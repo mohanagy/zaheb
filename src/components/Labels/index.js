@@ -1,0 +1,6 @@
+export { LabelWithText } from './LabelWithText'
+export { LabelWithIcon } from './LabelWithIcon'
+export { ColorFullLabel } from './ColorFullLabel'
+export { OrderDetailsLabel } from './OrderDetailsLabel'
+export { DetailsLabel } from './DetailsLabel'
+export { WhiteLabel } from './WhiteLabel'
