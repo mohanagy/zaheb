@@ -20,3 +20,5 @@ export {
 export { OrderStatus } from './OrderStatus'
 export { OrderDetailsBox } from './OrderDetailsBox'
 export { WorkerOrderCard, ClientInfoCard, SuccessfulOrderCard } from './Cards'
+export { Dot, ActiveDot } from './Icons/PaginationDots'
+export { Slider } from './Slider'

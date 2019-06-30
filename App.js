@@ -6,8 +6,8 @@ const App = () => (
   <ThemeProvider>
 
     <AppContainer theme={theme} />
-  </ThemeProvider>
-  
+  </TذhemeProvider>
+
 )
 
 export default App
