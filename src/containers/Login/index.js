@@ -1,11 +1,14 @@
 import React, { Component } from 'react'
-import { StyleSheet } from 'react-native'
+import { StyleSheet, Dimensions } from 'react-native'
 import PropTypes from 'prop-types'
 import {
-  Logo, Title, Group, SplashButton, InputField, ScrollContainer,
+  Logo, Title, Group, SplashButton, InputField, ScrollContainer, BackgroundImageWrapper,
 } from 'components'
 import LinearGradient from 'react-native-linear-gradient'
 import logo from 'assets/logo.png'
+import blurredBackground from 'assets/blurred-background.png'
+
+const screen = Dimensions.get('screen')
 
 class Login extends Component {
   static navigationOptions = {
@@ -15,12 +18,7 @@ class Login extends Component {
   render() {
     const { navigation: { navigate } } = this.props
     return (
-      <LinearGradient
-        style={styles.container}
-        colors={['#ff0000', '#0092c9']}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 0.5, y: 0.3 }}
-      >
+      <BackgroundImageWrapper source={blurredBackground} style={{ height: '100%' }}>
         <ScrollContainer
           contentContainerStyle={{
             marginBottom: 0,
@@ -38,7 +36,14 @@ class Login extends Component {
           >
             <Logo
               source={logo}
-              style={{}}
+              style={{
+                borderTopLeftRadius: 99999,
+                borderTopRightRadius: 99999,
+                backgroundColor: '#FFFFFF',
+                width: screen.width * 0.5,
+              }}
+              containerStyle={{
+              }}
             />
             <Title
               text="تسجيل الدخول"
@@ -111,9 +116,8 @@ class Login extends Component {
             />
 
           </Group>
-
         </ScrollContainer>
-      </LinearGradient>
+      </BackgroundImageWrapper>
     )
   }
 }

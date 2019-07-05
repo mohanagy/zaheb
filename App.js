@@ -4,9 +4,8 @@ import { ThemeProvider } from 'react-native-elements'
 import theme from 'styles/theme'
 const App = () => (
   <ThemeProvider>
-
     <AppContainer theme={theme} />
-  </TذhemeProvider>
+  </ThemeProvider>
 
 )
 

@@ -187,7 +187,7 @@ const MyAccountNavigator = createStackNavigator({
   Header,
 },
 {
-  initialRouteName: 'SplashLoading',
+  initialRouteName: 'Login',
   headerMode: 'screen',
   navigationOptions: {
     header: null,
