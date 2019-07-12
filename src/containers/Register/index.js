@@ -1,13 +1,12 @@
-import React, { Component } from 'react'
-import { StyleSheet } from 'react-native'
+import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import {
   Logo, Title, Group, SplashButton,
-  InputField, ScrollContainer, TextArea,
-  Maps,
+  InputField, SimpleForm, LabeledInput,
+  Details,
 } from 'components'
-import LinearGradient from 'react-native-linear-gradient'
 import logo from 'assets/logo.png'
+import blurredBackground from 'assets/blurred-background.png'
 
 class Register extends Component {
   static navigationOptions = {
@@ -17,195 +16,127 @@ class Register extends Component {
   render() {
     const { navigation: { navigate } } = this.props
     return (
-      <LinearGradient
-        style={styles.container}
-        colors={['#ff0000', '#0092c9']}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 0.5, y: 0.3 }}
+      <SimpleForm
+        backgroundSource={blurredBackground}
+        backgroundOverlay="#00000095"
+        after={(
+          <Group
+            style={{
+              marginVertical: 30,
+              fontWeight: '9',
+              justifyContent: 'center',
+            }}
+          >
+            <Details
+              text={(
+                <Fragment>
+                  {'Already got an account? '}
+                  <Details
+                    text="Sign in"
+                    style={{
+                      color: '#BE1522',
+                      textDecorationLine: 'underline',
+                    }}
+                  />
+                </Fragment>
+              )}
+            >
+            </Details>
+          </Group>
+        )}
       >
-        <ScrollContainer
-          contentContainerStyle={{
-
+        <Group
+          style={{
+            position: 'relative',
+            marginHorizontal: 28,
+            borderRadius: 6.7,
+            backgroundColor: '#FFFFFF',
           }}
         >
-          <Group
-            style={{
-              justifyContent: 'flex-end',
-              alignItems: 'center',
-              marginVertical: 30,
-            }}
-          >
-            <Logo
-              source={logo}
-              style={{}}
-            />
-            <Title
-              text="تسجيل حساب جديد"
-            />
-          </Group>
-          <Group
-            style={{
-              flexDirection: 'column',
-              justifyContent: 'flex-start',
-              alignItems: 'center',
-              paddingHorizontal: 20,
-              width: '100%',
-              height: '100%',
-            }}
-          >
-            <InputField
-              placeHolder="الاسم"
-              style={
-                {
-                  inputStyle: {
-                    backgroundColor: '#ffffff',
-                    borderRadius: 5,
-                    fontFamily: 'HelveticaNeueW23forSKY-Reg',
-                    paddingLeft: 6,
-                    marginBottom: 10,
-
-                  },
-                }}
-            />
-            <InputField
-              placeHolder="رقم الجوال"
-              style={
-                {
-                  inputStyle: {
-                    backgroundColor: '#ffffff',
-                    borderRadius: 5,
-                    fontFamily: 'HelveticaNeueW23forSKY-Reg',
-                    paddingLeft: 6,
-                    marginBottom: 10,
-
-                  },
-                }}
-            />
-            <InputField
-              placeHolder="كلمة المرور"
-              style={
-                {
-                  inputStyle: {
-                    backgroundColor: '#ffffff',
-                    fontFamily: 'HelveticaNeueW23forSKY-Reg',
-                    borderRadius: 5,
-                    paddingLeft: 6,
-                    marginBottom: 10,
-                  },
-                }}
-            />
-            <InputField
-              placeHolder="تاكيد كلمة المرور"
-              style={
-                {
-                  inputStyle: {
-                    backgroundColor: '#ffffff',
-                    fontFamily: 'HelveticaNeueW23forSKY-Reg',
-                    borderRadius: 5,
-                    paddingLeft: 6,
-                    marginBottom: 10,
-                  },
-                }}
-            />
-            <InputField
-              placeHolder="إسم العنوان, مثال: 'المنزل'"
-              style={
-                {
-                  inputStyle: {
-                    backgroundColor: '#ffffff',
-                    fontFamily: 'HelveticaNeueW23forSKY-Reg',
-                    borderRadius: 5,
-                    paddingLeft: 6,
-                    marginBottom: 10,
-                  },
-                }}
-            />
-            <TextArea
-
-              placeHolder="كتابة العنوان بالتفصيل"
-              style={
-                {
-                  inputStyle: {
-                    backgroundColor: '#ffffff',
-                    fontFamily: 'HelveticaNeueW23forSKY-Reg',
-                    borderRadius: 5,
-                    paddingLeft: 6,
-                    marginBottom: 10,
-                  },
-                }}
-            />
-            <Maps
-              style={
-                {
-                  container: {
-                    height: '20%',
-                    width: '95%',
-                    paddingVertical: 150,
-                    marginBottom: 10,
-                    borderRadius: 10,
-                  },
-                  map: {
-                    ...StyleSheet.absoluteFillObject,
-                  },
-                }
-              }
-            />
-            <SplashButton
-              title="تسجيل حساب جديد"
-              onPress={() => navigate('PreviousOrders')}
-              style={{
-                buttonStyle: {
-                  backgroundColor: '#ffffff',
-                  marginBottom: 10,
-                  paddingVertical: 15,
-                },
-                containerStyle: {
-                  width: '100%',
-                  paddingHorizontal: 10,
-                },
-                titleStyle: {
-                  color: '#0083b5',
-                  fontFamily: 'HelveticaNeueW23forSKY-Reg',
-                  alignItems: 'center',
-                },
-              }}
-            />
-
-            <SplashButton
-              title="تسجيل الدخول"
-              type="clear"
-              onPress={() => navigate('Login')}
-              style={{
-                titleStyle: {
-                  color: '#ffffff',
-                  fontFamily: 'HelveticaNeueW23forSKY-Reg',
-                },
-                containerStyle: {
-                  marginVertical: 30,
-                },
-              }}
-            />
-
-          </Group>
-
-        </ScrollContainer>
-      </LinearGradient>
+          <Title
+            text={[
+              (<Title text="Z" style={{ color: '#BE1522' }} />),
+              (<Title text="AHEB" style={{ color: '#1E1E1E' }} />),
+            ]}
+          />
+          <LabeledInput
+            label="Full name"
+            inputStyle={inputStyle}
+            labelStyle={inputLabelStyle}
+            containerStyle={inputContainerStyle}
+          />
+          <LabeledInput
+            label="E-Mail"
+            inputStyle={inputStyle}
+            labelStyle={inputLabelStyle}
+            containerStyle={inputContainerStyle}
+          />
+          <LabeledInput
+            label="Mobile number"
+            inputStyle={inputStyle}
+            labelStyle={inputLabelStyle}
+            containerStyle={inputContainerStyle}
+          />
+          <LabeledInput
+            label="Password"
+            inputStyle={inputStyle}
+            labelStyle={inputLabelStyle}
+            containerStyle={inputContainerStyle}
+          />
+          <LabeledInput
+            label="Your location"
+            inputStyle={inputStyle}
+            labelStyle={inputLabelStyle}
+            containerStyle={{ ...inputContainerStyle, marginBottom: 60 }}
+          />
+          <SplashButton
+            title="Sign Up"
+            onPress={() => navigate('PreviousOrders')}
+            style={buttonStyle}
+          />
+        </Group>
+      </SimpleForm>
     )
   }
 }
-const styles = StyleSheet.create({
-  container: {
-    width: '100%',
-  },
-  inputStyle: {
-    backgroundColor: '#ffffff',
-    borderRadius: 5,
 
-  },
-})
+const inputStyle = {
+  fontFamily: 'HelveticaNeueW23forSKY-Reg',
+  padding: 0,
+  margin: 0,
+}
 
+const inputLabelStyle = {
+  color: '#b0abab',
+  marginLeft: 10,
+}
+
+const inputContainerStyle = {
+  marginHorizontal: 18,
+  marginTop: 20,
+}
 Register.propTypes = {
   navigation: PropTypes.object.isRequired,
+}
+
+const buttonStyle = {
+  buttonStyle: {
+    backgroundColor: '#FF2334',
+    borderRadius: 20,
+    marginHorizontal: 50,
+  },
+  containerStyle: {
+    position: 'absolute',
+    bottom: -25,
+    width: '100%',
+    paddingHorizontal: 10,
+  },
+  titleStyle: {
+    color: '#FFFFFF',
+    fontWeight: '9',
+    fontSize: 18,
+    fontFamily: 'HelveticaNeueW23forSKY-Reg',
+  },
 }
 
 export default Register
