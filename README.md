@@ -1,14 +1,16 @@
 # Zaheb task sheet
 ### BACKLOG
 Total: **41**
+
 Done: **3**
+
 Remaining: **38**
-#### <div class='highlight green'>DONE</div>
+#### DONE
 - [x] Sign in
 - [x] Signup
 - [x] Forgot password
 
-#### <div class='highlight red'>TO-DO</div>
+#### TO-DO
 - [ ] Profile supplier
 - [ ] Profile supplier - 1
 - [ ] Profile supplier - 2
@@ -48,11 +50,3 @@ Remaining: **38**
 - [ ] My purchases
 - [ ] Contact us
 - [ ] iPhone 6/7/8 Plus – 5
-
-<style>
-    .highlight {padding: 8px 20px;border-radius: 5px;}
-    .red {color:#F43D52;background:#F8859380;}
-    .blue {color: #6199CC;background: #9BBEDF80;}
-    .green {color: #98C379;background: #C1DBAE80;}
-    .grey {color: #5a5a5a;background: #a6a6a680;}
-</style>
