@@ -4,7 +4,7 @@ import {
 } from 'react-navigation'
 import {
   MyInformation, MyPayments, OrderTube, MyOrders, Splash, SplashLoading,
-  Login, Register, CurrentOrders, PreviousOrders, OrdersNotPaid, CurrentOrderDetails,
+  Login, Register, CurrentOrders, PreviousOrders, OrdersNotPaid, CurrentOrderDetails, ForgotPassword,
 } from 'containers'
 
 import { Header } from 'components'
@@ -185,9 +185,10 @@ const MyAccountNavigator = createStackNavigator({
   Register,
   MyAccount: MyAccountStack,
   Header,
+  ForgotPassword,
 },
 {
-  initialRouteName: 'Register',
+  initialRouteName: 'ForgotPassword',
   headerMode: 'screen',
   navigationOptions: {
     header: null,
