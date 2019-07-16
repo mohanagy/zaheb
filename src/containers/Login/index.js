@@ -1,11 +1,9 @@
-import React, { Component } from 'react'
-import { StyleSheet } from 'react-native'
+import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import {
-  Logo, Title, Group, SplashButton, InputField, ScrollContainer,
+  Title, Group, SplashButton, LabeledInput, Details, SimpleForm,
 } from 'components'
-import LinearGradient from 'react-native-linear-gradient'
-import logo from 'assets/logo.png'
+import blurredBackground from 'assets/blurred-background.png'
 
 class Login extends Component {
   static navigationOptions = {
@@ -15,119 +13,107 @@ class Login extends Component {
   render() {
     const { navigation: { navigate } } = this.props
     return (
-      <LinearGradient
-        style={styles.container}
-        colors={['#ff0000', '#0092c9']}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 0.5, y: 0.3 }}
+      <SimpleForm
+        backgroundOverlay="#00000095"
+        backgroundSource={blurredBackground}
+        after={(
+          <Group
+            style={{
+              marginVertical: 30,
+              fontWeight: '9',
+              justifyContent: 'center',
+            }}
+          >
+            <Details text="Forgot password?" />
+            <Details
+              text={(
+                <Fragment>
+                  {"Don't have an account? "}
+                  <Details
+                    text="Create now"
+                    style={{
+                      color: '#BE1522',
+                      textDecorationLine: 'underline',
+                    }}
+                  />
+                </Fragment>
+              )}
+            >
+            </Details>
+          </Group>
+        )}
       >
-        <ScrollContainer
-          contentContainerStyle={{
-            marginBottom: 0,
-            paddingBottom: 0,
-            justifyContent: 'flex-start',
+        <Group
+          style={{
+            position: 'relative',
+            marginHorizontal: 28,
+            borderRadius: 6.7,
+            backgroundColor: '#FFFFFF',
           }}
         >
-          <Group
-            style={{
-              justifyContent: 'flex-start',
-              alignItems: 'center',
-              marginTop: 30,
-              flex: 1,
-            }}
-          >
-            <Logo
-              source={logo}
-              style={{}}
-            />
-            <Title
-              text="تسجيل الدخول"
-            />
-          </Group>
-          <Group
-            style={{
-              flexDirection: 'column',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              marginVertical: 90,
-              height: '40%',
-              paddingHorizontal: 20,
-              width: '100%',
-            }}
-          >
-            <InputField
-              placeHolder="رقم الجوال"
-              style={
-                {
-                  inputStyle: {
-                    backgroundColor: '#ffffff',
-                    borderRadius: 5,
-                    fontFamily: 'HelveticaNeueW23forSKY-Reg',
-                    paddingLeft: 6,
-
-                  },
-                }}
-            />
-            <InputField
-              placeHolder="كلمة المرور"
-              style={
-                {
-                  inputStyle: {
-                    backgroundColor: '#ffffff',
-                    fontFamily: 'HelveticaNeueW23forSKY-Reg',
-                    borderRadius: 5,
-                    paddingLeft: 6,
-                  },
-                }}
-            />
-            <SplashButton
-              title="تسجيل الدخول"
-              onPress={() => navigate('PreviousOrders')}
-              style={{
-                buttonStyle: {
-                  backgroundColor: '#ffffff',
-                },
-                containerStyle: {
-                  width: '100%',
-                  paddingHorizontal: 10,
-                },
-                titleStyle: {
-                  color: '#0083b5',
-                  fontFamily: 'HelveticaNeueW23forSKY-Reg',
-                },
-              }}
-            />
-
-            <SplashButton
-              title="تسجيل حساب جديد"
-              type="clear"
-              onPress={() => navigate('Register')}
-              style={{
-                titleStyle: {
-                  color: '#ffffff',
-                  fontFamily: 'HelveticaNeueW23forSKY-Reg',
-                },
-              }}
-            />
-
-          </Group>
-
-        </ScrollContainer>
-      </LinearGradient>
+          <Title
+            text={[
+              (<Title text="Z" style={{ color: '#BE1522' }} />),
+              (<Title text="AHEB" style={{ color: '#1E1E1E' }} />),
+            ]}
+          />
+          <LabeledInput
+            label="Name or email"
+            inputStyle={inputStyle}
+            labelStyle={inputLabelStyle}
+            containerStyle={{ ...inputContainerStyle, marginBottom: 20 }}
+          />
+          <LabeledInput
+            label="Password"
+            inputStyle={inputStyle}
+            labelStyle={inputLabelStyle}
+            containerStyle={{ ...inputContainerStyle, marginBottom: 60 }}
+          />
+          <SplashButton
+            title="Sign in"
+            onPress={() => navigate('PreviousOrders')}
+            style={buttonStyle}
+          />
+        </Group>
+      </SimpleForm>
     )
   }
 }
-const styles = StyleSheet.create({
-  container: {
-    height: '100%',
-    width: '100%',
-  },
-  inputStyle: {
-    backgroundColor: '#ffffff',
-    borderRadius: 5,
 
+const inputStyle = {
+  fontFamily: 'HelveticaNeueW23forSKY-Reg',
+  padding: 0,
+  margin: 0,
+}
+
+const inputLabelStyle = {
+  color: '#b0abab',
+  marginLeft: 10,
+}
+
+const inputContainerStyle = {
+  marginHorizontal: 18,
+}
+
+const buttonStyle = {
+  buttonStyle: {
+    backgroundColor: '#FF2334',
+    borderRadius: 20,
+    marginHorizontal: 50,
   },
-})
+  containerStyle: {
+    position: 'absolute',
+    bottom: -25,
+    width: '100%',
+    paddingHorizontal: 10,
+  },
+  titleStyle: {
+    color: '#FFFFFF',
+    fontWeight: '9',
+    fontSize: 18,
+    fontFamily: 'HelveticaNeueW23forSKY-Reg',
+  },
+}
 
 
 Login.propTypes = {
