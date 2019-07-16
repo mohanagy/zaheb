@@ -10,6 +10,7 @@ import PreviousOrders from './PreviousOrders'
 import OrdersNotPaid from './OrdersNotPaid'
 import CurrentOrderDetails from './CurrentOrderDetails'
 import ForgotPassword from './ForgotPassword'
+import ContactUs from './ContactUs'
 
 
 export {
@@ -26,4 +27,5 @@ export {
   OrdersNotPaid,
   CurrentOrderDetails,
   ForgotPassword,
+  ContactUs,
 }
