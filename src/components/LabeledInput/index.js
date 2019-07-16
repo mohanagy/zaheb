@@ -6,22 +6,26 @@ import { Group } from 'components'
 
 export const LabeledInput = (props) => {
   const {
-    containerStyle, labelStyle, inputStyle, placeHolder, label,
+    containerStyle, labelStyle, inputStyle, placeholder, label,
   } = props
   console.log('inputStyle', inputStyle)
   return (
     <Group style={containerStyle}>
-      <Text style={labelStyle}>{label}</Text>
+      <Text style={labelStyle}>
+        {label}
+      </Text>
       <Input
-        placeholder={placeHolder}
+        placeholder={placeholder}
         inputStyle={inputStyle}
+        inputContainerStyle={{ borderBottomWidth: 0 }}
       >
       </Input>
     </Group>
   )
 }
+
 LabeledInput.propTypes = {
-  placeHolder: PropTypes.string.isRequired,
+  placeholder: PropTypes.string.isRequired,
   inputStyle: PropTypes.object,
   labelStyle: PropTypes.object,
   containerStyle: PropTypes.object,

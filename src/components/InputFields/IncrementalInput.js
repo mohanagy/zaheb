@@ -4,7 +4,7 @@ import { View, Text } from 'react-native'
 import { TouchableButton } from 'components'
 
 
-const IncrementalInput = ({ placeHolder, style }) => (
+const IncrementalInput = ({ placeholder, style }) => (
   <View
     style={{
       flexDirection: 'row',
@@ -62,7 +62,7 @@ const IncrementalInput = ({ placeHolder, style }) => (
 )
 
 IncrementalInput.propTypes = {
-  placeHolder: PropTypes.string.isRequired,
+  placeholder: PropTypes.string.isRequired,
   style: PropTypes.object.isRequired,
 }
 export default IncrementalInput

@@ -1,3 +1,4 @@
+export CurvedHeader from './CurvedHeader'
 export { Logo } from './Logo'
 export { Details, Title } from './Texts'
 export { Group } from './Group'

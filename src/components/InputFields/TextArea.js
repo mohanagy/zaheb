@@ -3,18 +3,18 @@ import PropTypes from 'prop-types'
 import { Input } from 'react-native-elements'
 
 
-const TextArea = ({ placeHolder, style }) => (
+const TextArea = ({ placeholder, style }) => (
   <Input
     multiline
     numberOfLines={4}
-    placeholder={placeHolder}
+    placeholder={placeholder}
     {...style}
   >
   </Input>
 )
 
 TextArea.propTypes = {
-  placeHolder: PropTypes.string.isRequired,
+  placeholder: PropTypes.string.isRequired,
   style: PropTypes.object.isRequired,
 }
 export default TextArea
