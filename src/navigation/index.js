@@ -5,7 +5,7 @@ import {
 import {
   MyInformation, MyPayments, OrderTube, MyOrders, Splash, SplashLoading,
   Login, Register, CurrentOrders, PreviousOrders, OrdersNotPaid, CurrentOrderDetails, ForgotPassword,
-  ContactUs,
+  ContactUs, MyPurchases,
 } from 'containers'
 
 import { Header } from 'components'
@@ -188,9 +188,10 @@ const MyAccountNavigator = createStackNavigator({
   Header,
   ForgotPassword,
   ContactUs,
+  MyPurchases,
 },
 {
-  initialRouteName: 'ContactUs',
+  initialRouteName: 'MyPurchases',
   headerMode: 'screen',
   navigationOptions: {
     header: null,
