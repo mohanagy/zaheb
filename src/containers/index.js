@@ -12,6 +12,7 @@ import CurrentOrderDetails from './CurrentOrderDetails'
 import ForgotPassword from './ForgotPassword'
 import ContactUs from './ContactUs'
 import MyPurchases from './MyPurchases'
+import MyRequests from './MyRequests'
 
 
 export {
@@ -30,4 +31,5 @@ export {
   ForgotPassword,
   ContactUs,
   MyPurchases,
+  MyRequests,
 }
