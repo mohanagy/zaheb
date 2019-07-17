@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import { Dimensions } from 'react-native'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 
