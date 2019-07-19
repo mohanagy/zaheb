@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { Dimensions } from 'react-native'
 import { ScrollContainer, PurchaseCard } from 'components'
 
 import purchases from './_data'
