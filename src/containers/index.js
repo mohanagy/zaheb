@@ -14,6 +14,7 @@ import ContactUs from './ContactUs'
 import MyPurchases from './MyPurchases'
 import MyRequests from './MyRequests'
 import Conversations from './Conversations'
+import HomeStore from './HomeStore'
 
 
 export {
@@ -34,4 +35,5 @@ export {
   MyPurchases,
   MyRequests,
   Conversations,
+  HomeStore,
 }
