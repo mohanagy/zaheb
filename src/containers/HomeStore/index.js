@@ -16,9 +16,7 @@ class HomeStore extends Component {
 
   render() {
     return (
-      <BackgroundImageWrapper
-        source={blurredBackground}
-      >
+      <BackgroundImageWrapper style={{ minHeight: screen.height }} source={blurredBackground}>
         <Group
           style={{
             backgroundColor: '#FFFFFFA8', position: 'absolute', top: 0, bottom: 0, right: 0, left: 0,
@@ -29,7 +27,6 @@ class HomeStore extends Component {
           style={{
             marginTop: 40,
             marginHorizontal: 20,
-            minHeight: screen.height,
             flexDirection: 'row',
             flexWrap: 'wrap',
             justifyContent: 'space-around',
