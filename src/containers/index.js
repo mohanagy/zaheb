@@ -16,6 +16,7 @@ import MyRequests from './MyRequests'
 import Conversations from './Conversations'
 import HomeStore from './HomeStore'
 import HomeType from './HomeType'
+import Products from './Products'
 
 
 export {
@@ -38,4 +39,5 @@ export {
   Conversations,
   HomeStore,
   HomeType,
+  Products,
 }
