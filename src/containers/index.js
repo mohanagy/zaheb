@@ -17,7 +17,7 @@ import Conversations from './Conversations'
 import HomeStore from './HomeStore'
 import HomeType from './HomeType'
 import Products from './Products'
-
+import Workshops from './Workshops'
 
 export {
   MyInformation,
@@ -40,4 +40,5 @@ export {
   HomeStore,
   HomeType,
   Products,
+  Workshops,
 }
