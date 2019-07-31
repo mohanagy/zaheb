@@ -19,6 +19,7 @@ import HomeType from './HomeType'
 import Products from './Products'
 import Workshops from './Workshops'
 import MyOffers from './MyOffers'
+import TermsAndConditions from './TermsAndConditions'
 
 export {
   MyInformation,
@@ -43,4 +44,5 @@ export {
   Products,
   Workshops,
   MyOffers,
+  TermsAndConditions,
 }
