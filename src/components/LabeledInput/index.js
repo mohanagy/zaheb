@@ -8,7 +8,6 @@ export const LabeledInput = (props) => {
   const {
     containerStyle, labelStyle, inputStyle, placeholder, label,
   } = props
-  console.log('inputStyle', inputStyle)
   return (
     <Group style={containerStyle}>
       <Text style={labelStyle}>

@@ -20,6 +20,8 @@ import Products from './Products'
 import Workshops from './Workshops'
 import MyOffers from './MyOffers'
 import TermsAndConditions from './TermsAndConditions'
+import WhoWeAre from './WhoWeAre'
+import ProfileSupplier from './ProfileSupplier'
 
 export {
   MyInformation,
@@ -45,4 +47,6 @@ export {
   Workshops,
   MyOffers,
   TermsAndConditions,
+  WhoWeAre,
+  ProfileSupplier,
 }
