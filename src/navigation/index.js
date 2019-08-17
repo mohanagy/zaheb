@@ -6,7 +6,7 @@ import {
   MyInformation, MyPayments, OrderTube, MyOrders, Splash, SplashLoading,
   Login, Register, CurrentOrders, PreviousOrders, OrdersNotPaid, CurrentOrderDetails, ForgotPassword,
   ContactUs, MyPurchases, MyRequests, Conversations, HomeStore, HomeType, Products, Workshops,
-  MyOffers, TermsAndConditions, WhoWeAre, ProfileSupplier, ProfileWorkshop, Favorites, HomePage,
+  MyOffers, TermsAndConditions, WhoWeAre, ProfileSupplier, ProfileWorkshop, Favorites, HomePage, HomeStarterPage,
 } from 'containers'
 
 import { Header } from 'components'
@@ -203,9 +203,10 @@ const MyAccountNavigator = createStackNavigator({
   ProfileWorkshop,
   Favorites,
   HomePage,
+  HomeStarterPage,
 },
 {
-  initialRouteName: 'HomePage',
+  initialRouteName: 'HomeStarterPage',
   headerMode: 'screen',
   navigationOptions: {
     header: null,

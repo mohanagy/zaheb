@@ -25,6 +25,7 @@ import ProfileSupplier from './ProfileSupplier'
 import ProfileWorkshop from './ProfileWorkshop'
 import Favorites from './Favorites'
 import HomePage from './HomePage'
+import HomeStarterPage from './HomeStarterPage'
 
 export {
   MyInformation,
@@ -55,4 +56,5 @@ export {
   ProfileWorkshop,
   Favorites,
   HomePage,
+  HomeStarterPage,
 }
