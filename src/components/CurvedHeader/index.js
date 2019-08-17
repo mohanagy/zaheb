@@ -19,7 +19,7 @@ class CurvedHeader extends Component {
         style={{
           height: screen.width * 0.3,
           flexDirection: 'column-reverse',
-          marginBottom: type === 'image' ? 30 : 0,
+          marginBottom: type === 'image' ? 80 : 0,
         }}
       >
         <Group
@@ -78,8 +78,9 @@ class CurvedHeader extends Component {
               <Image
                 source={source}
                 style={{
-                  width: '100%',
-                  height: '100%',
+                  width: 100,
+                  height: 100,
+                  margin: 25,
                   resizeMode: 'contain',
                   borderWidth: 0,
                 }}

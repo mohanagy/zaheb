@@ -23,6 +23,7 @@ import TermsAndConditions from './TermsAndConditions'
 import WhoWeAre from './WhoWeAre'
 import ProfileSupplier from './ProfileSupplier'
 import ProfileWorkshop from './ProfileWorkshop'
+import Favorites from './Favorites'
 
 export {
   MyInformation,
@@ -51,4 +52,5 @@ export {
   WhoWeAre,
   ProfileSupplier,
   ProfileWorkshop,
+  Favorites,
 }
