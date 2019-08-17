@@ -26,6 +26,7 @@ import ProfileWorkshop from './ProfileWorkshop'
 import Favorites from './Favorites'
 import HomePage from './HomePage'
 import HomeStarterPage from './HomeStarterPage'
+import CustomerService from './CustomerService'
 
 export {
   MyInformation,
@@ -57,4 +58,5 @@ export {
   Favorites,
   HomePage,
   HomeStarterPage,
+  CustomerService,
 }

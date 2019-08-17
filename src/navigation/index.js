@@ -7,6 +7,7 @@ import {
   Login, Register, CurrentOrders, PreviousOrders, OrdersNotPaid, CurrentOrderDetails, ForgotPassword,
   ContactUs, MyPurchases, MyRequests, Conversations, HomeStore, HomeType, Products, Workshops,
   MyOffers, TermsAndConditions, WhoWeAre, ProfileSupplier, ProfileWorkshop, Favorites, HomePage, HomeStarterPage,
+  CustomerService,
 } from 'containers'
 
 import { Header } from 'components'
@@ -204,9 +205,10 @@ const MyAccountNavigator = createStackNavigator({
   Favorites,
   HomePage,
   HomeStarterPage,
+  CustomerService,
 },
 {
-  initialRouteName: 'HomeStarterPage',
+  initialRouteName: 'CustomerService',
   headerMode: 'screen',
   navigationOptions: {
     header: null,
