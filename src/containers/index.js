@@ -24,6 +24,7 @@ import WhoWeAre from './WhoWeAre'
 import ProfileSupplier from './ProfileSupplier'
 import ProfileWorkshop from './ProfileWorkshop'
 import Favorites from './Favorites'
+import HomePage from './HomePage'
 
 export {
   MyInformation,
@@ -53,4 +54,5 @@ export {
   ProfileSupplier,
   ProfileWorkshop,
   Favorites,
+  HomePage,
 }

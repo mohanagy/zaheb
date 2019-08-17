@@ -13,13 +13,16 @@ class CurvedHeader extends Component {
   };
 
   render() {
-    const { type, content, source } = this.props
+    const {
+      type, content, source, style,
+    } = this.props
     return (
       <Group
         style={{
           height: screen.width * 0.3,
           flexDirection: 'column-reverse',
           marginBottom: type === 'image' ? 80 : 0,
+          ...style,
         }}
       >
         <Group
@@ -58,7 +61,7 @@ class CurvedHeader extends Component {
                 }}
               />
             </Group>
-          ) : (
+          ) : type === 'image' && (
             <Group
               style={{
                 alignSelf: 'center',
