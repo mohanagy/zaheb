@@ -1,8 +1,8 @@
 # Zaheb task sheet
 ### BACKLOG
 Total: **41**
-Done: **13**
-Remaining: **28**
+Done: **24**
+Remaining: **17**
 #### <div class='highlight green'>DONE</div>
 - [x] Sign in
 - [x] Signup
@@ -20,18 +20,19 @@ Remaining: **28**
 - [x] My offser
 - [x] Terms and conditions
 - [x] Who we are
-
+- [x] Profile supplier
+- [x] Profile supplier - 1
+- [x] Profile supplier - 2
+- [x] Profile workshop
+- [x] Profile workshop - 1
+- [x] Profile workshop - 2
+- [x] Favorites
+- [x] Home
+- [x] Home -2
 #### <div class='highlight blue'>IN-PROGRESS</div>
 
 #### <div class='highlight red'>TO-DO</div>
-- [ ] Profile supplier
-- [ ] Profile supplier - 1
-- [ ] Profile supplier - 2
-- [ ] Profile workshop
-- [ ] Profile workshop - 1
-- [ ] Profile workshop - 2
-- [ ] Custoers service
-- [ ] Favorites
+- [ ] Customers service
 - [ ] Sub-services
 - [ ] Request details
 - [ ] Nearest service center
@@ -40,8 +41,6 @@ Remaining: **28**
 - [ ] Details of your car - 2
 - [ ] My profile
 - [ ] My profile - 1
-- [ ] Home
-- [ ] Home -2
 - [ ] Profile driver - 1
 - [ ] Profile driver  - 2
 - [ ] Notifications
@@ -50,11 +49,3 @@ Remaining: **28**
 - [ ] Product options
 - [ ] Menu
 - [ ] Chat
-
-<style>
-    .highlight {padding: 8px 20px;border-radius: 5px;}
-    .red {color:#F43D52;background:#F8859380;}
-    .blue {color: #6199CC;background: #9BBEDF80;}
-    .green {color: #98C379;background: #C1DBAE80;}
-    .grey {color: #5a5a5a;background: #a6a6a680;}
-</style>
