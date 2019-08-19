@@ -1,8 +1,9 @@
 # Zaheb task sheet
 ### BACKLOG
 Total: **41**
-Done: **24**
-Remaining: **17**
+Done: **27**
+Remaining: **8**
+Blocked: **6**
 #### <div class='highlight green'>DONE</div>
 - [x] Sign in
 - [x] Signup
@@ -29,23 +30,23 @@ Remaining: **17**
 - [x] Favorites
 - [x] Home
 - [x] Home -2
+- [x] Customers service
+- [x] Sub-services
+- [x] Request details
 #### <div class='highlight blue'>IN-PROGRESS</div>
-
-#### <div class='highlight red'>TO-DO</div>
-- [ ] Customers service
-- [ ] Sub-services
-- [ ] Request details
-- [ ] Nearest service center
-- [ ] Nearest service center - 1
 - [ ] Details of your car 
-- [ ] Details of your car - 2
 - [ ] My profile
-- [ ] My profile - 1
-- [ ] Profile driver - 1
 - [ ] Profile driver  - 2
 - [ ] Notifications
 - [ ] Payment
 - [ ] Payment information
 - [ ] Product options
-- [ ] Menu
 - [ ] Chat
+
+#### <div class='highlight red'>Blocked</div>
+- [ ] Nearest service center
+- [ ] Nearest service center - 1
+- [ ] Details of your car - 2
+- [ ] My profile - 1
+- [ ] Profile driver - 1
+- [ ] Menu
