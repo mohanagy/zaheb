@@ -28,6 +28,7 @@ import HomePage from './HomePage'
 import HomeStarterPage from './HomeStarterPage'
 import CustomerService from './CustomerService'
 import SubServices from './SubServices'
+import RequestDetails from './RequestDetails'
 
 export {
   MyInformation,
@@ -61,4 +62,5 @@ export {
   HomeStarterPage,
   CustomerService,
   SubServices,
+  RequestDetails,
 }
