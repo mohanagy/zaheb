@@ -29,6 +29,7 @@ import HomeStarterPage from './HomeStarterPage'
 import CustomerService from './CustomerService'
 import SubServices from './SubServices'
 import RequestDetails from './RequestDetails'
+import DetailsOfYourCar from './DetailsOfYourCar'
 
 export {
   MyInformation,
@@ -63,4 +64,5 @@ export {
   CustomerService,
   SubServices,
   RequestDetails,
+  DetailsOfYourCar,
 }
