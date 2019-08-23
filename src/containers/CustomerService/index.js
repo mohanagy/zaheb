@@ -5,7 +5,6 @@ import {
 import { Input, Text } from 'react-native-elements'
 import { TextInput } from 'react-native'
 
-console.log('TextInput', TextInput)
 class CustomerService extends Component {
   render() {
     return (
