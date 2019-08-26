@@ -3,7 +3,6 @@ import {
   Group, Details, CurvedHeader, LabeledInputWithIcon, ScrollContainer,
 } from 'components'
 import { Dimensions } from 'react-native'
-import Icon from 'react-native-vector-icons/FontAwesome'
 
 import man from '../../assets/man.png'
 

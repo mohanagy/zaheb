@@ -7,49 +7,25 @@ import {
   Login, Register, CurrentOrders, PreviousOrders, OrdersNotPaid, CurrentOrderDetails, ForgotPassword,
   ContactUs, MyPurchases, MyRequests, Conversations, HomeStore, HomeType, Products, Workshops,
   MyOffers, TermsAndConditions, WhoWeAre, ProfileSupplier, ProfileWorkshop, Favorites, HomePage, HomeStarterPage,
-  CustomerService, SubServices, RequestDetails, DetailsOfYourCar, Profile,
+  CustomerService, SubServices, RequestDetails, DetailsOfYourCar, Profile, ProfileDriver, Notifications, Payment,
 } from 'containers'
 
 import { Header } from 'components'
 import { Icon } from 'react-native-elements'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 
-const OrderTubeStack = createStackNavigator({
-  OrderTube,
-})
-const SplashStack = createStackNavigator({
-  Splash,
-}, {
-  navigationOptions: {
-    header: null,
-  },
-})
-const MyOrdersStack = createStackNavigator({
-  MyOrders,
-})
-const CurrentOrdersStack = createStackNavigator({
-  CurrentOrders,
-  CurrentOrderDetails,
-})
-const PreviousOrdersStack = createStackNavigator({
-  PreviousOrders,
-})
-const OrdersNotPaidStack = createStackNavigator({
-  OrdersNotPaid,
-})
-
-const MyAccountStack = createMaterialTopTabNavigator({
-  MyInformation,
-  MyPayments,
-})
+const OrderTubeStack = createStackNavigator({ OrderTube })
+const SplashStack = createStackNavigator({ Splash }, { navigationOptions: { header: null } })
+const MyOrdersStack = createStackNavigator({ MyOrders })
+const CurrentOrdersStack = createStackNavigator({ CurrentOrders, CurrentOrderDetails })
+const PreviousOrdersStack = createStackNavigator({ PreviousOrders })
+const OrdersNotPaidStack = createStackNavigator({ OrdersNotPaid })
+const MyAccountStack = createMaterialTopTabNavigator({ MyInformation, MyPayments })
 const TabCustomerNavigator = createBottomTabNavigator(
   {
     MyOrders: {
       screen: MyOrdersStack,
-      navigationOptions: {
-        tabBarLabel: 'طلباتي',
-        header: null,
-      },
+      navigationOptions: { tabBarLabel: 'طلباتي', header: null },
     },
     MyAccount: {
       screen: MyAccountStack,
@@ -75,26 +51,13 @@ const TabCustomerNavigator = createBottomTabNavigator(
         const IconComponent = Icon
         let iconName
         switch (routeName) {
-          case 'MyAccount':
-            iconName = 'user'
-            break
-          case 'OrderTube':
-            iconName = 'plus-square'
-            break
-          case 'MyOrders':
-            iconName = 'cubes'
-            break
-          default:
-            iconName = 'cubes'
-            break
+          case 'MyAccount': iconName = 'user'; break
+          case 'OrderTube': iconName = 'plus-square'; break
+          case 'MyOrders': iconName = 'cubes'; break
+          default: iconName = 'cubes'
         }
         return (
-          <IconComponent
-            type="font-awesome"
-            name={iconName}
-            size={25}
-            color={tintColor}
-          />
+          <IconComponent type="font-awesome" name={iconName} size={25} color={tintColor} />
         )
       },
     }),
@@ -201,6 +164,7 @@ const MyAccountNavigator = createStackNavigator({
   TermsAndConditions,
   WhoWeAre,
   ProfileSupplier,
+  ProfileDriver,
   ProfileWorkshop,
   Favorites,
   HomePage,
@@ -210,9 +174,11 @@ const MyAccountNavigator = createStackNavigator({
   RequestDetails,
   DetailsOfYourCar,
   Profile,
+  Notifications,
+  Payment,
 },
 {
-  initialRouteName: 'Profile',
+  initialRouteName: 'Payment',
   headerMode: 'screen',
   navigationOptions: {
     header: null,

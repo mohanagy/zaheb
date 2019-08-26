@@ -16,13 +16,13 @@ class Tabs extends Component {
   }
 
   render() {
-    const { options } = this.props
+    const { options, tabsWrapperStyle } = this.props
     const { activeTab } = this.state
     const { activeContent: ContentComponent = EmptyContent } = options.find(({ key }) => key === activeTab)
 
     return (
       <Group>
-        <Group style={styles.tabsWrapperStyle}>
+        <Group style={{ ...styles.tabsWrapperStyle, ...tabsWrapperStyle }}>
           {
             options.map(({ icon, key }) => (
               <TouchableOpacity onPress={() => this.onTabChange(key)}>
