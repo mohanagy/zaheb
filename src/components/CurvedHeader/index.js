@@ -14,7 +14,7 @@ class CurvedHeader extends Component {
 
   render() {
     const {
-      type, content, source, style,
+      type, content, source, style, fillSource,
     } = this.props
     return (
       <Group
@@ -81,9 +81,9 @@ class CurvedHeader extends Component {
               <Image
                 source={source}
                 style={{
-                  width: 100,
-                  height: 100,
-                  margin: 25,
+                  width: fillSource ? 150 : 100,
+                  height: fillSource ? 150 : 100,
+                  margin: fillSource ? 0 : 25,
                   resizeMode: 'contain',
                   borderWidth: 0,
                 }}

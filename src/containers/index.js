@@ -30,6 +30,7 @@ import CustomerService from './CustomerService'
 import SubServices from './SubServices'
 import RequestDetails from './RequestDetails'
 import DetailsOfYourCar from './DetailsOfYourCar'
+import Profile from './Profile'
 
 export {
   MyInformation,
@@ -65,4 +66,5 @@ export {
   SubServices,
   RequestDetails,
   DetailsOfYourCar,
+  Profile,
 }
