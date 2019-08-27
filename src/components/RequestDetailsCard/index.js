@@ -57,8 +57,4 @@ class RequestDetailsCard extends Component {
   }
 }
 
-RequestDetailsCard.propTypes = {
-
-}
-
 export default RequestDetailsCard

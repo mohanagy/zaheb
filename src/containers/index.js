@@ -22,6 +22,7 @@ import MyOffers from './MyOffers'
 import TermsAndConditions from './TermsAndConditions'
 import WhoWeAre from './WhoWeAre'
 import ProfileSupplier from './ProfileSupplier'
+import ProfileDriver from './ProfileDriver'
 import ProfileWorkshop from './ProfileWorkshop'
 import Favorites from './Favorites'
 import HomePage from './HomePage'
@@ -30,6 +31,9 @@ import CustomerService from './CustomerService'
 import SubServices from './SubServices'
 import RequestDetails from './RequestDetails'
 import DetailsOfYourCar from './DetailsOfYourCar'
+import Profile from './Profile'
+import Notifications from './Notifications'
+import Payment from './Payment'
 
 export {
   MyInformation,
@@ -57,6 +61,7 @@ export {
   TermsAndConditions,
   WhoWeAre,
   ProfileSupplier,
+  ProfileDriver,
   ProfileWorkshop,
   Favorites,
   HomePage,
@@ -65,4 +70,7 @@ export {
   SubServices,
   RequestDetails,
   DetailsOfYourCar,
+  Profile,
+  Notifications,
+  Payment,
 }
