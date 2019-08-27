@@ -34,6 +34,7 @@ import DetailsOfYourCar from './DetailsOfYourCar'
 import Profile from './Profile'
 import Notifications from './Notifications'
 import Payment from './Payment'
+import PaymentInformation from './PaymentInformation'
 
 export {
   MyInformation,
@@ -73,4 +74,5 @@ export {
   Profile,
   Notifications,
   Payment,
+  PaymentInformation,
 }

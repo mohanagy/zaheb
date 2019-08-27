@@ -8,6 +8,7 @@ import {
   ContactUs, MyPurchases, MyRequests, Conversations, HomeStore, HomeType, Products, Workshops,
   MyOffers, TermsAndConditions, WhoWeAre, ProfileSupplier, ProfileWorkshop, Favorites, HomePage, HomeStarterPage,
   CustomerService, SubServices, RequestDetails, DetailsOfYourCar, Profile, ProfileDriver, Notifications, Payment,
+  PaymentInformation,
 } from 'containers'
 
 import { Header } from 'components'
@@ -23,24 +24,12 @@ const OrdersNotPaidStack = createStackNavigator({ OrdersNotPaid })
 const MyAccountStack = createMaterialTopTabNavigator({ MyInformation, MyPayments })
 const TabCustomerNavigator = createBottomTabNavigator(
   {
-    MyOrders: {
-      screen: MyOrdersStack,
-      navigationOptions: { tabBarLabel: 'طلباتي', header: null },
-    },
+    MyOrders: { screen: MyOrdersStack, navigationOptions: { tabBarLabel: 'طلباتي', header: null } },
     MyAccount: {
       screen: MyAccountStack,
-      navigationOptions: () => ({
-        tabBarLabel: 'حسابي',
-        header: props => <Header {...props} />,
-      }),
+      navigationOptions: () => ({ tabBarLabel: 'حسابي', header: props => <Header {...props} /> }),
     },
-    OrderTube: {
-      screen: OrderTubeStack,
-      navigationOptions: {
-        tabBarLabel: 'اطلب اسطوانة',
-
-      },
-    },
+    OrderTube: { screen: OrderTubeStack, navigationOptions: { tabBarLabel: 'اطلب اسطوانة' } },
   },
   {
     order: ['MyOrders', 'OrderTube', 'MyAccount'],
@@ -56,48 +45,25 @@ const TabCustomerNavigator = createBottomTabNavigator(
           case 'MyOrders': iconName = 'cubes'; break
           default: iconName = 'cubes'
         }
-        return (
-          <IconComponent type="font-awesome" name={iconName} size={25} color={tintColor} />
-        )
+        return <IconComponent type="font-awesome" name={iconName} size={25} color={tintColor} />
       },
     }),
-    tabBarOptions: {
-      activeTintColor: '#e91e63',
-      labelStyle: { fontFamily: 'HelveticaNeueW23forSKY-Reg' },
-    },
+    tabBarOptions: { activeTintColor: '#e91e63', labelStyle: { fontFamily: 'HelveticaNeueW23forSKY-Reg' } },
     lazy: true,
     lazyLoading: true,
     navigationOptions: ({ navigation }) => {
       const { routeName } = navigation.state.routes[navigation.state.index]
       if (routeName === 'MyAccount') { return { header: props => <Header {...props} /> } }
-
-      return {
-        header: null,
-      }
+      return { header: null }
     },
     headerMode: 'screen',
   }
 )
 const TabWorkerNavigator = createBottomTabNavigator(
   {
-    CurrentOrders: {
-      screen: CurrentOrdersStack,
-      navigationOptions: {
-        tabBarLabel: 'الطلبات الحالية',
-      },
-    },
-    PreviousOrders: {
-      screen: PreviousOrdersStack,
-      navigationOptions: () => ({
-        tabBarLabel: 'طلبات سابقة',
-      }),
-    },
-    OrdersNotPaid: {
-      screen: OrdersNotPaidStack,
-      navigationOptions: {
-        tabBarLabel: 'طلبات تحتاج الى تحصيل',
-      },
-    },
+    CurrentOrders: { screen: CurrentOrdersStack, navigationOptions: { tabBarLabel: 'الطلبات الحالية' } },
+    PreviousOrders: { screen: PreviousOrdersStack, navigationOptions: () => ({ tabBarLabel: 'طلبات سابقة' }) },
+    OrdersNotPaid: { screen: OrdersNotPaidStack, navigationOptions: { tabBarLabel: 'طلبات تحتاج الى تحصيل' } },
   },
   {
     order: ['CurrentOrders', 'PreviousOrders', 'OrdersNotPaid'],
@@ -121,12 +87,7 @@ const TabWorkerNavigator = createBottomTabNavigator(
             break
         }
         return (
-          <FontAwesome5
-            type="font-awesome"
-            name={iconName}
-            size={20}
-            color={tintColor}
-          />
+          <FontAwesome5 type="font-awesome" name={iconName} size={20} color={tintColor} />
         )
       },
     }),
@@ -136,9 +97,7 @@ const TabWorkerNavigator = createBottomTabNavigator(
     },
     lazy: true,
     lazyLoading: true,
-    navigationOptions: {
-      header: null,
-    },
+    navigationOptions: { header: null },
   }
 )
 
@@ -176,13 +135,12 @@ const MyAccountNavigator = createStackNavigator({
   Profile,
   Notifications,
   Payment,
+  PaymentInformation,
 },
 {
-  initialRouteName: 'Payment',
+  initialRouteName: 'PaymentInformation',
   headerMode: 'screen',
-  navigationOptions: {
-    header: null,
-  },
+  navigationOptions: { header: null },
 })
 
 export default createAppContainer(MyAccountNavigator)
