@@ -8,7 +8,7 @@ import {
   ContactUs, MyPurchases, MyRequests, Conversations, HomeStore, HomeType, Products, Workshops,
   MyOffers, TermsAndConditions, WhoWeAre, ProfileSupplier, ProfileWorkshop, Favorites, HomePage, HomeStarterPage,
   CustomerService, SubServices, RequestDetails, DetailsOfYourCar, Profile, ProfileDriver, Notifications, Payment,
-  PaymentInformation,
+  PaymentInformation, ProductOptions, Chat,
 } from 'containers'
 
 import { Header } from 'components'
@@ -136,9 +136,11 @@ const MyAccountNavigator = createStackNavigator({
   Notifications,
   Payment,
   PaymentInformation,
+  ProductOptions,
+  Chat,
 },
 {
-  initialRouteName: 'PaymentInformation',
+  initialRouteName: 'Chat',
   headerMode: 'screen',
   navigationOptions: { header: null },
 })

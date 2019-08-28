@@ -35,6 +35,8 @@ import Profile from './Profile'
 import Notifications from './Notifications'
 import Payment from './Payment'
 import PaymentInformation from './PaymentInformation'
+import ProductOptions from './ProductOptions'
+import Chat from './Chat'
 
 export {
   MyInformation,
@@ -75,4 +77,6 @@ export {
   Notifications,
   Payment,
   PaymentInformation,
+  ProductOptions,
+  Chat,
 }
