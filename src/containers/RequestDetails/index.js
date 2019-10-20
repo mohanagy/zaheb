@@ -55,4 +55,8 @@ class RequestDetails extends Component {
   }
 }
 
+RequestDetails.propTypes = {
+
+}
+
 export default RequestDetails

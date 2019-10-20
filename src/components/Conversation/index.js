@@ -11,7 +11,7 @@ class Conversation extends Component {
     return (
       <Group>
         {
-          chat.map(({
+          chat && chat.map(({
             content, time, senderId,
           }) => {
             const actor = collaborators.find((({ id }) => id === senderId))

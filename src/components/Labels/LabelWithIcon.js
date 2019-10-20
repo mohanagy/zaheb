@@ -1,32 +1,39 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { Text } from 'react-native'
+import { Group } from 'components'
 import PropTypes from 'prop-types'
 import { Icon } from 'react-native-elements'
 
 export const LabelWithIcon = ({
-  label, style, loading, type, onPress,
+  label, style, loading, type, onPress, textStyle,
 }) => (
-  <View
+  <Group
     style={{
       ...style,
       backgroundColor: 'white',
-      height: 60,
       flexDirection: 'row',
       justifyContent: 'flex-start',
       paddingLeft: 14,
       alignContent: 'center',
       alignItems: 'center',
-      borderRadius: 4,
+      borderRadius: 25,
       elevation: 2,
       width: 340,
       marginBottom: 10,
       marginTop: 10,
+      shadowOffset: {
+        width: 0,
+        height: 1,
+      },
+      shadowOpacity: 0.20,
+      shadowRadius: 1.41,
+
 
     }}
     loading={loading}
     onPress={onPress}
   >
-    <View
+    <Group
       style={{
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -39,8 +46,9 @@ export const LabelWithIcon = ({
         style={{
           fontFamily: 'HelveticaNeueW23forSKY-Reg',
           fontSize: 12,
-          color: type === 'edit' ? '#233142' : '#c0ccda',
+          color: '#1E1E1E',
           justifyContent: 'center',
+          ...textStyle,
 
         }}
       >
@@ -54,16 +62,18 @@ export const LabelWithIcon = ({
           color: '#c0ccda',
         }}
       />
-    </View>
-  </View>
+    </Group>
+  </Group>
 )
 
 LabelWithIcon.propTypes = {
   label: PropTypes.string.isRequired,
   style: PropTypes.object.isRequired,
+  textStyle: PropTypes.object.isRequired,
   loading: PropTypes.bool,
   type: PropTypes.string,
   onPress: PropTypes.func.isRequired,
+
 }
 LabelWithIcon.defaultProps = {
   loading: false,

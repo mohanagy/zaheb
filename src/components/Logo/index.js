@@ -1,17 +1,19 @@
 import React from 'react'
 import { Image } from 'react-native-elements'
-// import { Image } from 'react-native'
+import { TouchableOpacity } from 'react-native'
 import PropTypes from 'prop-types'
 export const Logo = ({
-  source, style, containerStyle, resizeMode, borderRadius,
+  source, style, containerStyle, resizeMode, borderRadius,onPress,
 }) => (
-  <Image
-    resizeMode={resizeMode}
-    borderRadius={borderRadius}
-    source={source}
-    style={style}
-    containerStyle={containerStyle}
-  />
+  <TouchableOpacity onPress={onPress}>
+    <Image
+      resizeMode={resizeMode}
+      borderRadius={borderRadius}
+      source={source}
+      style={style}
+      containerStyle={containerStyle}
+    />
+  </TouchableOpacity>
 
 )
 

@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "/home/crow/projects/19/zaheb/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-v28/values-v28.xml",
+            "outputFile": "/Users/mohammed/Desktop/projects/zaheb/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-v28/values-v28.xml",
             "map": [
                 {
-                    "source": "/home/crow/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/d00aff50efe4bfcc80c8ed38455da2b8/res/values-v28/values-v28.xml",
+                    "source": "/Users/mohammed/.gradle/caches/transforms-2/files-2.1/3aa7035b8c832a16e2db2b31c83279aa/appcompat-1.1.0-rc01/res/values-v28/values-v28.xml",
                     "from": {
                         "startLines": "2,3,4,8",
                         "startColumns": "4,4,4,4",

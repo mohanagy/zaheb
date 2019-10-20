@@ -1,11 +1,15 @@
 import React from 'react'
 import AppContainer from 'navigation'
-import { ThemeProvider } from 'react-native-elements'
-import theme from 'styles/theme'
+import { Provider } from 'react-redux'
+import store from './src/store'
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+
 const App = () => (
-  <ThemeProvider>
-    <AppContainer theme={theme} />
-  </ThemeProvider>
+  <Provider store={store}>
+    <SafeAreaProvider>
+    <AppContainer />
+    </SafeAreaProvider>
+  </Provider>
 
 )
 

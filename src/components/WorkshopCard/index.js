@@ -3,13 +3,11 @@ import PropTypes from 'prop-types'
 import {
   Group, Details, SplashButton,
 } from 'components'
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import { Image, AirbnbRating } from 'react-native-elements'
 
-import purchaseImage from '../../assets/purchase_image.png'
 
 export const ProductCard = ({
-  name, date, price, liked, type, rating,
+  name, bio, source, rating,onPress,
 }) => (
   <Group
     style={{
@@ -36,7 +34,7 @@ export const ProductCard = ({
       }}
     >
       <Image
-        source={purchaseImage}
+        source={source}
         style={{
           width: '100%',
           height: '100%',
@@ -52,10 +50,9 @@ export const ProductCard = ({
         }}
       >
         <Group style={{ alignItems: 'flex-start', justifyContent: 'space-between' }}>
-          <Details text="Rear view mirror" style={{ ...textsStyle, fontSize: 20, fontWeight: '900' }} />
+          <Details text={name} style={{ ...textsStyle, fontSize: 20, fontWeight: '900' }} />
           <Group style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center' }}>
-            <Details text="Lexlis" style={{ ...textsStyle, fontSize: 18, fontWeight: '600' }} />
-            <Details text="Skoda" style={{ ...textsStyle, marginLeft: 5, fontWeight: '100' }} />
+            <Details text={bio} style={{ ...textsStyle, fontSize: 18, fontWeight: '600' }} />
           </Group>
           <AirbnbRating
             showRating={false}
@@ -66,6 +63,7 @@ export const ProductCard = ({
         </Group>
         <Group style={{ justifyContent: 'flex-end', alignItems: 'flex-end', marginVertical: 10 }}>
           <SplashButton
+            onPress={onPress}
             title="Booking"
             style={{
               buttonStyle: {

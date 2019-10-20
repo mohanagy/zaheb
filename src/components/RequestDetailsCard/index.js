@@ -22,7 +22,7 @@ class RequestDetailsCard extends Component {
     return (
       <Group style={{ marginHorizontal: '5%', ...style }}>
         {
-          requestDetailsFields.map(({ title, icon, fieldName }, ix) => (
+          requestDetailsFields && requestDetailsFields.map(({ title, icon, fieldName }, ix) => (
             <Group style={{ flexDirection: 'row', width: '90%' }}>
               <Group
                 style={{

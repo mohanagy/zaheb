@@ -1,4 +1,11 @@
-export CurvedHeader from './CurvedHeader'
+/* eslint-disable import/no-cycle */
+export { HalfBottomModal } from './Modal'
+export { NearestServiceModalBody } from './NearestServiceModalBody'
+export { BottomTab } from './Tabs/BottomTab'
+export { TouchableLogo } from './TouchableLogo'
+export { Drawer } from './Drawer'
+
+export { CurvedHeader } from './CurvedHeader'
 export { Logo } from './Logo'
 export { Details, Title } from './Texts'
 export { Group } from './Group'
