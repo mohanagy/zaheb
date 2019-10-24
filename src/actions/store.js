@@ -142,3 +142,179 @@ export const getServicesByCarId = (id) => async (dispatch, getState) => {
     dispatch(finishStoreFetching())
   }
 }
+export const getMyPurchases = () => async (dispatch, getState) => {
+  dispatch(startStoreFetching())
+  const { userData: { accessToken } } = getState()
+  try {
+    const response = await fetch(`${api.getMyPurchases}`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+    const json = await response.json()
+    const { error, product_orders:myPurchases = [] } = json
+
+    if (error) {
+      dispatch(errorHappened({
+        type: 'error',
+        title: 'خطأ',
+        message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
+      }))
+      return false
+    }
+    return dispatch(getDataSuccess({ myPurchases }))
+  } catch (e) {
+    dispatch(errorHappened({
+      type: 'error',
+      title: 'خطأ',
+      message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
+    }))
+    return false
+  } finally {
+    dispatch(finishStoreFetching())
+  }
+}
+export const getMyRequests = () => async (dispatch, getState) => {
+  dispatch(startStoreFetching())
+  const { userData: { accessToken } } = getState()
+  try {
+    const response = await fetch(`${api.getMyRequests}`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+    const json = await response.json()
+    const { error, orders:myRequests = [] } = json
+
+    if (error) {
+      dispatch(errorHappened({
+        type: 'error',
+        title: 'خطأ',
+        message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
+      }))
+      return false
+    }
+    return dispatch(getDataSuccess({ myRequests }))
+  } catch (e) {
+    dispatch(errorHappened({
+      type: 'error',
+      title: 'خطأ',
+      message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
+    }))
+    return false
+  } finally {
+    dispatch(finishStoreFetching())
+  }
+}
+
+
+export const getMyRequestedOffers =  () =>  async (dispatch,getState) => {
+  dispatch(startStoreFetching())
+  try {
+    const { userData: { accessToken } } = getState()
+    const response = await fetch(`${api.getMyRequestedOffers}`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+    const json = await response.json()
+    const {  offers } = json
+    dispatch(getDataSuccess({ offers }))
+  }
+  catch (error) {
+    dispatch(errorHappened({
+      type: 'error',
+      title: 'خطأ',
+      message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
+    }))
+    return false
+  }
+  finally {
+    dispatch(finishStoreFetching())
+  }
+}
+export const getMyOffers =  () =>  async (dispatch,getState) => {
+  dispatch(startStoreFetching())
+  try {
+    const { userData: { accessToken } } = getState()
+    const response = await fetch(`${api.getMyOffers}`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+    const json = await response.json()
+    const {  workshopOffers:myOffers } = json
+    dispatch(getDataSuccess({ myOffers }))
+  }
+  catch (error) {
+    dispatch(errorHappened({
+      type: 'error',
+      title: 'خطأ',
+      message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
+    }))
+    return false
+  }
+  finally {
+    dispatch(finishStoreFetching())
+  }
+}
+export const getMyFavorites =  () =>  async (dispatch,getState) => {
+  dispatch(startStoreFetching())
+  try {
+    const { userData: { accessToken } } = getState()
+    const response = await fetch(`${api.getMyFavorites}`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+    const json = await response.json()
+    const {  myFavourite:favorites } = json
+    dispatch(getDataSuccess({ favorites }))
+  }
+  catch (error) {
+    dispatch(errorHappened({
+      type: 'error',
+      title: 'خطأ',
+      message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
+    }))
+    return false
+  }
+  finally {
+    dispatch(finishStoreFetching())
+  }
+}
+export const cancelMyRequestedOffers =  (id) =>  async (dispatch,getState) => {
+  dispatch(startStoreFetching())
+  try {
+    const { userData: { accessToken } } = getState()
+    const response = await fetch(`${api.cancelMyRequestedOffers}${id}`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+    const json = await response.json()
+  }
+  catch (error) {
+    dispatch(errorHappened({
+      type: 'error',
+      title: 'خطأ',
+      message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
+    }))
+    return false
+  }
+  finally {
+    dispatch(finishStoreFetching())
+  }
+}

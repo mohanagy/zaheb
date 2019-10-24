@@ -6,7 +6,7 @@ import { Group } from 'components'
 
 export const LabeledInput = (props) => {
   const {
-    containerStyle, labelStyle, inputStyle, placeholder, label, onChangeText, secureTextEntry,
+    containerStyle, labelStyle, inputStyle, placeholder, label, onChangeText, secureTextEntry,disabled,
   } = props
   return (
     <Group style={containerStyle}>
@@ -19,6 +19,7 @@ export const LabeledInput = (props) => {
         inputContainerStyle={{ borderBottomWidth: 0 }}
         onChangeText={onChangeText}
         secureTextEntry={secureTextEntry}
+        disabled={disabled}
       >
       </Input>
     </Group>

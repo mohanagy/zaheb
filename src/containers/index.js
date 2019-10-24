@@ -19,6 +19,7 @@ import HomeType from './HomeType'
 import Products from './Products'
 import Workshops from './Workshops'
 import MyOffers from './MyOffers'
+import Offers from './Offers'
 import TermsAndConditions from './TermsAndConditions'
 import WhoWeAre from './WhoWeAre'
 import ProfileSupplier from './ProfileSupplier'
@@ -62,6 +63,7 @@ export {
   Products,
   Workshops,
   MyOffers,
+  Offers,
   TermsAndConditions,
   WhoWeAre,
   ProfileSupplier,

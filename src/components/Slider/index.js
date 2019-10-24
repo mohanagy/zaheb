@@ -15,10 +15,6 @@ export const Slider = ({ navigate }) => (
     dot={<Dot />}
     activeDot={<ActiveDot />}
     onIndexChanged={(index) => {
-      console.log({
-        index,
-        navigate,
-      })
       if (index === 3) { navigate('Login') }
     }}
   >

@@ -8,7 +8,6 @@ import AsyncStorage from '@react-native-community/async-storage'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as userActions from 'actions/users'
-import { navigate } from 'actions/navigationActions'
 
 export class SplashLoading extends Component {
   componentDidMount() {
@@ -20,10 +19,15 @@ export class SplashLoading extends Component {
     const firstTime = await AsyncStorage.getItem('@firstTime')
     const { navigation: { navigate },actions:{ checkAuth,updateUserStore } } = this.props
     const checkAuthValue = await checkAuth(userToken)
-    if (userToken && checkAuthValue) {
-      const user = await AsyncStorage.getItem('@suer')
-      await updateUserStore({ user,accessToken:userToken })
-      return navigate('HomePage') }
+    if (userToken && checkAuthValue ) {
+      const user = await AsyncStorage.getItem('@user')
+      const userParsed = JSON.parse(user).user
+      if (!userParsed) {
+        await   AsyncStorage.removeItem('@access_token','@user')
+      }
+      await updateUserStore({ user:JSON.parse(user).user,accessToken:userToken })
+      return navigate('HomePage')
+    }
     if (firstTime) return navigate('Login')
     await AsyncStorage.setItem('@firstTime','true')
     return navigate('Splash')
@@ -58,7 +62,6 @@ const styles = StyleSheet.create({
 
 const mapDispatchToProps = (dispatch) => ({
   actions: bindActionCreators(userActions,dispatch),
-  navigate:navigate(dispatch),
 })
 
 const mapStateToProps = (state) => ({

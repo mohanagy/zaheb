@@ -58,7 +58,7 @@ class SubServices extends Component {
   handleSelectService=async (id) => {
     const { actions:{ selectService },navigation:{ navigate } } = this.props
     await selectService(id)
-    navigate('DetailsOfYourCar')
+    navigate('Workshops')
   }
 
   render() {

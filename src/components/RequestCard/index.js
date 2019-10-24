@@ -7,7 +7,7 @@ import { Image } from 'react-native-elements'
 import purchaseImage from '../../assets/purchase_image.png'
 
 export const RequestCard = ({
-  name, date, time, badge,
+  name, date, time, badge = 'New',source,
 }) => (
   <Group
     style={{
@@ -34,7 +34,7 @@ export const RequestCard = ({
       }}
     >
       <Image
-        source={purchaseImage}
+        source={source}
         style={{
           width: '100%',
           height: '100%',

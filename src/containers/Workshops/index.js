@@ -11,7 +11,7 @@ import workshops from './_data'
 
 class Purchases extends Component {
   static navigationOptions = ({ navigation }) => ({
-    headerTitle: 'Sub Services',
+    headerTitle: 'Workshops',
     headerTitleStyle: {
       textAlign: 'center',
       flexGrow: 1,
@@ -56,9 +56,6 @@ class Purchases extends Component {
   handleSelectWorkShop= async (id) => {
     const { actions:{ selectWorkShop },navigation:{ navigate } } = this.props
     await selectWorkShop(id)
-    console.log({
-      id,
-    })
     navigate('NearestServiceCenter')
   }
 
@@ -72,8 +69,8 @@ class Purchases extends Component {
       >
         {
           workshops.map(({
-            name,id,image,bio,
-          }) => <WorkshopCard source={{ uri:image }} bio={bio} key={id} name={name} onPress={() => this.handleSelectWorkShop(id)} />)
+            name,id,image,bio,user_cars
+          }) => <WorkshopCard source={{ uri:image }} bio={bio} key={id} name={name} user_cars={user_cars} onPress={() => this.handleSelectWorkShop(id)} />)
         }
       </ScrollContainer>
     )

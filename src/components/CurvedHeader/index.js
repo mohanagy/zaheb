@@ -80,12 +80,16 @@ export class CurvedHeader extends Component {
             >
               <Image
                 source={source}
-                style={{
-                  width: fillSource ? 150 : 100,
-                  height: fillSource ? 150 : 100,
+                containerStyle={{
+                  width: fillSource ? 150 : 90,
+                  height: fillSource ? 150 : 90,
                   margin: fillSource ? 0 : 25,
                   resizeMode: 'contain',
                   borderWidth: 0,
+                  alignItems:'center',
+                  justifyContent: 'center',
+                  alignSelf:'center',
+                  alignContent:'center',
                 }}
               />
             </Group>

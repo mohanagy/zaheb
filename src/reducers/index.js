@@ -1,5 +1,6 @@
 
 import { combineReducers } from 'redux'
-import userData from './user'
+import userData from './users'
 import storeData from './store'
-export default combineReducers({ userData, storeData })
+import generalData from './general'
+export default combineReducers({ userData, storeData,generalData })

@@ -67,7 +67,7 @@ class HomeStore extends Component {
   }
 
   render() {
-    const { store:{ cars }  } = this.props
+    const { storeData:{ cars }  } = this.props
     return (
       <BackgroundImageWrapper style={{ minHeight: screen.height }} source={blurredBackground}>
         <Group
@@ -115,7 +115,7 @@ const mapDispatchToProps = (dispatch) => ({
 })
 
 const mapStateToProps = (state) => ({
-  store: state.storeData,
+  storeData: state.storeData,
   common: state.common,
   userData:state.userData,
 })

@@ -9,7 +9,7 @@ const screen = Dimensions.get('screen')
 class LabeledInputWithIcon extends Component {
   render() {
     const {
-      label, icon, containerStyle, labelStyle, inputProps,
+      label, icon, containerStyle, labelStyle, inputProps,onPressOnIcon,
     } = this.props
     return (
       <Group style={containerStyle}>
@@ -32,7 +32,7 @@ class LabeledInputWithIcon extends Component {
               alignItems: 'center',
             }}
           >
-            <FontAwesome5 name={icon} size={20} color="#FFF" />
+            <FontAwesome5 name={icon} size={20} color="#FFF" onPress={onPressOnIcon} />
           </Group>
         </Group>
       </Group>

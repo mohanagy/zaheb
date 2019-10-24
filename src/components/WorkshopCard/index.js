@@ -7,7 +7,7 @@ import { Image, AirbnbRating } from 'react-native-elements'
 
 
 export const ProductCard = ({
-  name, bio, source, rating,onPress,
+  name, user_cars, source, rating,onPress,
 }) => (
   <Group
     style={{
@@ -52,7 +52,7 @@ export const ProductCard = ({
         <Group style={{ alignItems: 'flex-start', justifyContent: 'space-between' }}>
           <Details text={name} style={{ ...textsStyle, fontSize: 20, fontWeight: '900' }} />
           <Group style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center' }}>
-            <Details text={bio} style={{ ...textsStyle, fontSize: 18, fontWeight: '600' }} />
+            <Details text={(user_cars[0].types_of_cars.en_name+'/'+user_cars[1].types_of_cars.en_name+'...')} style={{ ...textsStyle, fontSize: 18, fontWeight: '600' }} />
           </Group>
           <AirbnbRating
             showRating={false}

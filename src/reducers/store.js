@@ -7,6 +7,11 @@ const initialState = {
   selectedCarId: null,
   selectedServiceId: null,
   selectedWorkShopId: null,
+  myRequests: [],
+  myPurchases:[],
+  myOffers:[],
+  offers:[],
+  favorites:[],
 }
 const carsReducer = (state = initialState, action) => {
   const { payload } = action

@@ -20,6 +20,7 @@ import {
   Products,
   Workshops,
   MyOffers,
+  Offers,
   TermsAndConditions,
   WhoWeAre,
   ProfileSupplier,
@@ -43,7 +44,7 @@ import {
 
 import { BottomTab } from 'components'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
-import { Drawer } from '../components/Drawer'
+import Drawer from '../components/Drawer'
 
 const SplashStack = createStackNavigator(
   { Splash },
@@ -57,21 +58,98 @@ const HomeStack = createStackNavigator({
 const HomeStoreStack = createStackNavigator({
   HomeStore,
   navigationOptions: () => ({ header: null, headerMode: 'none' }),
+
+})
+const MyRequestsStack = createStackNavigator({
+  MyRequests,
+  navigationOptions: () => ({ header: null, headerMode: 'none' }),
+
+})
+const CustomerServiceStack = createStackNavigator({
+  CustomerService,
+  navigationOptions: () => ({ header: null, headerMode: 'none' }),
+
+})
+const MyPurchasesStack = createStackNavigator({
+  MyPurchases,
+  navigationOptions: () => ({ header: null, headerMode: 'none' }),
+
+})
+const WhoWeAreStack = createStackNavigator({
+  WhoWeAre,
+  navigationOptions: () => ({ header: null, headerMode: 'none' }),
+
+})
+const ConversationsStack = createStackNavigator({
+  Conversations,
+  navigationOptions: () => ({ header: null, headerMode: 'none' }),
+
+})
+const MyOffersStack = createStackNavigator({
+  MyOffers,
+  navigationOptions: () => ({ header: null, headerMode: 'none' }),
+
+})
+const OffersStack = createStackNavigator({
+  Offers,
+  navigationOptions: () => ({ header: null, headerMode: 'none' }),
+
+})
+const FavoritesStack = createStackNavigator({
+  Favorites,
+  navigationOptions: () => ({ header: null, headerMode: 'none' }),
+
+})
+const TermsAndConditionsStack = createStackNavigator({
+  TermsAndConditions,
+  navigationOptions: () => ({ header: null, headerMode: 'none' }),
+
+})
+const ContactUsStack = createStackNavigator({
+  ContactUs,
+  navigationOptions: () => ({ header: null, headerMode: 'none' }),
+
+})
+const ProfileStack = createStackNavigator({
+  Profile,
+  navigationOptions: () => ({ header: null, headerMode: 'none' }),
+
+})
+const SubServicesStack = createStackNavigator({
+  SubServices,
+  navigationOptions: () => ({ header: null, headerMode: 'none' }),
+
+})
+const HomeTypeStack = createStackNavigator({
+  HomeType,
+  navigationOptions: () => ({ header: null, headerMode: 'none' }),
+
+})
+const WorkshopsStack = createStackNavigator({
+  Workshops,
+  navigationOptions: () => ({ header: null, headerMode: 'none' }),
+
+})
+const NearestServiceCenterStack = createStackNavigator({
+  NearestServiceCenter,
+  navigationOptions: () => ({ header: null, headerMode: 'none' }),
+
 })
 
 const TabNavigator = createBottomTabNavigator(
   {
     Purchases: {
-      screen: MyPurchases,
+      screen: MyPurchasesStack,
       navigationOptions: {
         tabBarLabel: 'Purchases',
         header: null,
       },
     },
     MyRequests: {
-      screen: MyRequests,
+      screen: MyRequestsStack,
       navigationOptions: () => ({
         tabBarLabel: 'My request',
+        header:null,
       }),
     },
     HomePage: {
@@ -80,17 +158,16 @@ const TabNavigator = createBottomTabNavigator(
         tabBarLabel: 'Home',
         title: 'Home',
         headerMode: 'none',
-        header: null,
       }),
     },
     CustomersService: {
-      screen: ContactUs,
+      screen: CustomerServiceStack,
       navigationOptions: {
         tabBarLabel: 'Customers service',
       },
     },
     Profile: {
-      screen: ProfileSupplier,
+      screen: ProfileStack,
       navigationOptions: {
         tabBarLabel: 'Profile',
       },
@@ -166,49 +243,45 @@ const Navigator = createStackNavigator(
   {
     SplashLoading,
     Splash: SplashStack,
-    TabNavigator,
     Login,
     Register,
     ForgotPassword,
-    ContactUs,
-    MyPurchases,
-    MyRequests,
-    Conversations,
-    HomeStore: {
-      screen: HomeStoreStack,
-      navigationOptions: {
-        header: null,
-      },
-    },
-    HomeType,
+    ContactUs:ContactUsStack,
+    MyPurchases:MyPurchasesStack,
+    MyRequests:MyRequestsStack,
+    Conversations:ConversationsStack,
+    HomeStore:HomeStoreStack,
+    HomeType:HomeTypeStack,
     Products,
-    Workshops,
-    MyOffers,
-    TermsAndConditions,
-    WhoWeAre,
+    Workshops:WorkshopsStack,
+    MyOffers:MyOffersStack,
+    Offers:OffersStack,
+    TermsAndConditions:TermsAndConditionsStack,
+    WhoWeAre:WhoWeAreStack,
     ProfileSupplier,
     ProfileDriver,
     ProfileWorkshop,
-    Favorites,
+    Favorites:FavoritesStack,
     HomePage: TabNavigator,
     HomeStarterPage,
-    CustomerService,
-    SubServices,
+    CustomerService:CustomerServiceStack,
+    SubServices:SubServicesStack,
     RequestDetails,
     DetailsOfYourCar,
-    Profile,
+    Profile:ProfileStack,
     Notifications,
     Payment,
     PaymentInformation,
     ProductOptions,
     Chat,
-    NearestServiceCenter,
+    NearestServiceCenter:NearestServiceCenterStack,
   },
   {
     initialRouteName: 'SplashLoading',
-    navigationOptions: () => ({
-      header: null,
-    }),
+    header:null,
+    headerMode:'none',
+
+
   }
 )
 const MyDrawerNavigator = createDrawerNavigator(
@@ -219,11 +292,10 @@ const MyDrawerNavigator = createDrawerNavigator(
         drawerIcon: ({ tintColor }) => (
           <FontAwesome5 name="home" size={24} style={{ color: tintColor }} />
         ),
-        header: null,
       },
     },
     'My requests': {
-      screen: MyRequests,
+      screen: MyRequestsStack,
       navigationOptions: {
         drawerIcon: ({ tintColor }) => (
           <FontAwesome5 name="list" size={24} style={{ color: tintColor }} />
@@ -231,7 +303,7 @@ const MyDrawerNavigator = createDrawerNavigator(
       },
     },
     'Customers service': {
-      screen: CustomerService,
+      screen: CustomerServiceStack,
       navigationOptions: {
         drawerIcon: ({ tintColor }) => (
           <FontAwesome5 name="headset" size={24} style={{ color: tintColor }} />
@@ -239,7 +311,7 @@ const MyDrawerNavigator = createDrawerNavigator(
       },
     },
     'My purchases': {
-      screen: MyPurchases,
+      screen: MyPurchasesStack,
       navigationOptions: {
         drawerIcon: ({ tintColor }) => (
           <FontAwesome5
@@ -251,7 +323,7 @@ const MyDrawerNavigator = createDrawerNavigator(
       },
     },
     Profile: {
-      screen: ProfileSupplier,
+      screen: ProfileStack,
       navigationOptions: {
         drawerIcon: ({ tintColor }) => (
           <FontAwesome5
@@ -263,7 +335,7 @@ const MyDrawerNavigator = createDrawerNavigator(
       },
     },
     'Who are we': {
-      screen: WhoWeAre,
+      screen: WhoWeAreStack,
       navigationOptions: {
         drawerIcon: ({ tintColor }) => (
           <FontAwesome5 name="users" size={24} style={{ color: tintColor }} />
@@ -271,7 +343,7 @@ const MyDrawerNavigator = createDrawerNavigator(
       },
     },
     Conversations: {
-      screen: Conversations,
+      screen: ConversationsStack,
       navigationOptions: {
         drawerIcon: ({ tintColor }) => (
           <FontAwesome5
@@ -282,8 +354,16 @@ const MyDrawerNavigator = createDrawerNavigator(
         ),
       },
     },
+    'Offers': {
+      screen:OffersStack,
+      navigationOptions: {
+        drawerIcon: ({ tintColor }) => (
+          <FontAwesome5 name="tags" size={24} style={{ color: tintColor }} />
+        ),
+      },
+    },
     'My offers': {
-      screen: MyOffers,
+      screen:MyOffersStack,
       navigationOptions: {
         drawerIcon: ({ tintColor }) => (
           <FontAwesome5 name="tags" size={24} style={{ color: tintColor }} />
@@ -291,7 +371,7 @@ const MyDrawerNavigator = createDrawerNavigator(
       },
     },
     Favorites: {
-      screen: Favorites,
+      screen: FavoritesStack,
       navigationOptions: {
         drawerIcon: ({ tintColor }) => (
           <FontAwesome5 name="heart" size={24} style={{ color: tintColor }} />
@@ -299,7 +379,7 @@ const MyDrawerNavigator = createDrawerNavigator(
       },
     },
     'Terms and conditions': {
-      screen: TermsAndConditions,
+      screen: TermsAndConditionsStack,
       navigationOptions: {
         drawerIcon: ({ tintColor }) => (
           <FontAwesome5
@@ -311,7 +391,7 @@ const MyDrawerNavigator = createDrawerNavigator(
       },
     },
     'Contact us': {
-      screen: ContactUs,
+      screen: ContactUsStack,
       navigationOptions: {
         drawerIcon: ({ tintColor }) => (
           <FontAwesome5
@@ -335,7 +415,7 @@ const MyDrawerNavigator = createDrawerNavigator(
       activeTintColor: 'red',
     },
     contentComponent: (props) => <Drawer {...props} />,
-    navigationOptions: { headerMode: 'none', header: null },
+
   }
 )
 export default createAppContainer(MyDrawerNavigator)

@@ -7,11 +7,13 @@ import {
 
 export const NearestServiceModalBody = ({
   style, titleStyle, title, onPress, showPicker,
+  selectVideoTapped,selectPhotoTapped,driver,setDriver,
+  image,video,createOrder
 }) => (
   <Group
     style={{
       ...style,
-      height: '70%',
+      height: '60%',
       backgroundColor: '#ffffff',
       maxWidth: '100%', // <= try this
       alignContent: 'space-around',
@@ -26,6 +28,7 @@ export const NearestServiceModalBody = ({
         alignContent: 'space-around',
         margin: 47.5,
         marginHorizontal: 20,
+        flex:1,
       }}
     >
       <Details
@@ -51,9 +54,9 @@ export const NearestServiceModalBody = ({
       </Group>
       <Group>
         <Select
-          options={[{ label: 'text here', value: 0 }, { label: 'I need a driver', value: 1 }]}
-          onValueChange={() => console.log('as')}
-          selectedValue={1}
+          options={[{ label: 'I don\'t need a driver', value: 0 }, { label: 'I need a driver', value: 1 }]}
+          onValueChange={(value) => setDriver(value)}
+          selectedValue={driver}
         />
       </Group>
       <Group>
@@ -73,8 +76,7 @@ export const NearestServiceModalBody = ({
               borderBottomWidth: 0,
 
             },
-          }
-          }
+          }}
         />
       </Group>
       <Group
@@ -84,13 +86,14 @@ export const NearestServiceModalBody = ({
 
         }}
       >
-        <LabelWithIcon label="Attach a video" style={{ maxWidth: '50%', marginHorizontal: 10 }} />
+        <LabelWithIcon label={video?"1 video ":"Attach a video"} style={{ maxWidth: '50%', marginHorizontal: 10 }} onPress={selectVideoTapped} />
         <LabelWithIcon
-          label="Attach a photo"
+          label={image?"1 photo ":"Attach a photo"}
           style={{ maxWidth: '50%', marginHorizontal: 10 }}
           textStyle={{
             fontWeight: '100',
           }}
+          onPress={selectPhotoTapped}
         />
 
       </Group>
@@ -104,7 +107,7 @@ export const NearestServiceModalBody = ({
       >
         <SplashButton
           title="Confirm location"
-          onPress={onPress}
+          onPress={createOrder}
           style={{
             buttonStyle: {
               backgroundColor: '#1E1E1E',

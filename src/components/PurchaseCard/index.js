@@ -4,9 +4,10 @@ import { Group, Title, Details } from 'components'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import { Image } from 'react-native-elements'
 
-import purchaseImage from '../../assets/purchase_image.png'
 
-export const PurchaseCard = ({ name, date, price }) => (
+export const PurchaseCard = ({
+  name, date, cost,source,
+}) => (
   <Group
     style={{
       flexDirection: 'row',
@@ -32,7 +33,7 @@ export const PurchaseCard = ({ name, date, price }) => (
       }}
     >
       <Image
-        source={purchaseImage}
+        source={source}
         style={{
           width: '100%',
           height: '100%',
@@ -78,7 +79,7 @@ export const PurchaseCard = ({ name, date, price }) => (
           }}
         >
           <Details
-            text={`$${price}`}
+            text={`$${cost}`}
             style={{
               backgroundColor: '#B0ABAB',
               borderRadius: 50,
