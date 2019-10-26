@@ -1,4 +1,0 @@
-#Fri Oct 25 00:57:45 EEST 2019
-base.0=/Users/mohammed/Desktop/projects/zaheb/android/app/build/intermediates/dex/debug/mergeDexDebug/out/classes.dex
-path.0=classes.dex
-renamed.0=classes.dex

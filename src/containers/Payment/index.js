@@ -1,146 +1,104 @@
 import React, { Component } from 'react'
 import {
-  Group, ScrollContainer, Details, SelectButton, SplashButton,
+  Group, ScrollContainer,PaymentCredit,PaymentButton,PaymentPayPal,
 } from 'components'
 import { Dimensions } from 'react-native'
-import { Input } from 'react-native-elements'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import * as storeActions from 'actions/store'
+import PropTypes from 'prop-types'
 
 const screen = Dimensions.get('screen')
 
 class Payment extends Component {
-  state = { activePaymentMethod: 'cashcard' }
+  static navigationOptions = ({ navigation }) => ({
+    headerTitle: 'Home',
+    headerTitleStyle: {
+      textAlign: 'center',
+      flexGrow: 1,
+      alignSelf: 'center',
+      color: '#ffffff',
+    },
+    headerStyle: {
+      backgroundColor: '#1E1E1E',
+    },
+    headerRight: (
+      <FontAwesome5
+        name="bell"
+        size={18}
+        onPress={() => {}}
+        solid
+        style={{
+          marginRight: 10,
+          color: '#ffffff',
+
+        }}
+      />),
+    headerLeft: (
+      <FontAwesome5
+        name="stream"
+        size={18}
+        onPress={() => navigation.toggleDrawer()}
+        solid
+        style={{
+          marginLeft: 10,
+          color: '#ffffff',
+
+        }}
+      />),
+  });
+
+  state = {
+    activePaymentMethod: 'cashcard',
+    methods:[{ method:'cashcard',icon:'credit-card' ,title:'Credit-Card' },{ method:'paypal',icon:'paypal',title:'PayPal' }],
+  }
+
+  selectActivePaymentMethod =(method) => {
+    this.setState({
+      activePaymentMethod:method,
+    })
+  }
 
   render() {
-    const { activePaymentMethod } = this.state
+    const { activePaymentMethod,methods } = this.state
     return (
       <ScrollContainer>
         <Group style={{ backgroundColor: '#F6F6F6', minHeight: screen.height }}>
           <Group
             style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}
           >
-            <SelectButton
-              style={{
-                ...styles.selectButtonStyle,
-                ...(activePaymentMethod === 'cashcard'
-                  ? styles.selectButtonStyleActive
-                  : styles.selectButtonStyleInactive),
-              }}
-            >
-              <Group style={{ justifyContent: 'center', alignItems: 'center' }}>
-                <FontAwesome5
-                  name="credit-card"
-                  size={60}
-                  style={{
-                    ...styles.selectButtonTextStyle,
-                    ...(activePaymentMethod === 'cashcard'
-                      ? styles.selectButtonTextStyleActive
-                      : styles.selectButtonTextStyleInactive),
-                  }}
-                />
-              </Group>
-              <Details
-                text="Credit-Card"
-                style={{
-                  ...styles.selectButtonTextStyle,
-                  ...(activePaymentMethod === 'cashcard'
-                    ? styles.selectButtonTextStyleActive
-                    : styles.selectButtonTextStyleInactive),
-                }}
+            {methods.map(({ method ,icon,title }) => (
+              <PaymentButton
+                icon={icon}
+                title={title}
+                method={method}
+                activePaymentMethod={activePaymentMethod}
+                selectActivePaymentMethod={() => this.selectActivePaymentMethod(method)}
               />
-            </SelectButton>
-            <SelectButton
-              style={{
-                ...styles.selectButtonStyle,
-                ...(activePaymentMethod === 'paypal'
-                  ? styles.selectButtonStyleActive
-                  : styles.selectButtonStyleInactive),
-              }}
-            >
-              <Group style={{ justifyContent: 'center', alignItems: 'center' }}>
-                <FontAwesome5
-                  name="paypal"
-                  size={60}
-                  style={{
-                    ...styles.selectButtonTextStyle,
-                    ...(activePaymentMethod === 'paypal'
-                      ? styles.selectButtonTextStyleActive
-                      : styles.selectButtonTextStyleInactive),
-                  }}
-                />
-              </Group>
-              <Details
-                text="PayPal"
-                style={{
-                  ...styles.selectButtonTextStyle,
-                  ...(activePaymentMethod === 'paypal'
-                    ? styles.selectButtonTextStyleActive
-                    : styles.selectButtonTextStyleInactive),
-                }}
-              />
-            </SelectButton>
+            ))}
           </Group>
-          <Details text="Cardholder's first name*:" style={{ color: '#1E1E1E', alignSelf: 'flex-start' }} />
-          <Input inputStyle={{ backgroundColor: '#FFF', border: 'none', borderRadius: 5 }} inputContainerStyle={{ borderBottomWidth: 0 }} />
-          <Details text="Cardholder's last name*:" style={{ color: '#1E1E1E', alignSelf: 'flex-start' }} />
-          <Input inputStyle={{ backgroundColor: '#FFF', border: 'none', borderRadius: 5 }} inputContainerStyle={{ borderBottomWidth: 0 }} />
-          <Details text="Card Number*:" style={{ color: '#1E1E1E', alignSelf: 'flex-start' }} />
-          <Input inputStyle={{ backgroundColor: '#FFF', border: 'none', borderRadius: 5 }} inputContainerStyle={{ borderBottomWidth: 0 }} />
-          <Group style={{ flexDirection: 'row', justifyContent: 'flex-start', marginBottom: 50 }}>
-            <Group>
-              <Details text="Year*:" style={{ color: '#1E1E1E', alignSelf: 'flex-start' }} />
-              <Input inputStyle={{ backgroundColor: '#FFF', border: 'none', borderRadius: 5 }} inputContainerStyle={{ borderBottomWidth: 0 }} />
-            </Group>
-            <Group>
-              <Details text="Exp date*:" style={{ color: '#1E1E1E', alignSelf: 'flex-start' }} />
-              <Input inputStyle={{ backgroundColor: '#FFF', border: 'none', borderRadius: 5 }} inputContainerStyle={{ borderBottomWidth: 0 }} />
-            </Group>
-            <Group>
-              <Details text="Security code*:" style={{ color: '#1E1E1E', alignSelf: 'flex-start' }} />
-              <Input inputStyle={{ backgroundColor: '#FFF', border: 'none', borderRadius: 5 }} inputContainerStyle={{ borderBottomWidth: 0 }} />
-            </Group>
-          </Group>
-          <SplashButton
-            title="Pay"
-            style={{
-              buttonStyle: {
-                width: 150, backgroundColor: '#1E1E1E', borderRadius: 99 * 9, alignSelf: 'center',
-              },
-            }}
-          />
+          {activePaymentMethod === 'cashcard' ? <PaymentCredit /> : <PaymentPayPal />}
         </Group>
       </ScrollContainer>
     )
   }
 }
 
+
 Payment.propTypes = {
+  actions: PropTypes.object.isRequired,
+  storeData: PropTypes.object.isRequired,
 
 }
 
-const styles = {
-  selectButtonStyle: {
-    padding: 15,
-    margin: 20,
-    width: 150,
-    borderRadius: 20,
-    shadowColor: '#991E1E1E',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
-    elevation: 5,
-  },
-  selectButtonStyleActive: {
-    backgroundColor: '#1E1E1E',
-  },
-  selectButtonStyleInactive: {
-    backgroundColor: '#FFF',
-  },
-  selectButtonIconStyle: { },
-  selectButtonIconStyleActive: {},
-  selectButtonIconStyleInactive: {},
-  selectButtonTextStyleActive: { color: '#FFF' },
-  selectButtonTextStyleInactive: { color: '#1E1E1E' },
-}
+const mapDispatchToProps = (dispatch) => ({
+  actions: bindActionCreators({ ...storeActions }, dispatch),
+})
 
-export default Payment
+const mapStateToProps = (state) => ({
+  user: state.userData.user,
+  storeData: state.storeData,
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Payment)

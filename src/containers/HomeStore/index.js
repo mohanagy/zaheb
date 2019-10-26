@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Dimensions } from 'react-native'
+import { Dimensions,ActivityIndicator } from 'react-native'
 
 import {
   Group, CurvedHeader, Details, BackgroundImageWrapper, Logo,
@@ -67,7 +67,22 @@ class HomeStore extends Component {
   }
 
   render() {
-    const { storeData:{ cars }  } = this.props
+    const { storeData:{ cars,isFetching }  } = this.props
+    if (isFetching) { return (
+      <Group
+        style={{
+          position: 'absolute',
+          left: 0,
+          right: 0,
+          top: 0,
+          bottom: 0,
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <ActivityIndicator size="large" />
+      </Group>
+    ) }
     return (
       <BackgroundImageWrapper style={{ minHeight: screen.height }} source={blurredBackground}>
         <Group

@@ -33,7 +33,9 @@ import RequestDetails from './RequestDetails'
 import DetailsOfYourCar from './DetailsOfYourCar'
 import Profile from './Profile'
 import Notifications from './Notifications'
+import PaymentCredit from '../components/PaymentCredit'
 import Payment from './Payment'
+import PaymentPayPal from '../components/PaymentPayPal'
 import PaymentInformation from './PaymentInformation'
 import ProductOptions from './ProductOptions'
 import Chat from './Chat'
@@ -76,7 +78,9 @@ export {
   DetailsOfYourCar,
   Profile,
   Notifications,
+  PaymentCredit,
   Payment,
+  PaymentPayPal,
   PaymentInformation,
   ProductOptions,
   Chat,

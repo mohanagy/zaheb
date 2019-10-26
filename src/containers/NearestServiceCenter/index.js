@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import _ from 'lodash'
-import { PermissionsAndroid, Platform } from 'react-native'
+import moment from 'moment'
+import { PermissionsAndroid, Platform,ActivityIndicator } from 'react-native'
+import Geolocation from '@react-native-community/geolocation'
+
 import {
   Maps, Group, SplashButton, HalfBottomModal, NearestServiceModalBody,
 } from 'components'
@@ -9,7 +12,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import DateTimePicker from '@react-native-community/datetimepicker'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { storeActions, navigationActions } from 'actions'
+import { storeActions } from 'actions'
 import ImagePicker from 'react-native-image-picker'
 
 
@@ -98,19 +101,46 @@ class NearestServiceCenter extends Component {
       })
     }
 
-    handleCreateOrder =async()=>{
-      const {actions:{createOrder}}=this.props
-      const {date,time,driver,description,image,video,price}=this.state
+    handleCreateOrder = async () => {
+      const { actions:{ createOrder },storeData:{ selectedWorkShopId,selectedServiceId },navigation:{ navigate } } = this.props
+      const {
+        date,time,driver,description,image,video,lat,lng,
+      } = this.state
+      const order = {
+        workshop_id:selectedWorkShopId ,
+        service_id:selectedServiceId ,
+        need_driver:driver,
+        service_time:moment(time).format('HH:mm:ss'),
+        service_date:moment(date).format('YYYY-MM-DD'),
+        description,
+        lat,
+        lng,
+        image,
+        video,
+      }
+      await createOrder(order)
+      this.toggleModal()
+      navigate('RequestDetails')
     }
+
     componentDidMount =async () => {
-      const {  storeData: { selectedWorkShopId ,workshops }, navigation: { navigate } } = this.props
+      const {  storeData: { selectedWorkShopId  }, navigation: { navigate } } = this.props
       if (!selectedWorkShopId) { return navigate('WorksShops') }
-      // const workshop = _.find(workshops,['id',selectedWorkShopId])
+      Geolocation.getCurrentPosition((result) => {
+        const { coords:{ latitude,longitude } } = result
+        this.setState({ lat:latitude,lng:longitude })
+      },(error) => {}, { enableHighAccuracy:true })
     }
 
     setDriver =async (driver) => {
       this.setDriver({
         driver,
+      })
+    }
+
+    handleChangeText =(description) => {
+      this.setState({
+        description,
       })
     }
 
@@ -165,9 +195,24 @@ class NearestServiceCenter extends Component {
 
     render() {
       const {
-        isModalVisible, showDate, showTime, date, time,driver,image,video,
+        isModalVisible, showDate, showTime, date, time,driver,image,video,description,
       } = this.state
-      const { storeData:{ workshops,selectedWorkShopId } } = this.props
+      const { storeData:{ workshops,selectedWorkShopId ,isFetching } } = this.props
+      if (isFetching) { return (
+        <Group
+          style={{
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            top: 0,
+            bottom: 0,
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <ActivityIndicator size="large" />
+        </Group>
+      ) }
       return (
         <Group
           style={{
@@ -268,13 +313,15 @@ class NearestServiceCenter extends Component {
               <NearestServiceModalBody
                 title="50USD"
                 showPicker={(value) => this.showPicker(value)}
-                onPress={() => this.handleCreateOrder()}
+                handleCreateOrder={() => this.handleCreateOrder()}
                 selectPhotoTapped={() => this.selectPhotoTapped()}
                 selectVideoTapped={() => this.selectVideoTapped()}
                 driver={driver}
                 setDriver={() => this.setDriver}
                 image={image}
                 video={video}
+                description={description}
+                handleChangeText={(value) => this.handleChangeText(value)}
 
               />
 
@@ -293,7 +340,6 @@ NearestServiceCenter.propTypes = {
 
 const mapDispatchToProps = (dispatch) => ({
   actions: bindActionCreators({ ...storeActions }, dispatch),
-  navigateScreen: navigationActions.navigate(dispatch),
 })
 
 const mapStateToProps = (state) => ({

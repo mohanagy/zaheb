@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
-import { ScrollContainer, WorkshopCard } from 'components'
+import { ActivityIndicator } from 'react-native'
+import { ScrollContainer, WorkshopCard,Group } from 'components'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
+import { bindActionCreators  } from 'redux'
 import * as storeActions from 'actions/store'
 import * as usersActions from 'actions/users'
 import PropTypes from 'prop-types'
-
-import workshops from './_data'
 
 class Purchases extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -60,7 +59,22 @@ class Purchases extends Component {
   }
 
   render() {
-    const { storeData:{ workshops } } = this.props
+    const { storeData:{ workshops ,isFetching } } = this.props
+    if (isFetching) { return (
+      <Group
+        style={{
+          position: 'absolute',
+          left: 0,
+          right: 0,
+          top: 0,
+          bottom: 0,
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <ActivityIndicator size="large" />
+      </Group>
+    ) }
     return (
       <ScrollContainer
         contentContainerStyle={{
@@ -69,7 +83,7 @@ class Purchases extends Component {
       >
         {
           workshops.map(({
-            name,id,image,bio,user_cars
+            name,id,image,bio,user_cars,
           }) => <WorkshopCard source={{ uri:image }} bio={bio} key={id} name={name} user_cars={user_cars} onPress={() => this.handleSelectWorkShop(id)} />)
         }
       </ScrollContainer>

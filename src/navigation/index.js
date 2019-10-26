@@ -135,6 +135,16 @@ const NearestServiceCenterStack = createStackNavigator({
   navigationOptions: () => ({ header: null, headerMode: 'none' }),
 
 })
+const RequestDetailsStack = createStackNavigator({
+  RequestDetails,
+  navigationOptions: () => ({ header: null, headerMode: 'none' }),
+
+})
+const PaymentCreditStack = createStackNavigator({
+  Payment,
+  navigationOptions: () => ({ header: null, headerMode: 'none' }),
+
+})
 
 const TabNavigator = createBottomTabNavigator(
   {
@@ -266,18 +276,18 @@ const Navigator = createStackNavigator(
     HomeStarterPage,
     CustomerService:CustomerServiceStack,
     SubServices:SubServicesStack,
-    RequestDetails,
+    RequestDetails:RequestDetailsStack,
     DetailsOfYourCar,
     Profile:ProfileStack,
     Notifications,
-    Payment,
+    Payment:PaymentCreditStack,
     PaymentInformation,
     ProductOptions,
     Chat,
     NearestServiceCenter:NearestServiceCenterStack,
   },
   {
-    initialRouteName: 'SplashLoading',
+    initialRouteName: 'Payment',
     header:null,
     headerMode:'none',
 

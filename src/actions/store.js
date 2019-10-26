@@ -1,5 +1,6 @@
 
 import API from 'api'
+import axios from 'axios'
 import * as actionsTypes from './actionTypes'
 const { api } = API
 
@@ -307,6 +308,137 @@ export const cancelMyRequestedOffers =  (id) =>  async (dispatch,getState) => {
     const json = await response.json()
   }
   catch (error) {
+    dispatch(errorHappened({
+      type: 'error',
+      title: 'خطأ',
+      message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
+    }))
+    return false
+  }
+  finally {
+    dispatch(finishStoreFetching())
+  }
+}
+export const createOrder =  (newOrder) =>  async (dispatch,getState) => {
+  dispatch(startStoreFetching())
+  try {
+    const data = new FormData()
+    data.append('workshop_id', newOrder.workshop_id)
+    data.append('service_id', newOrder.service_id)
+    data.append('need_driver', newOrder.need_driver)
+    data.append('service_time', newOrder.service_time)
+    data.append('service_date', newOrder.service_date)
+    data.append('description', newOrder.description)
+    data.append('lat', newOrder.lat)
+    data.append('lng', newOrder.lng)
+    if (newOrder.video)data.append('video', { uri: newOrder.video, name: 'video.mp4', type: 'video/mp4' })
+    if (newOrder.image)data.append('image',{ uri: newOrder.image, name: 'image.jpg', type: ' image/jpeg' })
+
+    const { userData: { accessToken } } = getState()
+    const response = await axios({
+      url:api.createOrder,
+      method: 'post',
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+        'Content-Type': '',
+      },
+      data,
+    })
+    const { data:result } = await response
+    const { status,order } = result
+    if (!status) { return dispatch(errorHappened({
+      type: 'error',
+      title: 'خطأ',
+      message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
+    })) }
+    const { id } = order
+    dispatch(getDataSuccess({ orderId:id }))
+  }
+  catch (error) {
+    console.log({
+      error,
+    })
+    dispatch(errorHappened({
+      type: 'error',
+      title: 'خطأ',
+      message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
+    }))
+    return false
+  }
+  finally {
+    dispatch(finishStoreFetching())
+  }
+}
+
+export const getOrderById =  (id) =>  async (dispatch,getState) => {
+  dispatch(startStoreFetching())
+  try {
+    const { userData: { accessToken } } = getState()
+    const response = await fetch(`${api.getOrderById}${id}`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+    const json = await response.json()
+    const {  order } = json
+    console.log({
+      json,
+    })
+    dispatch(getDataSuccess({ order }))
+  }
+  catch (error) {
+    console.log({
+      error,
+    })
+    dispatch(errorHappened({
+      type: 'error',
+      title: 'خطأ',
+      message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
+    }))
+    return false
+  }
+  finally {
+    dispatch(finishStoreFetching())
+  }
+}
+export const changeOrderStatus =  (status) =>  async (dispatch,getState) => {
+  dispatch(startStoreFetching())
+  try {
+    const { userData: { accessToken } } = getState()
+
+    const response = await axios({
+      url:`${api.changeOrderStatus}${status}`,
+      method: 'post',
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+      data:{
+        user_status:2,
+      },
+    })
+    const { data:result } =  response
+    console.log({
+      response,
+    })
+    const { status:statusResponse } = result
+
+    if (!statusResponse) { dispatch(errorHappened({
+      type: 'error',
+      title: 'خطأ',
+      message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
+    }))
+    return false
+    }
+    return true
+  }
+  catch (error) {
+    console.log({
+      error,
+    })
     dispatch(errorHappened({
       type: 'error',
       title: 'خطأ',

@@ -6,9 +6,9 @@ import {
 } from 'components'
 
 export const NearestServiceModalBody = ({
-  style, titleStyle, title, onPress, showPicker,
+  style, titleStyle, title, showPicker,
   selectVideoTapped,selectPhotoTapped,driver,setDriver,
-  image,video,createOrder
+  image,video,handleCreateOrder,description,handleChangeText,
 }) => (
   <Group
     style={{
@@ -77,6 +77,8 @@ export const NearestServiceModalBody = ({
 
             },
           }}
+          value={description}
+          onChangeText={handleChangeText}
         />
       </Group>
       <Group
@@ -86,9 +88,9 @@ export const NearestServiceModalBody = ({
 
         }}
       >
-        <LabelWithIcon label={video?"1 video ":"Attach a video"} style={{ maxWidth: '50%', marginHorizontal: 10 }} onPress={selectVideoTapped} />
+        <LabelWithIcon label={video ? '1 video ' : 'Attach a video'} style={{ maxWidth: '50%', marginHorizontal: 10 }} onPress={selectVideoTapped} />
         <LabelWithIcon
-          label={image?"1 photo ":"Attach a photo"}
+          label={image ? '1 photo ' : 'Attach a photo'}
           style={{ maxWidth: '50%', marginHorizontal: 10 }}
           textStyle={{
             fontWeight: '100',
@@ -107,7 +109,7 @@ export const NearestServiceModalBody = ({
       >
         <SplashButton
           title="Confirm location"
-          onPress={createOrder}
+          onPress={handleCreateOrder}
           style={{
             buttonStyle: {
               backgroundColor: '#1E1E1E',
