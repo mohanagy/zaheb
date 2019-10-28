@@ -37,8 +37,7 @@ export class MyPayments extends Component {
           contentContainerStyle={{
             marginLeft: 10,
             justifyContent: 'space-around',
-          }
-          }
+          }}
         >
           <ColorFullLabel
             label="يوجد عليك ديون بقيمة"

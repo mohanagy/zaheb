@@ -1,15 +1,13 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import {
   Group, Details, SplashButton,
 } from 'components'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import { Image, AirbnbRating } from 'react-native-elements'
 
-import purchaseImage from '../../assets/purchase_image.png'
 
 export const MyOfferCard = ({
-  image,description,
+  workshop:{ commercial_register_image,name },offer:{ description },cost,
 }) => (
   <Group
     style={{
@@ -36,7 +34,7 @@ export const MyOfferCard = ({
       }}
     >
       <Image
-        source={purchaseImage}
+        source={{ uri:commercial_register_image }}
         style={{
           width: '100%',
           height: '100%',
@@ -52,7 +50,7 @@ export const MyOfferCard = ({
         }}
       >
         <Group style={{ alignItems: 'flex-start', justifyContent: 'center' }}>
-          <Details text="Rear view mirror" style={{ ...textsStyle, fontSize: 20, fontWeight: '900' }} />
+          <Details text={name} style={{ ...textsStyle, fontSize: 20, fontWeight: '900' }} />
           <Details
             text={description}
             style={{
@@ -68,7 +66,7 @@ export const MyOfferCard = ({
             />
             <Details text="(300 Reviews)" style={{ ...textsStyle, fontSize: 12, color: '#898989' }} />
           </Group>
-          <Details text="Price: 50$" style={textsStyle} />
+          <Details text={`Price: ${cost}$`} style={textsStyle} />
         </Group>
         <Group style={{ justifyContent: 'space-between', alignItems: 'flex-end', marginVertical: 10 }}>
           <SplashButton title={<FontAwesome5 name="plus" />} style={buttonStyle} />

@@ -25,7 +25,7 @@ class CustomerService extends Component {
       <FontAwesome5
         name="bell"
         size={18}
-        onPress={() => {}}
+        onPress={() => navigation.navigate('Notifications')}
         solid
         style={{
           marginRight: 10,

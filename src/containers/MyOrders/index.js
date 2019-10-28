@@ -175,8 +175,7 @@ class MyOrders extends Component {
           contentContainerStyle={{
             marginLeft: 10,
             justifyContent: 'space-around',
-          }
-          }
+          }}
         >
           <OrderDetailsBox
             stage={1}

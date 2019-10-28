@@ -17,6 +17,17 @@ const initialState = {
   order:{
     service:{},
   },
+  workshopOffers:[],
+  products:[],
+  selectedProductId:null,
+  models:[],
+  manufacturingYears:[],
+  productsFilter:{
+    product_classification_id:null,
+    manufacturing_year_id:null,
+    car_model_id:null,
+  },
+  filteredProducts:[],
 }
 const carsReducer = (state = initialState, action) => {
   const { payload } = action

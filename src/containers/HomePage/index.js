@@ -29,7 +29,7 @@ class HomePage extends Component {
      <FontAwesome5
        name="bell"
        size={18}
-       onPress={() => {}}
+       onPress={() => navigation.navigate('Notifications')}
        solid
        style={{
          marginRight: 10,
@@ -85,9 +85,9 @@ render() {
               style={{
                 marginBottom: 15, backgroundColor: '#1E1E1E', borderRadius: 99 ** 9, padding: 20,
               }}
-              onPress={() => navigate('HomeStore')}
+              onPress={() => navigate('MaintenancePage')}
             >
-              <FontAwesome5 name="tools" size={55} style={{ color: '#FFF' }} onPress={() => navigate('HomeStore')} />
+              <FontAwesome5 name="tools" size={55} style={{ color: '#FFF' }} onPress={() => navigate('MaintenancePage')} />
             </Group>
             <Details text="Maintenance Services" style={{ marginBottom: 20, color: '#1E1E1E', fontSize: 22 }} />
             <Group

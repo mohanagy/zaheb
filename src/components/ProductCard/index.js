@@ -1,15 +1,13 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import {
   Group, Details, SplashButton,
 } from 'components'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import { Image } from 'react-native-elements'
 
-import purchaseImage from '../../assets/purchase_image.png'
 
 export const ProductCard = ({
-  name, date, price, liked, type,
+  name,number,image,description, user,onPress,cost,
 }) => (
   <Group
     style={{
@@ -36,7 +34,7 @@ export const ProductCard = ({
       }}
     >
       <Image
-        source={purchaseImage}
+        source={{ uri:image }}
         style={{
           width: '100%',
           height: '100%',
@@ -48,17 +46,18 @@ export const ProductCard = ({
     <Group style={{ flex: 1, marginHorizontal: 6 }}>
       <Group style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
         <Group style={{ alignItems: 'flex-start' }}>
-          <Details text="Rear view mirror" style={{ ...textsStyle, fontSize: 20, fontWeight: '900' }} />
+          <Details text={name} style={{ ...textsStyle, fontSize: 16, fontWeight: '900' }} />
           <Group style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center' }}>
-            <Details text="Lexlis" style={{ ...textsStyle, fontSize: 18, fontWeight: '600' }} />
-            <Details text="2019/AYCO/ZN6EKC" style={{ ...textsStyle, marginLeft: 5, fontWeight: '100' }} />
+            <Details text={description} style={{ ...textsStyle, fontSize: 14, fontWeight: '600' }} />
+            <Details text={number} style={{ ...textsStyle, marginLeft: 5, fontWeight: '100' }} />
           </Group>
-          <Details text="By: Ahmed" style={{ ...textsStyle, fontWeight: '600' }} />
-          <Details text="$50" style={{ ...textsStyle }} />
+          <Details text={`By: ${user.name}`} style={{ ...textsStyle,fontSize:12, fontWeight: '600' }} />
+          <Details text={`$${cost}`} style={{ ...textsStyle }} />
         </Group>
         <Group style={{ justifyContent: 'space-between', alignItems: 'center', marginVertical: 10 }}>
           <FontAwesome5 name="heart" size={20} />
           <SplashButton
+            onPress={onPress}
             title="Buy"
             style={{
               buttonStyle: {

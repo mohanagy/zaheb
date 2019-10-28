@@ -69,6 +69,9 @@ export const getCars = () => async (dispatch, getState) => {
 export const selectCar = (id) => async (dispatch) => {
   dispatch(getDataSuccess({ selectedCarId: id }))
 }
+export const selectProduct = (id) => async (dispatch) => {
+  dispatch(getDataSuccess({ selectedProductId: id }))
+}
 export const selectService = (id) => async (dispatch) => {
   dispatch(getDataSuccess({ selectedServiceId: id }))
 }
@@ -132,6 +135,40 @@ export const getServicesByCarId = (id) => async (dispatch, getState) => {
       return false
     }
     return dispatch(getDataSuccess({ services }))
+  } catch (e) {
+    dispatch(errorHappened({
+      type: 'error',
+      title: 'خطأ',
+      message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
+    }))
+    return false
+  } finally {
+    dispatch(finishStoreFetching())
+  }
+}
+export const getProductsClassification = (id) => async (dispatch, getState) => {
+  dispatch(startStoreFetching())
+  const { userData: { accessToken } } = getState()
+  try {
+    const response = await fetch(`${api.getProductsClassificationByCarTypeId}?car_id=${id}`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+    const json = await response.json()
+    const { error, products } = json
+
+    if (error) {
+      dispatch(errorHappened({
+        type: 'error',
+        title: 'خطأ',
+        message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
+      }))
+      return false
+    }
+    return dispatch(getDataSuccess({ products }))
   } catch (e) {
     dispatch(errorHappened({
       type: 'error',
@@ -227,6 +264,36 @@ export const getMyRequestedOffers =  () =>  async (dispatch,getState) => {
     const json = await response.json()
     const {  offers } = json
     dispatch(getDataSuccess({ offers }))
+  }
+  catch (error) {
+    dispatch(errorHappened({
+      type: 'error',
+      title: 'خطأ',
+      message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
+    }))
+    return false
+  }
+  finally {
+    dispatch(finishStoreFetching())
+  }
+}
+export const getWorkshopOffers =  () =>  async (dispatch,getState) => {
+  dispatch(startStoreFetching())
+  try {
+    const { userData: { accessToken } } = getState()
+    const response = await fetch(`${api.getWorkshopOffers}`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+    const json = await response.json()
+    const {  workshopOffers } = json
+    console.log({
+      workshopOffers,json,
+    })
+    dispatch(getDataSuccess({ workshopOffers }))
   }
   catch (error) {
     dispatch(errorHappened({
@@ -356,9 +423,6 @@ export const createOrder =  (newOrder) =>  async (dispatch,getState) => {
     dispatch(getDataSuccess({ orderId:id }))
   }
   catch (error) {
-    console.log({
-      error,
-    })
     dispatch(errorHappened({
       type: 'error',
       title: 'خطأ',
@@ -390,9 +454,6 @@ export const getOrderById =  (id) =>  async (dispatch,getState) => {
     dispatch(getDataSuccess({ order }))
   }
   catch (error) {
-    console.log({
-      error,
-    })
     dispatch(errorHappened({
       type: 'error',
       title: 'خطأ',
@@ -421,9 +482,6 @@ export const changeOrderStatus =  (status) =>  async (dispatch,getState) => {
       },
     })
     const { data:result } =  response
-    console.log({
-      response,
-    })
     const { status:statusResponse } = result
 
     if (!statusResponse) { dispatch(errorHappened({
@@ -436,9 +494,6 @@ export const changeOrderStatus =  (status) =>  async (dispatch,getState) => {
     return true
   }
   catch (error) {
-    console.log({
-      error,
-    })
     dispatch(errorHappened({
       type: 'error',
       title: 'خطأ',
@@ -449,4 +504,106 @@ export const changeOrderStatus =  (status) =>  async (dispatch,getState) => {
   finally {
     dispatch(finishStoreFetching())
   }
+}
+export const getCarManufacturingYears =  (id) =>  async (dispatch,getState) => {
+  dispatch(startStoreFetching())
+  try {
+    const { userData: { accessToken } } = getState()
+    const response = await fetch(`${api.getCarManufacturingYears}${id}`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+    const json = await response.json()
+    const {  manufacturingYears } = json
+
+    dispatch(getDataSuccess({ manufacturingYears }))
+  }
+  catch (error) {
+    dispatch(errorHappened({
+      type: 'error',
+      title: 'خطأ',
+      message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
+    }))
+    return false
+  }
+  finally {
+    dispatch(finishStoreFetching())
+  }
+}
+export const getCarModels =  (id) =>  async (dispatch,getState) => {
+  dispatch(startStoreFetching())
+  try {
+    const { userData: { accessToken } } = getState()
+    const response = await fetch(`${api.getCarModels}${id}`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+    const json = await response.json()
+    const {  models } = json
+    dispatch(getDataSuccess({ models }))
+  }
+  catch (error) {
+    dispatch(errorHappened({
+      type: 'error',
+      title: 'خطأ',
+      message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
+    }))
+    return false
+  }
+  finally {
+    dispatch(finishStoreFetching())
+  }
+}
+export const getProductsByFilters =  (productsFilter) =>  async (dispatch,getState) => {
+  dispatch(startStoreFetching())
+  try {
+    const { userData: { accessToken },storeData:{ selectedCarId } } = getState()
+    const {
+      product_classification_id,manufacturing_year_id,car_model_id,
+    } = productsFilter
+
+
+    const url = `${api.getProductsByFilters}?car_id=${selectedCarId}&product_classification_id=${product_classification_id}&manufacturing_year_id=${manufacturing_year_id}&car_model_id=${car_model_id}`
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+    const json = await response.json()
+    const {  products } = json
+
+    dispatch(getDataSuccess({ filteredProducts:products }))
+  }
+  catch (error) {
+    dispatch(errorHappened({
+      type: 'error',
+      title: 'خطأ',
+      message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
+    }))
+    return false
+  }
+  finally {
+    dispatch(finishStoreFetching())
+  }
+}
+
+export const setFilters = ({ manufacturingYear,vehicleModel,selectedProductId }) => async (dispatch) => {
+  console.log({
+    manufacturingYear,vehicleModel,selectedProductId,
+  })
+  dispatch(getDataSuccess({
+    productsFilter:{
+      product_classification_id:selectedProductId,
+      manufacturing_year_id:manufacturingYear,
+      car_model_id:vehicleModel,
+    },
+  }))
 }

@@ -22,7 +22,7 @@ class Offers extends Component {
       <FontAwesome5
         name="bell"
         size={18}
-        onPress={() => {}}
+        onPress={() => navigation.navigate('Notifications')}
         solid
         style={{
           marginRight: 10,
@@ -47,13 +47,11 @@ class Offers extends Component {
 componentDidMount =async () => {
   const { actions:{ getMyRequestedOffers } } = this.props
   await getMyRequestedOffers()
-  console.log('aslkdklsadmklsamd')
 }
 
 handleCancel =async (id) => {
   const { actions:{ cancelMyRequestedOffers,getMyRequestedOffers } } = this.props
   await cancelMyRequestedOffers(id)
-  console.log('sadklsad')
   await getMyRequestedOffers()
 }
 

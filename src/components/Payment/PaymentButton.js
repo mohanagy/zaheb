@@ -14,10 +14,10 @@ const PaymentButton = ({
     }}
     onPress={selectActivePaymentMethod}
   >
-    <Group style={{ justifyContent: 'center', alignItems: 'center' }}>
+    <Group style={{ justifyContent: 'center', alignItems: 'center' , padding: 0 }}>
       <FontAwesome5
         name={icon}
-        size={60}
+        size={20}
         style={{
           ...styles.selectButtonTextStyle,
           ...(activePaymentMethod === method
@@ -29,6 +29,7 @@ const PaymentButton = ({
     <Details
       text={title}
       style={{
+        fontSize: 10,
         ...styles.selectButtonTextStyle,
         ...(activePaymentMethod === method
           ? styles.selectButtonTextStyleActive
@@ -41,9 +42,9 @@ const PaymentButton = ({
 
 const styles = {
   selectButtonStyle: {
-    padding: 15,
-    margin: 20,
-    width: 150,
+    paddingVertical: 20,
+    marginHorizontal: 10,
+    marginVertical: 10,
     borderRadius: 20,
     shadowColor: '#991E1E1E',
     shadowOffset: { width: 0, height: 2 },

@@ -15,6 +15,7 @@ import MyPurchases from './MyPurchases'
 import MyRequests from './MyRequests'
 import Conversations from './Conversations'
 import HomeStore from './HomeStore'
+import MaintenancePage from './MaintenancePage'
 import HomeType from './HomeType'
 import Products from './Products'
 import Workshops from './Workshops'
@@ -87,4 +88,5 @@ export {
   ProfileDriver,
   NearestServiceCenter,
   HomeStarterPage,
+  MaintenancePage,
 }

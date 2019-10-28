@@ -136,6 +136,43 @@ export const getTermsAndConditions = () => async (dispatch, getState) => {
     dispatch(finishGeneralFetching())
   }
 }
+export const getNotifications = () => async (dispatch, getState) => {
+  dispatch(startGeneralFetching())
+  const { userData: { accessToken } } = getState()
+  try {
+    const response = await fetch(api.getNotifications, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+    const json = await response.json()
+    const { error, notification } = json
+
+    dispatch(getDataSuccess({ notifications:notification }))
+
+    if (error) {
+      dispatch(errorHappened({
+        type: 'error',
+        title: 'خطأ',
+        message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
+      }))
+      return false
+    }
+
+    return dispatch(getDataSuccess({ terms }))
+  } catch (e) {
+    dispatch(errorHappened({
+      type: 'error',
+      title: 'خطأ',
+      message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
+    }))
+    return false
+  } finally {
+    dispatch(finishGeneralFetching())
+  }
+}
 export const selectCar = (id) => async (dispatch) => {
   dispatch(getDataSuccess({ selectedCarId: id }))
 }

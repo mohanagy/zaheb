@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollContainer, OfferCard } from 'components'
+import { ScrollContainer, MyOfferCard } from 'components'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -23,7 +23,7 @@ class MyOffers extends Component {
       <FontAwesome5
         name="bell"
         size={18}
-        onPress={() => {}}
+        onPress={() => navigation.navigate('Notifications')}
         solid
         style={{
           marginRight: 10,
@@ -45,17 +45,17 @@ class MyOffers extends Component {
       />),
   });
 
-componentDidMount =async () => {
-  const { actions:{ getMyRequestedOffers } } = this.props
-  await getMyRequestedOffers()
+componentDidMount = async () => {
+  const { actions:{ getWorkshopOffers } } = this.props
+  await getWorkshopOffers()
 }
 
 render() {
-  const { storeData:{ myOffers } } = this.props
+  const { storeData:{ workshopOffers } } = this.props
   return (
     <ScrollContainer contentContainerStyle={{ marginTop: 20 }}>
       {
-        myOffers.map((offer) => <OfferCard {...offer} />)
+        workshopOffers.map((offer) => <MyOfferCard {...offer} />)
       }
     </ScrollContainer>
   )

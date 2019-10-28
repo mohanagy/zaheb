@@ -27,7 +27,7 @@ class Payment extends Component {
       <FontAwesome5
         name="bell"
         size={18}
-        onPress={() => {}}
+        onPress={() => navigation.navigate('Notifications')}
         solid
         style={{
           marginRight: 10,
@@ -51,7 +51,11 @@ class Payment extends Component {
 
   state = {
     activePaymentMethod: 'cashcard',
-    methods:[{ method:'cashcard',icon:'credit-card' ,title:'Credit-Card' },{ method:'paypal',icon:'paypal',title:'PayPal' }],
+    methods:[
+      { method:'cashcard',icon:'credit-card' ,title:'Credit-Card' },
+      { method:'paypal',icon:'paypal',title:'PayPal' },
+      { method:'bank',icon:'piggy-bank',title:'Bank Transfer' },
+      { method:'cash',icon:'money-bill-alt',title:'Cash' }],
   }
 
   selectActivePaymentMethod =(method) => {
@@ -66,7 +70,7 @@ class Payment extends Component {
       <ScrollContainer>
         <Group style={{ backgroundColor: '#F6F6F6', minHeight: screen.height }}>
           <Group
-            style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}
+            style={{ flexDirection: 'row' }}
           >
             {methods.map(({ method ,icon,title }) => (
               <PaymentButton

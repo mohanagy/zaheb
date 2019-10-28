@@ -40,6 +40,7 @@ const initialState = {
       'value': 'https://www.linkedin.com',
     },
   },
+  notifications:[],
 }
 const userReducer = (state = initialState, action) => {
   const { payload } = action

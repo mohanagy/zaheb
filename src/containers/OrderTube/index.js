@@ -81,8 +81,7 @@ export class OrderTube extends Component {
             marginLeft: 10,
             justifyContent: 'space-around',
             height: '100%',
-          }
-          }
+          }}
         >
           <Group>
             <Details
@@ -99,7 +98,7 @@ export class OrderTube extends Component {
               }}
             >
 
-              {tubes.map(tube => (
+              {tubes.map((tube) => (
                 <Tube
                   style={{
                     image: {
