@@ -7,7 +7,7 @@ import { Group, Title } from 'components'
 
 const screen = Dimensions.get('screen')
 
-class CurvedHeader extends Component {
+export class CurvedHeader extends Component {
   static navigationOptions = {
     header: null,
   };
@@ -80,12 +80,16 @@ class CurvedHeader extends Component {
             >
               <Image
                 source={source}
-                style={{
-                  width: fillSource ? 150 : 100,
-                  height: fillSource ? 150 : 100,
+                containerStyle={{
+                  width: fillSource ? 150 : 90,
+                  height: fillSource ? 150 : 90,
                   margin: fillSource ? 0 : 25,
                   resizeMode: 'contain',
                   borderWidth: 0,
+                  alignItems:'center',
+                  justifyContent: 'center',
+                  alignSelf:'center',
+                  alignContent:'center',
                 }}
               />
             </Group>
@@ -94,45 +98,6 @@ class CurvedHeader extends Component {
       </Group>
     )
   }
-}
-
-const inputStyle = {
-  fontFamily: 'HelveticaNeueW23forSKY-Reg',
-  padding: 0,
-  margin: 0,
-}
-
-const inputLabelStyle = {
-  color: '#b0abab',
-  marginLeft: 10,
-}
-
-const inputContainerStyle = {
-  marginHorizontal: 18,
-  marginTop: 20,
-}
-CurvedHeader.propTypes = {
-  navigation: PropTypes.object.isRequired,
-}
-
-const buttonStyle = {
-  buttonStyle: {
-    backgroundColor: '#FF2334',
-    borderRadius: 20,
-    marginHorizontal: 50,
-  },
-  containerStyle: {
-    position: 'absolute',
-    bottom: -25,
-    width: '100%',
-    paddingHorizontal: 10,
-  },
-  titleStyle: {
-    color: '#FFFFFF',
-    fontWeight: '9',
-    fontSize: 18,
-    fontFamily: 'HelveticaNeueW23forSKY-Reg',
-  },
 }
 
 export default CurvedHeader

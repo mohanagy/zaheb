@@ -3,35 +3,100 @@ import {
   Group, Details, CurvedHeader, LabeledInputWithIcon, ScrollContainer,
 } from 'components'
 import { Dimensions } from 'react-native'
-
-import man from '../../assets/man.png'
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import * as usersActions from 'actions/users'
+import PropTypes from 'prop-types'
 
 const screen = Dimensions.get('screen')
 
-const profile = {
-  id: '006641',
-  username: 'Ahmed Saftawai',
-  password: 'password1',
-  phoneNumber: '00972 5758564852',
-  location: {
-    country: 'Palestine',
-    city: 'Gaza',
-  },
-  email: 'example@domain.com',
-  language: 'English',
-}
-
 class Profile extends Component {
+  static navigationOptions = ({ navigation }) => ({
+    headerTitle: 'My Profile',
+    headerTitleStyle: {
+      textAlign: 'center',
+      flexGrow: 1,
+      alignSelf: 'center',
+      color: '#ffffff',
+    },
+    headerStyle: {
+      backgroundColor: '#1E1E1E',
+    },
+    headerRight: (
+      <FontAwesome5
+        name="bell"
+        size={18}
+        onPress={() => {}}
+        solid
+        style={{
+          marginRight: 10,
+          color: '#ffffff',
+
+        }}
+      />),
+    headerLeft: (
+      <FontAwesome5
+        name="stream"
+        size={18}
+        onPress={() => navigation.toggleDrawer()}
+        solid
+        style={{
+          marginLeft: 10,
+          color: '#ffffff',
+
+        }}
+      />),
+  });
+
+  state={
+    user:{
+      name:'',
+      username:'',
+      id:'',
+      address:'',
+      email:'',
+      password:'',
+      phone:'',
+      language:'',
+      image:'',
+    },
+  }
+
+  componentDidMount =async () => {
+    const { actions:{ getUserProfile } } = this.props
+    const user =  await getUserProfile()
+    this.setState({
+      user,
+    })
+  }
+
+  handleUpdateProfile =async (field,value) => {
+    const { actions:{ updateProfile } } = this.props
+    await updateProfile(field,value)
+  }
+
+  handleChange =async (field,value) => {
+    const { user } = this.state
+    this.setState({
+      user:{
+        ...user,
+        [field]:value,
+      },
+    })
+  }
+
   render() {
+    const {   user  } = this.state
     return (
       <ScrollContainer>
         <Group style={{ backgroundColor: '#F6F6F6', minHeight: screen.height, paddingBottom: 50 }}>
           <Group>
-            <CurvedHeader type="image" source={man} fillSource />
+            <CurvedHeader type="image" source={{ uri:user.image }} fillSource />
           </Group>
-          <Details text={profile.username} style={{ color: 'black' }} />
-          <Details text={`No.${profile.id}`} style={{ color: 'black' }} />
-          <Details text={`${profile.location.city} ${profile.location.country}`} style={{ color: 'black', fontSize: 10 }} />
+          <Details text={user.username} style={{ color: 'black' }} />
+          <Details text={`No.${user.id}`} style={{ color: 'black' }} />
+          <Details text={`${user.address || ''}`} style={{ color: 'black', fontSize: 10 }} />
           <Group>
             <Details text="Private Details" style={{ alignSelf: 'flex-start', color: '#1E1E1E' }} />
             <LabeledInputWithIcon
@@ -40,8 +105,10 @@ class Profile extends Component {
               icon="edit"
               inputProps={{
                 style: styles.inputStyle,
-                value: profile.username,
+                value: user.name,
+                onChangeText:(value) => this.handleChange('name',value),
               }}
+              onPressOnIcon={() => this.handleUpdateProfile('name',user.name)}
             />
             <LabeledInputWithIcon
               label="Email"
@@ -49,8 +116,12 @@ class Profile extends Component {
               icon="edit"
               inputProps={{
                 style: styles.inputStyle,
-                value: profile.email,
+                value: user.email,
+                onChangeText:(value) => this.handleChange('email',value),
+
               }}
+              onPressOnIcon={() => this.handleUpdateProfile('email',user.email)}
+
             />
             <LabeledInputWithIcon
               label="Password"
@@ -59,8 +130,11 @@ class Profile extends Component {
               inputProps={{
                 secureTextEntry: true,
                 style: styles.inputStyle,
-                value: profile.password,
+                value: '**********',
+                // onChangeText:(value) => this.handleChange('name',value),
               }}
+              onPressOnIcon={() => {}}
+
             />
             <LabeledInputWithIcon
               label="Mobile Number"
@@ -68,8 +142,11 @@ class Profile extends Component {
               icon="edit"
               inputProps={{
                 style: styles.inputStyle,
-                value: profile.phoneNumber,
+                value: user.phone,
+                onChangeText:(value) => this.handleChange('phone',value),
               }}
+              onPressOnIcon={() => this.handleUpdateProfile('phone',user.phone)}
+
             />
             <LabeledInputWithIcon
               label="Location"
@@ -77,8 +154,11 @@ class Profile extends Component {
               icon="plus"
               inputProps={{
                 style: styles.inputStyle,
-                value: profile.location.city,
+                value: user.address || '',
+                onChangeText:(value) => this.handleChange('address',value),
               }}
+              onPressOnIcon={() => this.handleUpdateProfile('address',user.address)}
+
             />
             <LabeledInputWithIcon
               label="Language"
@@ -86,8 +166,11 @@ class Profile extends Component {
               icon="edit"
               inputProps={{
                 style: styles.inputStyle,
-                value: profile.language,
+                value: user.language,
+                onChangeText:(value) => this.handleChange('language',value),
               }}
+              onPressOnIcon={() => this.handleUpdateProfile('language',user.language)}
+
             />
           </Group>
         </Group>
@@ -103,4 +186,20 @@ const styles = {
   },
 }
 
-export default Profile
+const mapDispatchToProps = (dispatch) => ({
+  actions: bindActionCreators(usersActions,dispatch),
+})
+
+const mapStateToProps = (state) => ({
+  common: state.common,
+  userData:state.userData,
+})
+
+Profile.propTypes = {
+  actions: PropTypes.object.isRequired,
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Profile)

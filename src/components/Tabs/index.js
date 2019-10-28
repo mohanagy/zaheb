@@ -24,7 +24,7 @@ class Tabs extends Component {
       <Group>
         <Group style={{ ...styles.tabsWrapperStyle, ...tabsWrapperStyle }}>
           {
-            options.map(({ icon, key }) => (
+            options && options.map(({ icon, key }) => (
               <TouchableOpacity onPress={() => this.onTabChange(key)}>
                 <Group
                   style={{ ...styles.tabIconStyle, ...(activeTab === key ? styles.activeTabIconStyle : {}) }}

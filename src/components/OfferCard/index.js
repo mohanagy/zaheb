@@ -1,17 +1,15 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import {
   Group, Details, SplashButton,
 } from 'components'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
-import { Image, AirbnbRating } from 'react-native-elements'
+import { Image } from 'react-native-elements'
 
-import purchaseImage from '../../assets/purchase_image.png'
 
-export const ProductCard = ({
-  name, date, price, liked, type, rating,
+export const OfferCard = ({
+  description,service:{ car_service_classification },handleCancel,
 }) => (
-  <Group
+  <Group 
     style={{
       flexDirection: 'row',
       justifyContent: 'flex-start',
@@ -36,7 +34,7 @@ export const ProductCard = ({
       }}
     >
       <Image
-        source={purchaseImage}
+        source={{ uri:car_service_classification.image }}
         style={{
           width: '100%',
           height: '100%',
@@ -48,27 +46,30 @@ export const ProductCard = ({
     <Group style={{ flex: 1, marginHorizontal: 6 }}>
       <Group
         style={{
-          flexDirection: 'row', justifyContent: 'space-between', height: '90%',
+          flexDirection: 'row', justifyContent: 'space-between', height:'90%',
         }}
       >
-        <Group style={{ alignItems: 'flex-start', justifyContent: 'center' }}>
-          <Details text="Rear view mirror" style={{ ...textsStyle, fontSize: 20, fontWeight: '900' }} />
-          <Details text="Engine maintenance" style={{ ...textsStyle, fontSize: 16 }} />
-          <Group style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <AirbnbRating
-              showRating={false}
-              count={5}
-              defaultRating={rating}
-              size={10}
-            />
-            <Details text="(300 Reviews)" style={{ ...textsStyle, fontSize: 12, color: '#898989' }} />
-          </Group>
-          <Details text="Price: 50$" style={textsStyle} />
+        <Group
+          style={{
+            alignItems: 'flex-start', justifyContent: 'space-around',flex:1,
+          }}
+        >
+          <Details text={car_service_classification.en_name} style={{ ...textsStyle, fontSize: 20, fontWeight: '900' }} />
+          <Details
+            text={description}
+            style={{
+              ...textsStyle, fontSize: 16,flexWrap: 'wrap',
+            }}
+          />
         </Group>
-        <Group style={{ justifyContent: 'space-between', alignItems: 'flex-end', marginVertical: 10 }}>
+        <Group
+          style={{
+            justifyContent: 'space-between', alignItems: 'flex-end', marginVertical: 5,marginRight: 10,
+          }}
+        >
           <SplashButton title={<FontAwesome5 name="plus" />} style={buttonStyle} />
           <SplashButton style={buttonStyle} title={<FontAwesome5 name="map-marker" />} />
-          <SplashButton title="Booking" style={buttonStyle} />
+          <SplashButton title="cancel" style={buttonStyle} titleStyle={{ fontSize:10 }} onPress={handleCancel} />
         </Group>
       </Group>
     </Group>
@@ -89,7 +90,7 @@ const buttonStyle = {
   },
 }
 
-ProductCard.propTypes = {
+OfferCard.propTypes = {
 }
 
-export default ProductCard
+export default OfferCard

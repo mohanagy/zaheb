@@ -1,15 +1,18 @@
 import React, { Component } from 'react'
 import { Group } from 'components'
+import { TouchableOpacity } from 'react-native'
 
 class SelectButton extends Component {
   render() {
     const {
-      activeStyle, inactiveStyle, active, style, children,
+      activeStyle, inactiveStyle, active, style, children,onPress,
     } = this.props
     return (
-      <Group style={{ ...style, ...(active ? activeStyle : inactiveStyle) }}>
-        {children}
-      </Group>
+      <TouchableOpacity onPress={onPress}>
+        <Group style={{ ...style, ...(active ? activeStyle : inactiveStyle) }}>
+          {children}
+        </Group>
+      </TouchableOpacity>
     )
   }
 }

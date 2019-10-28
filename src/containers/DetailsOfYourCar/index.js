@@ -1,6 +1,12 @@
 import React, { Component } from 'react'
 import { Group, Details, SplashButton } from 'components'
 import { Picker, Dimensions } from 'react-native'
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import * as storeActions from 'actions/store'
+import * as usersActions from 'actions/users'
+import PropTypes from 'prop-types'
 
 const screen = Dimensions.get('screen')
 
@@ -33,6 +39,43 @@ class DetailsOfYourCar extends Component {
     bodyNumber: bodyNumbers[0],
   }
 
+  static navigationOptions = ({ navigation }) => ({
+    headerTitle: 'Details of your car',
+    headerTitleStyle: {
+      textAlign: 'center',
+      flexGrow: 1,
+      alignSelf: 'center',
+      color: '#ffffff',
+    },
+    headerStyle: {
+      backgroundColor: '#1E1E1E',
+    },
+    headerRight: (
+      <FontAwesome5
+        name="bell"
+        size={18}
+        onPress={() => {}}
+        solid
+        style={{
+          marginRight: 10,
+          color: '#ffffff',
+
+        }}
+      />),
+    headerLeft: (
+      <FontAwesome5
+        name="stream"
+        size={18}
+        onPress={() => navigation.toggleDrawer()}
+        solid
+        style={{
+          marginLeft: 10,
+          color: '#ffffff',
+
+        }}
+      />),
+  });
+
   render() {
     const { vehicleModel, manufacturingYear, bodyNumber } = this.state
     return (
@@ -44,10 +87,9 @@ class DetailsOfYourCar extends Component {
             style={{
               marginBottom: 20, height: 50, width: screen.width - 40, backgroundColor: '#FFF', borderRadius: 15, alignSelf: 'center',
             }}
-            onValueChange={itemValue => this.setState({ manufacturingYear: itemValue })
-            }
+            onValueChange={(itemValue) => this.setState({ manufacturingYear: itemValue })}
           >
-            {manufacturingYears.map(year => <Picker.Item {...year} />)}
+            {manufacturingYears.map((year) => <Picker.Item {...year} />)}
           </Picker>
           <Details text="Vehicle Model" style={{ marginHorizontal: 0, marginBottom: 5, color: '#1E1E1E' }} />
           <Picker
@@ -55,10 +97,9 @@ class DetailsOfYourCar extends Component {
             style={{
               marginBottom: 20, height: 50, width: screen.width - 40, backgroundColor: '#FFF', borderRadius: 15, alignSelf: 'center',
             }}
-            onValueChange={itemValue => this.setState({ vehicleModel: itemValue })
-            }
+            onValueChange={(itemValue) => this.setState({ vehicleModel: itemValue })}
           >
-            {vehicleModels.map(model => <Picker.Item {...model} />)}
+            {vehicleModels.map((model) => <Picker.Item {...model} />)}
           </Picker>
           <Details text="Body Number" style={{ marginHorizontal: 0, marginBottom: 5, color: '#1E1E1E' }} />
           <Picker
@@ -66,10 +107,9 @@ class DetailsOfYourCar extends Component {
             style={{
               marginBottom: 20, height: 50, width: screen.width - 40, backgroundColor: '#FFF', borderRadius: 15, alignSelf: 'center',
             }}
-            onValueChange={itemValue => this.setState({ bodyNumber: itemValue })
-            }
+            onValueChange={(itemValue) => this.setState({ bodyNumber: itemValue })}
           >
-            {bodyNumbers.map(number => <Picker.Item {...number} />)}
+            {bodyNumbers.map((number) => <Picker.Item {...number} />)}
           </Picker>
           <SplashButton
             title="Next"
@@ -90,5 +130,21 @@ class DetailsOfYourCar extends Component {
     )
   }
 }
+const mapDispatchToProps = (dispatch) => ({
+  actions: bindActionCreators({ ...storeActions,...usersActions },dispatch),
+})
 
-export default DetailsOfYourCar
+const mapStateToProps = (state) => ({
+  storeData: state.storeData,
+  common: state.common,
+  userData:state.userData,
+})
+
+DetailsOfYourCar.propTypes = {
+  actions: PropTypes.object.isRequired,
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(DetailsOfYourCar)

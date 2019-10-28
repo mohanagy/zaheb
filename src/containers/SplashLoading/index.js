@@ -1,26 +1,41 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import {
-  View, ActivityIndicator, AsyncStorage, StatusBar, StyleSheet,
+  View, ActivityIndicator, StatusBar, StyleSheet,
 } from 'react-native'
+import AsyncStorage from '@react-native-community/async-storage'
+
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import * as userActions from 'actions/users'
 
 export class SplashLoading extends Component {
-  static navigationOptions = {
-    header: null,
-  };
-
-  constructor() {
-    super()
+  componentDidMount() {
     this.checkInformation()
   }
 
   checkInformation=async () => {
-    const userToken = await AsyncStorage.getItem('token')
-    const { navigation: { navigate } } = this.props
-    if (userToken) return navigate('Home')
-
+    const userToken = await AsyncStorage.getItem('@access_token')
+    const firstTime = await AsyncStorage.getItem('@firstTime')
+    const { navigation: { navigate },actions:{ checkAuth,updateUserStore } } = this.props
+    const checkAuthValue = await checkAuth(userToken)
+    if (userToken && checkAuthValue ) {
+      const user = await AsyncStorage.getItem('@user')
+      const userParsed = JSON.parse(user).user
+      if (!userParsed) {
+        await   AsyncStorage.removeItem('@access_token','@user')
+      }
+      await updateUserStore({ user:JSON.parse(user).user,accessToken:userToken })
+      return navigate('HomePage')
+    }
+    if (firstTime) return navigate('Login')
+    await AsyncStorage.setItem('@firstTime','true')
     return navigate('Splash')
   }
+
+  static navigationOptions = {
+    header: null,
+  };
 
   render() {
     return (
@@ -45,4 +60,21 @@ const styles = StyleSheet.create({
   },
 })
 
-export default SplashLoading
+const mapDispatchToProps = (dispatch) => ({
+  actions: bindActionCreators(userActions,dispatch),
+})
+
+const mapStateToProps = (state) => ({
+  user: state.userData.user,
+  common: state.common,
+})
+
+SplashLoading.propTypes = {
+  navigate: PropTypes.func.isRequired,
+  actions: PropTypes.object.isRequired,
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(SplashLoading)

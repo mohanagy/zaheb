@@ -1,9 +1,8 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { Text } from 'react-native'
 import profilePic from 'assets/profilePic.png'
 import LinearGradient from 'react-native-linear-gradient'
 import { ProfileAvatar, Group } from 'components'
-import { Icon } from 'react-native-elements'
 export const Header = props => (
   <LinearGradient
     colors={['#0092c9', '#ffffff']}

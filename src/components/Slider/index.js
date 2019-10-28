@@ -23,7 +23,7 @@ export const Slider = ({ navigate }) => (
         justifyContent: 'flex-end',
         alignItems: 'center',
         backgroundColor: '#ffffff',
-        height: screen.height - 100,
+        height: screen.height - 150,
         width: screen.width,
       }}
     >

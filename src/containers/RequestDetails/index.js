@@ -2,31 +2,101 @@ import React, { Component } from 'react'
 import {
   Group, ScrollContainer, CurvedHeader, RequestDetailsCard, SplashButton,
 } from 'components'
-import { Dimensions } from 'react-native'
+import { Dimensions,ActivityIndicator } from 'react-native'
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
+import PropTypes from 'prop-types'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import { storeActions } from 'actions'
 
-import seats from '../../assets/purchase_image.png'
 
 const screen = Dimensions.get('screen')
 
 class RequestDetails extends Component {
+  static navigationOptions = ({ navigation }) => ({
+    headerTitle: 'Request Details',
+    headerTitleStyle: {
+      textAlign: 'center',
+      flexGrow: 1,
+      alignSelf: 'center',
+      color: '#ffffff',
+    },
+    headerStyle: {
+      backgroundColor: '#1E1E1E',
+    },
+    headerRight: (
+      <FontAwesome5
+        name="bell"
+        size={18}
+        onPress={() => {}}
+        solid
+        style={{
+          marginRight: 10,
+          color: '#ffffff',
+
+        }}
+      />),
+    headerLeft: (
+      <FontAwesome5
+        name="stream"
+        size={18}
+        onPress={() => navigation.toggleDrawer()}
+        solid
+        style={{
+          marginLeft: 10,
+          color: '#ffffff',
+        }}
+      />),
+  });
+
+  componentDidMount =async () => {
+    const { actions:{ getOrderById },storeData:{ orderId } } = this.props
+    await getOrderById(orderId)
+  }
+
+  handleChangeStatus =async (status) => {
+    const { actions:{ changeOrderStatus },navigation:{ navigate } } = this.props
+
+    const response = await changeOrderStatus(status)
+    if (status === 2 && response) { navigate('HomePage') }
+    if (status === 3 && response) { navigate('Payment') }
+  }
+
   render() {
+    const { storeData:{ order ,isFetching } } = this.props
+    if (isFetching) { return (
+      <Group
+        style={{
+          position: 'absolute',
+          left: 0,
+          right: 0,
+          top: 0,
+          bottom: 0,
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <ActivityIndicator size="large" />
+      </Group>
+    ) }
     return (
       <ScrollContainer>
         <Group style={{ backgroundColor: '#F6F6F6', minHeight: screen.height }}>
-          <CurvedHeader type="image" source={seats} />
+          <CurvedHeader type="image" source={{ uri:order.service.image }} />
           <RequestDetailsCard
             style={{ marginBottom: 50 }}
-            requestName="Back seats"
-            requestDate="19/8/2018 7:22 AM"
-            startingDate="19/9/2018"
-            ofToHour="6:00 PM-3:00 PM"
-            location="Gaza"
-            orderStatus="Canceled"
-            driverName="Said Sayeed"
-            supplierName="Marwan Jameel"
+            requestName={order.service.en_name}
+            requestDate={`${order.service_date}${order.service_time}`}
+            startingDate={order.service_date}
+            ofToHour={order.service_time}
+            location=""
+            orderStatus=""
+            driverName={order.driver || ''}
+            supplierName=""
           />
           <Group style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' }}>
             <SplashButton
+              onPress={() => this.handleChangeStatus(2)}
               title="Cancel Request"
               style={{
                 buttonStyle: {
@@ -39,6 +109,8 @@ class RequestDetails extends Component {
             />
             <SplashButton
               title="Request Done"
+              onPress={() => this.handleChangeStatus(3)}
+
               style={{
                 buttonStyle: {
                   backgroundColor: '#707070',
@@ -55,4 +127,19 @@ class RequestDetails extends Component {
   }
 }
 
-export default RequestDetails
+RequestDetails.propTypes = {
+  actions: PropTypes.object.isRequired,
+  storeData: PropTypes.object.isRequired,
+
+}
+
+const mapDispatchToProps = (dispatch) => ({
+  actions: bindActionCreators({ ...storeActions }, dispatch),
+})
+
+const mapStateToProps = (state) => ({
+  user: state.userData.user,
+  storeData: state.storeData,
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(RequestDetails)

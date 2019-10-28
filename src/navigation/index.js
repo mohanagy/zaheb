@@ -1,115 +1,15 @@
 import React from 'react'
+
+import { createStackNavigator } from 'react-navigation-stack'
+import { createAppContainer } from '@react-navigation/native'
+import { createBottomTabNavigator } from 'react-navigation-tabs'
+import { createDrawerNavigator } from 'react-navigation-drawer'
+
 import {
-  createBottomTabNavigator, createAppContainer, createStackNavigator, createMaterialTopTabNavigator,
-} from 'react-navigation'
-import {
-  MyInformation, MyPayments, OrderTube, MyOrders, Splash, SplashLoading,
-  Login, Register, CurrentOrders, PreviousOrders, OrdersNotPaid, CurrentOrderDetails, ForgotPassword,
-  ContactUs, MyPurchases, MyRequests, Conversations, HomeStore, HomeType, Products, Workshops,
-  MyOffers, TermsAndConditions, WhoWeAre, ProfileSupplier, ProfileWorkshop, Favorites, HomePage, HomeStarterPage,
-  CustomerService, SubServices, RequestDetails, DetailsOfYourCar, Profile, ProfileDriver, Notifications, Payment,
-  PaymentInformation, ProductOptions, Chat,
-} from 'containers'
-
-import { Header } from 'components'
-import { Icon } from 'react-native-elements'
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
-
-const OrderTubeStack = createStackNavigator({ OrderTube })
-const SplashStack = createStackNavigator({ Splash }, { navigationOptions: { header: null } })
-const MyOrdersStack = createStackNavigator({ MyOrders })
-const CurrentOrdersStack = createStackNavigator({ CurrentOrders, CurrentOrderDetails })
-const PreviousOrdersStack = createStackNavigator({ PreviousOrders })
-const OrdersNotPaidStack = createStackNavigator({ OrdersNotPaid })
-const MyAccountStack = createMaterialTopTabNavigator({ MyInformation, MyPayments })
-const TabCustomerNavigator = createBottomTabNavigator(
-  {
-    MyOrders: { screen: MyOrdersStack, navigationOptions: { tabBarLabel: 'طلباتي', header: null } },
-    MyAccount: {
-      screen: MyAccountStack,
-      navigationOptions: () => ({ tabBarLabel: 'حسابي', header: props => <Header {...props} /> }),
-    },
-    OrderTube: { screen: OrderTubeStack, navigationOptions: { tabBarLabel: 'اطلب اسطوانة' } },
-  },
-  {
-    order: ['MyOrders', 'OrderTube', 'MyAccount'],
-    initialRouteName: 'OrderTube',
-    defaultNavigationOptions: ({ navigation }) => ({
-      tabBarIcon: ({ tintColor }) => {
-        const { routeName } = navigation.state
-        const IconComponent = Icon
-        let iconName
-        switch (routeName) {
-          case 'MyAccount': iconName = 'user'; break
-          case 'OrderTube': iconName = 'plus-square'; break
-          case 'MyOrders': iconName = 'cubes'; break
-          default: iconName = 'cubes'
-        }
-        return <IconComponent type="font-awesome" name={iconName} size={25} color={tintColor} />
-      },
-    }),
-    tabBarOptions: { activeTintColor: '#e91e63', labelStyle: { fontFamily: 'HelveticaNeueW23forSKY-Reg' } },
-    lazy: true,
-    lazyLoading: true,
-    navigationOptions: ({ navigation }) => {
-      const { routeName } = navigation.state.routes[navigation.state.index]
-      if (routeName === 'MyAccount') { return { header: props => <Header {...props} /> } }
-      return { header: null }
-    },
-    headerMode: 'screen',
-  }
-)
-const TabWorkerNavigator = createBottomTabNavigator(
-  {
-    CurrentOrders: { screen: CurrentOrdersStack, navigationOptions: { tabBarLabel: 'الطلبات الحالية' } },
-    PreviousOrders: { screen: PreviousOrdersStack, navigationOptions: () => ({ tabBarLabel: 'طلبات سابقة' }) },
-    OrdersNotPaid: { screen: OrdersNotPaidStack, navigationOptions: { tabBarLabel: 'طلبات تحتاج الى تحصيل' } },
-  },
-  {
-    order: ['CurrentOrders', 'PreviousOrders', 'OrdersNotPaid'],
-    initialRouteName: 'PreviousOrders',
-    defaultNavigationOptions: ({ navigation }) => ({
-      tabBarIcon: ({ tintColor }) => {
-        const { routeName } = navigation.state
-        let iconName
-        switch (routeName) {
-          case 'OrdersNotPaid':
-            iconName = 'file-invoice-dollar'
-            break
-          case 'PreviousOrders':
-            iconName = 'receipt'
-            break
-          case 'CurrentOrders':
-            iconName = 'cubes'
-            break
-          default:
-            iconName = 'cubes'
-            break
-        }
-        return (
-          <FontAwesome5 type="font-awesome" name={iconName} size={20} color={tintColor} />
-        )
-      },
-    }),
-    tabBarOptions: {
-      activeTintColor: '#e91e63',
-      labelStyle: { fontFamily: 'HelveticaNeueW23forSKY-Reg' },
-    },
-    lazy: true,
-    lazyLoading: true,
-    navigationOptions: { header: null },
-  }
-)
-
-const MyAccountNavigator = createStackNavigator({
+  Splash,
   SplashLoading,
-  Splash: SplashStack,
-  TabCustomerNavigator,
-  TabWorkerNavigator,
   Login,
   Register,
-  MyAccount: MyAccountStack,
-  Header,
   ForgotPassword,
   ContactUs,
   MyPurchases,
@@ -120,10 +20,10 @@ const MyAccountNavigator = createStackNavigator({
   Products,
   Workshops,
   MyOffers,
+  Offers,
   TermsAndConditions,
   WhoWeAre,
   ProfileSupplier,
-  ProfileDriver,
   ProfileWorkshop,
   Favorites,
   HomePage,
@@ -133,16 +33,399 @@ const MyAccountNavigator = createStackNavigator({
   RequestDetails,
   DetailsOfYourCar,
   Profile,
+  ProfileDriver,
   Notifications,
   Payment,
   PaymentInformation,
   ProductOptions,
   Chat,
-},
-{
-  initialRouteName: 'Chat',
-  headerMode: 'screen',
-  navigationOptions: { header: null },
+  NearestServiceCenter,
+} from 'containers'
+
+import { BottomTab } from 'components'
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
+import Drawer from '../components/Drawer'
+
+const SplashStack = createStackNavigator(
+  { Splash },
+  { navigationOptions: { header: null } }
+)
+
+const HomeStack = createStackNavigator({
+  HomePage,
+  navigationOptions: () => ({ header: null, headerMode: 'none' }),
+})
+const HomeStoreStack = createStackNavigator({
+  HomeStore,
+  navigationOptions: () => ({ header: null, headerMode: 'none' }),
+
+})
+const MyRequestsStack = createStackNavigator({
+  MyRequests,
+  navigationOptions: () => ({ header: null, headerMode: 'none' }),
+
+})
+const CustomerServiceStack = createStackNavigator({
+  CustomerService,
+  navigationOptions: () => ({ header: null, headerMode: 'none' }),
+
+})
+const MyPurchasesStack = createStackNavigator({
+  MyPurchases,
+  navigationOptions: () => ({ header: null, headerMode: 'none' }),
+
+})
+const WhoWeAreStack = createStackNavigator({
+  WhoWeAre,
+  navigationOptions: () => ({ header: null, headerMode: 'none' }),
+
+})
+const ConversationsStack = createStackNavigator({
+  Conversations,
+  navigationOptions: () => ({ header: null, headerMode: 'none' }),
+
+})
+const MyOffersStack = createStackNavigator({
+  MyOffers,
+  navigationOptions: () => ({ header: null, headerMode: 'none' }),
+
+})
+const OffersStack = createStackNavigator({
+  Offers,
+  navigationOptions: () => ({ header: null, headerMode: 'none' }),
+
+})
+const FavoritesStack = createStackNavigator({
+  Favorites,
+  navigationOptions: () => ({ header: null, headerMode: 'none' }),
+
+})
+const TermsAndConditionsStack = createStackNavigator({
+  TermsAndConditions,
+  navigationOptions: () => ({ header: null, headerMode: 'none' }),
+
+})
+const ContactUsStack = createStackNavigator({
+  ContactUs,
+  navigationOptions: () => ({ header: null, headerMode: 'none' }),
+
+})
+const ProfileStack = createStackNavigator({
+  Profile,
+  navigationOptions: () => ({ header: null, headerMode: 'none' }),
+
+})
+const SubServicesStack = createStackNavigator({
+  SubServices,
+  navigationOptions: () => ({ header: null, headerMode: 'none' }),
+
+})
+const HomeTypeStack = createStackNavigator({
+  HomeType,
+  navigationOptions: () => ({ header: null, headerMode: 'none' }),
+
+})
+const WorkshopsStack = createStackNavigator({
+  Workshops,
+  navigationOptions: () => ({ header: null, headerMode: 'none' }),
+
+})
+const NearestServiceCenterStack = createStackNavigator({
+  NearestServiceCenter,
+  navigationOptions: () => ({ header: null, headerMode: 'none' }),
+
+})
+const RequestDetailsStack = createStackNavigator({
+  RequestDetails,
+  navigationOptions: () => ({ header: null, headerMode: 'none' }),
+
+})
+const PaymentCreditStack = createStackNavigator({
+  Payment,
+  navigationOptions: () => ({ header: null, headerMode: 'none' }),
+
 })
 
-export default createAppContainer(MyAccountNavigator)
+const TabNavigator = createBottomTabNavigator(
+  {
+    Purchases: {
+      screen: MyPurchasesStack,
+      navigationOptions: {
+        tabBarLabel: 'Purchases',
+        header: null,
+      },
+    },
+    MyRequests: {
+      screen: MyRequestsStack,
+      navigationOptions: () => ({
+        tabBarLabel: 'My request',
+        header:null,
+      }),
+    },
+    HomePage: {
+      screen: HomeStack,
+      navigationOptions: () => ({
+        tabBarLabel: 'Home',
+        title: 'Home',
+        headerMode: 'none',
+      }),
+    },
+    CustomersService: {
+      screen: CustomerServiceStack,
+      navigationOptions: {
+        tabBarLabel: 'Customers service',
+      },
+    },
+    Profile: {
+      screen: ProfileStack,
+      navigationOptions: {
+        tabBarLabel: 'Profile',
+      },
+    },
+    tabBarComponent: () => <BottomTab />,
+  },
+  {
+    order: [
+      'Purchases',
+      'MyRequests',
+      'HomePage',
+      'CustomersService',
+      'Profile',
+    ],
+    initialRouteName: 'HomePage',
+    defaultNavigationOptions: ({ navigation }) => ({
+      tabBarIcon: ({ tintColor }) => {
+        const { routeName } = navigation.state
+        let iconName
+        switch (routeName) {
+          case 'Purchases':
+            iconName = 'shopping-cart'
+            break
+          case 'MyRequests':
+            iconName = 'list'
+            break
+          case 'HomePage':
+            iconName = 'home'
+            break
+          case 'CustomersService':
+            iconName = 'headset'
+            break
+          case 'Profile':
+            iconName = 'user-alt'
+            break
+          default:
+            iconName = 'cubes'
+            break
+        }
+        return (
+          <FontAwesome5
+            type="font-awesome"
+            name={iconName}
+            size={routeName === 'HomePage' ? 20 : 20}
+            color={tintColor}
+            style={
+              routeName === 'HomePageX'
+                ? {
+                  height: 80,
+                  width: 80,
+                  borderRadius: 100,
+                  paddingTop: 15,
+                }
+                : undefined
+            }
+          />
+        )
+      },
+    }),
+    tabBarOptions: {
+      labelStyle: { fontFamily: 'HelveticaNeueW23forSKY-Reg' },
+    },
+    lazy: true,
+    lazyLoading: true,
+    navigationOptions: {
+      headerMode: 'none',
+      header: null,
+    },
+  }
+)
+
+const Navigator = createStackNavigator(
+  {
+    SplashLoading,
+    Splash: SplashStack,
+    Login,
+    Register,
+    ForgotPassword,
+    ContactUs:ContactUsStack,
+    MyPurchases:MyPurchasesStack,
+    MyRequests:MyRequestsStack,
+    Conversations:ConversationsStack,
+    HomeStore:HomeStoreStack,
+    HomeType:HomeTypeStack,
+    Products,
+    Workshops:WorkshopsStack,
+    MyOffers:MyOffersStack,
+    Offers:OffersStack,
+    TermsAndConditions:TermsAndConditionsStack,
+    WhoWeAre:WhoWeAreStack,
+    ProfileSupplier,
+    ProfileDriver,
+    ProfileWorkshop,
+    Favorites:FavoritesStack,
+    HomePage: TabNavigator,
+    HomeStarterPage,
+    CustomerService:CustomerServiceStack,
+    SubServices:SubServicesStack,
+    RequestDetails:RequestDetailsStack,
+    DetailsOfYourCar,
+    Profile:ProfileStack,
+    Notifications,
+    Payment:PaymentCreditStack,
+    PaymentInformation,
+    ProductOptions,
+    Chat,
+    NearestServiceCenter:NearestServiceCenterStack,
+  },
+  {
+    initialRouteName: 'Payment',
+    header:null,
+    headerMode:'none',
+
+
+  }
+)
+const MyDrawerNavigator = createDrawerNavigator(
+  {
+    Home: {
+      screen: Navigator,
+      navigationOptions: {
+        drawerIcon: ({ tintColor }) => (
+          <FontAwesome5 name="home" size={24} style={{ color: tintColor }} />
+        ),
+      },
+    },
+    'My requests': {
+      screen: MyRequestsStack,
+      navigationOptions: {
+        drawerIcon: ({ tintColor }) => (
+          <FontAwesome5 name="list" size={24} style={{ color: tintColor }} />
+        ),
+      },
+    },
+    'Customers service': {
+      screen: CustomerServiceStack,
+      navigationOptions: {
+        drawerIcon: ({ tintColor }) => (
+          <FontAwesome5 name="headset" size={24} style={{ color: tintColor }} />
+        ),
+      },
+    },
+    'My purchases': {
+      screen: MyPurchasesStack,
+      navigationOptions: {
+        drawerIcon: ({ tintColor }) => (
+          <FontAwesome5
+            name="shopping-cart"
+            size={24}
+            style={{ color: tintColor }}
+          />
+        ),
+      },
+    },
+    Profile: {
+      screen: ProfileStack,
+      navigationOptions: {
+        drawerIcon: ({ tintColor }) => (
+          <FontAwesome5
+            name="user-alt"
+            size={24}
+            style={{ color: tintColor }}
+          />
+        ),
+      },
+    },
+    'Who are we': {
+      screen: WhoWeAreStack,
+      navigationOptions: {
+        drawerIcon: ({ tintColor }) => (
+          <FontAwesome5 name="users" size={24} style={{ color: tintColor }} />
+        ),
+      },
+    },
+    Conversations: {
+      screen: ConversationsStack,
+      navigationOptions: {
+        drawerIcon: ({ tintColor }) => (
+          <FontAwesome5
+            name="comment-dots"
+            size={24}
+            style={{ color: tintColor }}
+          />
+        ),
+      },
+    },
+    'Offers': {
+      screen:OffersStack,
+      navigationOptions: {
+        drawerIcon: ({ tintColor }) => (
+          <FontAwesome5 name="tags" size={24} style={{ color: tintColor }} />
+        ),
+      },
+    },
+    'My offers': {
+      screen:MyOffersStack,
+      navigationOptions: {
+        drawerIcon: ({ tintColor }) => (
+          <FontAwesome5 name="tags" size={24} style={{ color: tintColor }} />
+        ),
+      },
+    },
+    Favorites: {
+      screen: FavoritesStack,
+      navigationOptions: {
+        drawerIcon: ({ tintColor }) => (
+          <FontAwesome5 name="heart" size={24} style={{ color: tintColor }} />
+        ),
+      },
+    },
+    'Terms and conditions': {
+      screen: TermsAndConditionsStack,
+      navigationOptions: {
+        drawerIcon: ({ tintColor }) => (
+          <FontAwesome5
+            name="file-signature"
+            size={24}
+            style={{ color: tintColor }}
+          />
+        ),
+      },
+    },
+    'Contact us': {
+      screen: ContactUsStack,
+      navigationOptions: {
+        drawerIcon: ({ tintColor }) => (
+          <FontAwesome5
+            name="address-book"
+            size={24}
+            style={{ color: tintColor }}
+          />
+        ),
+      },
+    },
+  },
+  {
+    initialRouteName: 'Home',
+    drawerPosition: 'left',
+    drawerOpenRoute: 'DrawerOpen',
+    drawerCloseRoute: 'DrawerClose',
+    // drawerToggleRoute: 'DrawerToggle',
+    // drawerBackgroundColor: 'rgba(255,255,255,1)',
+    contentOptions: {
+      activeBackgroundColor: 'black',
+      activeTintColor: 'red',
+    },
+    contentComponent: (props) => <Drawer {...props} />,
+
+  }
+)
+export default createAppContainer(MyDrawerNavigator)

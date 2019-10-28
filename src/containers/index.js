@@ -19,10 +19,10 @@ import HomeType from './HomeType'
 import Products from './Products'
 import Workshops from './Workshops'
 import MyOffers from './MyOffers'
+import Offers from './Offers'
 import TermsAndConditions from './TermsAndConditions'
 import WhoWeAre from './WhoWeAre'
 import ProfileSupplier from './ProfileSupplier'
-import ProfileDriver from './ProfileDriver'
 import ProfileWorkshop from './ProfileWorkshop'
 import Favorites from './Favorites'
 import HomePage from './HomePage'
@@ -33,10 +33,14 @@ import RequestDetails from './RequestDetails'
 import DetailsOfYourCar from './DetailsOfYourCar'
 import Profile from './Profile'
 import Notifications from './Notifications'
+import PaymentCredit from '../components/PaymentCredit'
 import Payment from './Payment'
+import PaymentPayPal from '../components/PaymentPayPal'
 import PaymentInformation from './PaymentInformation'
 import ProductOptions from './ProductOptions'
 import Chat from './Chat'
+import ProfileDriver from './ProfileDriver'
+import NearestServiceCenter from './NearestServiceCenter'
 
 export {
   MyInformation,
@@ -61,22 +65,26 @@ export {
   Products,
   Workshops,
   MyOffers,
+  Offers,
   TermsAndConditions,
   WhoWeAre,
   ProfileSupplier,
-  ProfileDriver,
   ProfileWorkshop,
   Favorites,
   HomePage,
-  HomeStarterPage,
   CustomerService,
   SubServices,
   RequestDetails,
   DetailsOfYourCar,
   Profile,
   Notifications,
+  PaymentCredit,
   Payment,
+  PaymentPayPal,
   PaymentInformation,
   ProductOptions,
   Chat,
+  ProfileDriver,
+  NearestServiceCenter,
+  HomeStarterPage,
 }

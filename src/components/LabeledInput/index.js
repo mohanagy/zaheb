@@ -6,7 +6,7 @@ import { Group } from 'components'
 
 export const LabeledInput = (props) => {
   const {
-    containerStyle, labelStyle, inputStyle, placeholder, label,
+    containerStyle, labelStyle, inputStyle, placeholder, label, onChangeText, secureTextEntry,disabled,
   } = props
   return (
     <Group style={containerStyle}>
@@ -17,6 +17,9 @@ export const LabeledInput = (props) => {
         placeholder={placeholder}
         inputStyle={inputStyle}
         inputContainerStyle={{ borderBottomWidth: 0 }}
+        onChangeText={onChangeText}
+        secureTextEntry={secureTextEntry}
+        disabled={disabled}
       >
       </Input>
     </Group>
@@ -25,9 +28,11 @@ export const LabeledInput = (props) => {
 
 LabeledInput.propTypes = {
   placeholder: PropTypes.string.isRequired,
+  secureTextEntry: PropTypes.bool,
   inputStyle: PropTypes.object,
   labelStyle: PropTypes.object,
   containerStyle: PropTypes.object,
+  onChangeText: PropTypes.func.isRequired,
   label: PropTypes.oneOf([PropTypes.string, PropTypes.node]).isRequired,
 }
 
@@ -35,4 +40,5 @@ LabeledInput.defaultProps = {
   inputStyle: {},
   labelStyle: {},
   containerStyle: {},
+  secureTextEntry: false,
 }

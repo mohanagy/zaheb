@@ -2,7 +2,9 @@ import React from 'react'
 import { ScrollView } from 'react-native'
 import PropTypes from 'prop-types'
 
-export const ScrollContainer = ({ children, style, contentContainerStyle }) => (
+export const ScrollContainer = ({
+  children, style, contentContainerStyle,
+}) => (
   <ScrollView
     keyboardShouldPersistTaps="never"
     contentContainerStyle={{
