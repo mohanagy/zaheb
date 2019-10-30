@@ -171,6 +171,11 @@ const ProductOptionsStack = createStackNavigator({
   navigationOptions: () => ({ header: null, headerMode: 'none' }),
 
 })
+const PaymentInformationStack = createStackNavigator({
+  PaymentInformation,
+  navigationOptions: () => ({ header: null, headerMode: 'none' }),
+
+})
 
 const TabNavigator = createBottomTabNavigator(
   {
@@ -308,7 +313,7 @@ const Navigator = createStackNavigator(
     Profile:ProfileStack,
     Notifications:NotificationsStack,
     Payment:PaymentCreditStack,
-    PaymentInformation,
+    PaymentInformation:PaymentInformationStack,
     ProductOptions:ProductOptionsStack,
     Chat,
     NearestServiceCenter:NearestServiceCenterStack,

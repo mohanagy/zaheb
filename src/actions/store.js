@@ -78,6 +78,9 @@ export const selectService = (id) => async (dispatch) => {
 export const selectWorkShop = (id) => async (dispatch) => {
   dispatch(getDataSuccess({ selectedWorkShopId: id }))
 }
+export const setShippingDetails = (shippingDetails) => async (dispatch) => {
+  dispatch(getDataSuccess({ shippingDetails }))
+}
 
 export const getWorkShopsByServiceId = (id) => async (dispatch, getState) => {
   dispatch(startStoreFetching())
@@ -606,4 +609,60 @@ export const setFilters = ({ manufacturingYear,vehicleModel,selectedProductId })
       car_model_id:vehicleModel,
     },
   }))
+}
+
+export const placeOrder =  (newOrder) =>  async (dispatch,getState) => {
+  dispatch(startStoreFetching())
+  try {
+    const data = new FormData()
+    data.append('supplier_id', newOrder.supplier_id)
+    data.append('product_id', newOrder.product_id)
+    data.append('need_driver', newOrder.need_driver)
+    data.append('payment_type', newOrder.payment_type)
+    data.append('shipping_name', newOrder.shipping_name)
+    data.append('shipping_city', newOrder.shipping_city)
+    data.append('shipping_street', newOrder.shipping_street)
+    data.append('shipping_phone', newOrder.shipping_phone)
+    if (newOrder.payment_type === 3) {
+      data.append('bank_name', newOrder.bank_name)
+      data.append('account_number', newOrder.account_number)
+      data.append('bank_attachment', {
+        uri: newOrder.bank_attachment,
+        name: 'bank_attachment.jpg',
+        type: ' image/jpeg',
+      })
+    }
+
+    const { userData: { accessToken } } = getState()
+    const response = await axios({
+      url:api.createProductOrder,
+      method: 'post',
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+        'Content-Type': '',
+      },
+      data,
+    })
+    const { data:result } = await response
+    const { status,order } = result
+    if (!status) { return dispatch(errorHappened({
+      type: 'error',
+      title: 'خطأ',
+      message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
+    })) }
+    const { id } = order
+    dispatch(getDataSuccess({ orderId:id }))
+  }
+  catch (error) {
+    dispatch(errorHappened({
+      type: 'error',
+      title: 'خطأ',
+      message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
+    }))
+    return false
+  }
+  finally {
+    dispatch(finishStoreFetching())
+  }
 }

@@ -36,7 +36,7 @@ import Profile from './Profile'
 import Notifications from './Notifications'
 import PaymentCredit from '../components/PaymentCredit'
 import Payment from './Payment'
-import PaymentPayPal from '../components/PaymentPayPal'
+import PaymentBank from '../components/PaymentBank'
 import PaymentInformation from './PaymentInformation'
 import ProductOptions from './ProductOptions'
 import Chat from './Chat'
@@ -81,7 +81,7 @@ export {
   Notifications,
   PaymentCredit,
   Payment,
-  PaymentPayPal,
+  PaymentBank,
   PaymentInformation,
   ProductOptions,
   Chat,

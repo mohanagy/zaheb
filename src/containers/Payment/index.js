@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {
-  Group, ScrollContainer,PaymentCredit,PaymentButton,PaymentPayPal,
+  Group, ScrollContainer,PaymentCredit,PaymentButton,PaymentBank ,
 } from 'components'
 import { Dimensions } from 'react-native'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
@@ -8,12 +8,13 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as storeActions from 'actions/store'
 import PropTypes from 'prop-types'
+import PayPal from 'react-native-paypal-wrapper'
 
 const screen = Dimensions.get('screen')
 
 class Payment extends Component {
   static navigationOptions = ({ navigation }) => ({
-    headerTitle: 'Home',
+    headerTitle: 'Payment',
     headerTitleStyle: {
       textAlign: 'center',
       flexGrow: 1,
@@ -64,6 +65,42 @@ class Payment extends Component {
     })
   }
 
+componentDidMount= () => {
+  PayPal.initialize(PayPal.SANDBOX,'AVlUoWineWrnrXuiTCGYzepYq_hlESVomdWgW2kDo-o9Pn_Ohbn4t63x1vU-ve-wlQ7kfc1IhmRqqcyC')
+}
+
+  onPress = async (method) => {
+    const {
+      storeData:{ shippingDetails ,filteredProducts ,selectedProductId },actions:{ placeOrder },navigation:{
+        navigate,
+      },
+    } = this.props
+    const product = filteredProducts.find(({ id }) => id === selectedProductId)
+
+    try {
+      if (method !== 'cash') { await PayPal.pay({
+        price: '50',
+        currency: 'USD',
+        description: 'Your description goes here',
+      }) }
+      const order = {
+        supplier_id:product.user_id,
+        product_id:product.id,
+        need_driver:shippingDetails.need_driver || 0,
+        payment_type:method === 'cash' ? 1 : 2,
+        shipping_name:shippingDetails.receiverName,
+        shipping_city:shippingDetails.city,
+        shipping_street:shippingDetails.street,
+        shipping_phone:shippingDetails.phoneNumber,
+      }
+      await placeOrder(order)
+      await navigate('HomeStore')
+    }
+    catch (error) {
+      await navigate('HomeStore')
+    }
+  }
+
   render() {
     const { activePaymentMethod,methods } = this.state
     return (
@@ -82,7 +119,12 @@ class Payment extends Component {
               />
             ))}
           </Group>
-          {activePaymentMethod === 'cashcard' ? <PaymentCredit /> : <PaymentPayPal />}
+          {activePaymentMethod !== 'bank' ? (
+            <PaymentCredit
+              title={activePaymentMethod === 'cash' ? 'Done' : 'Pay'}
+              onPress={() => this.onPress(activePaymentMethod)}
+            />
+          ) : <PaymentBank  />}
         </Group>
       </ScrollContainer>
     )
