@@ -10,8 +10,8 @@ import { bindActionCreators } from 'redux'
 import * as userActions from 'actions/users'
 
 export class SplashLoading extends Component {
-  componentDidMount() {
-    this.checkInformation()
+  async componentDidMount() {
+    await this.checkInformation()
   }
 
   checkInformation=async () => {

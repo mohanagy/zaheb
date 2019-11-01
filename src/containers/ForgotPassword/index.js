@@ -1,20 +1,39 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import {
-  Logo, Title, Group, SplashButton,
-  InputField, SimpleForm, LabeledInput,
-  Details, Dot,
+  Title, Group, SplashButton,  SimpleForm, LabeledInput,  Dot,
 } from 'components'
-import logo from 'assets/logo.png'
 import blurredBackground from 'assets/blurred-background.png'
-
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import * as userActions from 'actions/users'
 class ForgotPassword extends Component {
+  state={
+    phone:null,
+    email:null,
+  }
+
+  handleChange =(field,value) => {
+    this.setState({
+      [field]:value,
+    })
+  }
+
+  handleSubmit =async () => {
+    const { actions:{ forgetPassword },navigation:{ navigate } } = this.props
+    const { phone,email } = this.state
+    await forgetPassword({ email ,phone })
+    navigate('Login')
+  }
+
   static navigationOptions = {
     header: null,
   };
 
+
   render() {
     const { navigation: { navigate } } = this.props
+    const { phone,email } = this.state
     return (
       <SimpleForm
         backgroundSource={blurredBackground}
@@ -36,10 +55,12 @@ class ForgotPassword extends Component {
             ]}
           />
           <LabeledInput
-            label="E-Mail"
+            label="Enter your email"
             inputStyle={inputStyle}
             labelStyle={inputLabelStyle}
             containerStyle={inputContainerStyle}
+            value={email}
+            onChangeText={(value) => this.handleChange('email',value)}
           />
           <Group
             style={{
@@ -55,14 +76,16 @@ class ForgotPassword extends Component {
             <Dot />
           </Group>
           <LabeledInput
-            label="Mobile number"
+            label="Phone number"
             inputStyle={inputStyle}
             labelStyle={inputLabelStyle}
             containerStyle={{ ...inputContainerStyle, marginBottom: 60 }}
+            value={phone}
+            onChangeText={(value) => this.handleChange('phone',value)}
           />
           <SplashButton
             title="Send"
-            onPress={() => navigate('PreviousOrders')}
+            onPress={() => this.handleSubmit()}
             style={buttonStyle}
           />
         </Group>
@@ -110,4 +133,21 @@ const buttonStyle = {
   },
 }
 
-export default ForgotPassword
+const mapDispatchToProps = (dispatch) => ({
+  actions: bindActionCreators(userActions,dispatch,),
+})
+
+const mapStateToProps = (state) => ({
+  user: state.userData.user,
+  common: state.common,
+})
+
+ForgotPassword.propTypes = {
+  navigate: PropTypes.func.isRequired,
+  actions: PropTypes.object.isRequired,
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(ForgotPassword)

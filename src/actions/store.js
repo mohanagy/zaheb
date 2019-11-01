@@ -293,9 +293,6 @@ export const getWorkshopOffers =  () =>  async (dispatch,getState) => {
     })
     const json = await response.json()
     const {  workshopOffers } = json
-    console.log({
-      workshopOffers,json,
-    })
     dispatch(getDataSuccess({ workshopOffers }))
   }
   catch (error) {
@@ -451,9 +448,7 @@ export const getOrderById =  (id) =>  async (dispatch,getState) => {
     })
     const json = await response.json()
     const {  order } = json
-    console.log({
-      json,
-    })
+
     dispatch(getDataSuccess({ order }))
   }
   catch (error) {
@@ -599,9 +594,6 @@ export const getProductsByFilters =  (productsFilter) =>  async (dispatch,getSta
 }
 
 export const setFilters = ({ manufacturingYear,vehicleModel,selectedProductId }) => async (dispatch) => {
-  console.log({
-    manufacturingYear,vehicleModel,selectedProductId,
-  })
   dispatch(getDataSuccess({
     productsFilter:{
       product_classification_id:selectedProductId,

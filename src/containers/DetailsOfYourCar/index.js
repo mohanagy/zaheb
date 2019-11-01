@@ -76,12 +76,6 @@ class DetailsOfYourCar extends Component {
 
   handleNextButton =async (manufacturingYear,vehicleModel,bodyNumber) => {
     const { actions:{ setFilters },navigation:{ navigate },storeData:{ selectedProductId } } = this.props
-    console.log({
-      manufacturingYear,
-      vehicleModel,
-      selectedProductId,
-      t:'sakldaskldmaklsmdlkasmkldmsa',
-    })
     await setFilters({ manufacturingYear,vehicleModel,selectedProductId })
     navigate('Products')
   }

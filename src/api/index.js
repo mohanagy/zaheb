@@ -1,7 +1,7 @@
 
 // const API_URL = 'http://192.168.1.251:3000'
 // const API_URL = 'http://192.168.1.252:3000'
-const API_URL = 'http://mahmoudskaik.website'
+const API_URL = 'http://Marenksa.com'
 const APIV1 = `${API_URL}/api`
 
 module.exports = {
@@ -34,6 +34,9 @@ module.exports = {
     getProductsByFilters: `${APIV1}/getProducts`,
     getWorkshopOffers: `${APIV1}/myOffers`,
     getNotifications: `${APIV1}/getNotification`,
+    forgetPassword: `${APIV1}/forgetPassword`,
+    userRegister: `${APIV1}/userRegister`,
+    createCustomerServices: `${APIV1}/createCustomerServices`,
     getProductsClassificationByCarTypeId: `${APIV1}/getProductsClassificationByCarTypeId`,
     cancelMyRequestedOffers: `${APIV1}/cancelMyRequestedOffers?offer_id=`,
     getMyFavorites: `${APIV1}/getMyFavourite`,

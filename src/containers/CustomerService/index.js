@@ -47,7 +47,28 @@ class CustomerService extends Component {
       />),
   });
 
+  state={
+    title:null,
+    message:null,
+  }
+
+  handleChange =(field,value) => {
+    this.setState({
+      [field]:value,
+    })
+  }
+
+  handleSubmit =async () => {
+    const { actions:{ sendCustomerService },navigation:{ navigate } } = this.props
+    const { title,message } = this.state
+    await sendCustomerService({ title,message })
+    this.setState({
+      title:null,
+      message:null,
+    })  }
+
   render() {
+    const { title,message } = this.state
     return (
       <ScrollContainer>
         <CurvedHeader type="text" content="Customer Service" style={{ marginBottom: 30 }} />
@@ -59,6 +80,8 @@ class CustomerService extends Component {
             labelStyle={{
               marginVertical:10,
             }}
+            value={title}
+            onChangeText={(value) => this.handleChange('title',value)}
           />
           <Input
             multiline
@@ -69,9 +92,12 @@ class CustomerService extends Component {
             labelStyle={{
               marginVertical:10,
             }}
+            value={message}
+            onChangeText={(value) => this.handleChange('message',value)}
           />
           <SplashButton
             title="Contact Us"
+            onPress={() => this.handleSubmit()}
             style={{
               buttonStyle: {
                 width: 250,
