@@ -3,7 +3,7 @@ import {
   Group, Details, Conversation, ScrollContainer ,
 } from 'components'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
-import { Image, Dimensions ,BackHandler } from 'react-native'
+import { Image, Dimensions  ,ActivityIndicator } from 'react-native'
 import { Input } from 'react-native-elements'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -83,8 +83,24 @@ class Chat extends Component {
   }
 
   render() {
-    const { userData:{ conversation,selectedReceiver:{ name,image,id } } } = this.props
+    const { userData:{ conversation,selectedReceiver:{ name,image,id },isFetching } } = this.props
     const { message } = this.state
+
+    if (isFetching) { return (
+      <Group
+        style={{
+          position: 'absolute',
+          left: 0,
+          right: 0,
+          top: 0,
+          bottom: 0,
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <ActivityIndicator size="large" />
+      </Group>
+    ) }
     return (
       <Group
         style={{
@@ -132,7 +148,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const mapStateToProps = (state) => ({
   storeData: state.storeData,
-  common: state.common,
+  generalData:state.generalData,
   userData:state.userData,
 })
 

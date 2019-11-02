@@ -66,7 +66,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const mapStateToProps = (state) => ({
   user: state.userData.user,
-  common: state.common,
+  generalData:state.generalData,
 })
 
 SplashLoading.propTypes = {

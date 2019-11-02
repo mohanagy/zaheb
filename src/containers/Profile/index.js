@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import {
   Group, Details, CurvedHeader, LabeledInputWithIcon, ScrollContainer,
 } from 'components'
-import { Dimensions } from 'react-native'
+import { Dimensions,ActivityIndicator } from 'react-native'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -88,6 +88,22 @@ class Profile extends Component {
 
   render() {
     const {   user  } = this.state
+    const { userData:{ isFetching } } = this.props
+    if (isFetching) { return (
+      <Group
+        style={{
+          position: 'absolute',
+          left: 0,
+          right: 0,
+          top: 0,
+          bottom: 0,
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <ActivityIndicator size="large" />
+      </Group>
+    ) }
     return (
       <ScrollContainer>
         <Group style={{ backgroundColor: '#F6F6F6', minHeight: screen.height, paddingBottom: 50 }}>
@@ -191,7 +207,7 @@ const mapDispatchToProps = (dispatch) => ({
 })
 
 const mapStateToProps = (state) => ({
-  common: state.common,
+  generalData:state.generalData,
   userData:state.userData,
 })
 

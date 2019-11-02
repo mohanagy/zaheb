@@ -21,8 +21,8 @@ class Login extends Component {
   handleSubmitLogin= async () => {
     const { actions:{ login } , navigation: { navigate } } = this.props
     const { email,password }  = this.state
-    await login({ email,password })
-    const { user } = this.props
+    const user = await login({ email,password })
+
     if (user)navigate('HomePage')
   }
 
@@ -37,7 +37,7 @@ class Login extends Component {
       };
 
       render() {
-        const { navigation:{ navigate } } = this.props
+        const { navigation:{ navigate },userData:{ isFetching } } = this.props
         const { email,password } = this.state
         return (
           <SimpleForm
@@ -125,6 +125,7 @@ class Login extends Component {
                 title="Sign in"
                 onPress={() => this.handleSubmitLogin()}
                 style={buttonStyle}
+                loading={isFetching}
               />
             </Group>
           </SimpleForm>
@@ -177,7 +178,8 @@ const mapDispatchToProps = (dispatch) => ({
 
 const mapStateToProps = (state) => ({
   user: state.userData.user,
-  common: state.common,
+  userData:state.userData,
+  generalData: state.generalData,
 })
 
 Login.propTypes = {

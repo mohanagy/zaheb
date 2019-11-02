@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import moment from 'moment'
 
 import {
   Group, Details, Select, SplashButton, LabelWithIcon, TextArea,
@@ -8,7 +9,8 @@ import {
 export const NearestServiceModalBody = ({
   style, titleStyle, title, showPicker,
   selectVideoTapped,selectPhotoTapped,driver,setDriver,
-  image,video,handleCreateOrder,description,handleChangeText,
+  image,video,handleCreateOrder,description,handleChangeText,date,time,
+  isFetching,
 }) => (
   <Group
     style={{
@@ -44,9 +46,9 @@ export const NearestServiceModalBody = ({
 
         }}
       >
-        <LabelWithIcon label="Select Date" style={{ maxWidth: '50%', marginHorizontal: 10 }} onPress={() => showPicker('Date')} />
+        <LabelWithIcon label={date ? moment(date).format('YYYY-MM-DD') : 'Select Date'} style={{ maxWidth: '50%', marginHorizontal: 10 }} onPress={() => showPicker('Date')} />
         <LabelWithIcon
-          label=" Select Time"
+          label={time ? moment(time).format('HH:mm:ss') : 'Select Time'}
           style={{ maxWidth: '50%', marginHorizontal: 10 }}
           onPress={() => showPicker('Time')}
         />
@@ -109,6 +111,7 @@ export const NearestServiceModalBody = ({
       >
         <SplashButton
           title="Confirm location"
+          loading={isFetching}
           onPress={handleCreateOrder}
           style={{
             buttonStyle: {

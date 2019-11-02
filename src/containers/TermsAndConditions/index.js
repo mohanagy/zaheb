@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Dimensions } from 'react-native'
+import { Dimensions,ActivityIndicator } from 'react-native'
 
 import {
   Group, CurvedHeader, Details,
@@ -58,7 +58,22 @@ class TermsAndConditions extends Component {
   }
 
   render() {
-    const { generalData:{ terms:{ value } } } = this.props
+    const { generalData:{ terms:{ value } ,isFetching } } = this.props
+    if (isFetching) { return (
+      <Group
+        style={{
+          position: 'absolute',
+          left: 0,
+          right: 0,
+          top: 0,
+          bottom: 0,
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <ActivityIndicator size="large" />
+      </Group>
+    ) }
     return (
       <Group style={{ backgroundColor: '#F6F6F6' }}>
         <CurvedHeader type="text" content="Terms and Conditions" />

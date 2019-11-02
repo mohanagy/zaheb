@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { ScrollContainer, OfferCard } from 'components'
+import { ScrollContainer, OfferCard ,Group } from 'components'
+import { ActivityIndicator } from 'react-native'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -55,12 +56,47 @@ handleCancel =async (id) => {
   await getMyRequestedOffers()
 }
 
+handleSelectWorkShop= async (id) => {
+}
+
+
+handleMap =async (id) => {
+  const { actions:{ selectWorkShop },navigation:{ navigate } } = this.props
+  await selectWorkShop(id)
+  navigate('NearestServiceCenter')
+}
+
 render() {
-  const { storeData:{ offers } } = this.props
+  const { storeData:{ offers,isFetching } } = this.props
+  if (isFetching) { return (
+    <Group
+      style={{
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
+      <ActivityIndicator size="large" />
+    </Group>
+  ) }
   return (
     <ScrollContainer contentContainerStyle={{ marginTop: 20 }}>
       {
-        offers.map(({ description,service,id }) => <OfferCard description={description} service={service} key={id} handleCancel={() => this.handleCancel(id)} />)
+        offers.map(({ description,service,id }) => (
+          <OfferCard
+            isFetching={isFetching}
+            description={description}
+            service={service}
+            key={id}
+            handleCancel={() => this.handleCancel(id)}
+            handlePlus={() => this.handlePlus()}
+            handleMap={(id) => this.handleMap(id)}
+          />
+        ))
       }
     </ScrollContainer>
   )

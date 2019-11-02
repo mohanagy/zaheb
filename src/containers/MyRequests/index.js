@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { ScrollContainer, RequestCard } from 'components'
+import { ScrollContainer, RequestCard ,Group } from 'components'
+import { ActivityIndicator } from 'react-native'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -7,7 +8,6 @@ import * as storeActions from 'actions/store'
 import * as usersActions from 'actions/users'
 import PropTypes from 'prop-types'
 
-import requests from './_data'
 
 class MyRequests extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -54,7 +54,22 @@ componentDidMount =async () => {
 }
 
 render() {
-  const { storeData:{ myRequests } } = this.props
+  const { storeData:{ myRequests,isFetching } } = this.props
+  if (isFetching) { return (
+    <Group
+      style={{
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
+      <ActivityIndicator size="large" />
+    </Group>
+  ) }
   return (
     <ScrollContainer
       contentContainerStyle={{
@@ -78,7 +93,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const mapStateToProps = (state) => ({
   storeData: state.storeData,
-  common: state.common,
+  generalData:state.generalData,
   userData:state.userData,
 })
 

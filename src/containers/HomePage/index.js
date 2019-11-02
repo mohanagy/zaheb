@@ -114,7 +114,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const mapStateToProps = (state) => ({
   userData: state.userData,
-  common: state.common,
+  generalData:state.generalData  ,
 })
 
 HomePage.propTypes = {

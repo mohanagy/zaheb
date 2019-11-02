@@ -76,15 +76,16 @@ export class CurvedHeader extends Component {
                 shadowOpacity: 0.8,
                 shadowRadius: 2,
                 elevation: 5,
+                overflow: 'hidden',
               }}
             >
               <Image
                 source={source}
                 containerStyle={{
-                  width: fillSource ? 150 : 90,
-                  height: fillSource ? 150 : 90,
-                  margin: fillSource ? 0 : 25,
-                  resizeMode: 'contain',
+                  width: fillSource ? 150 : 150,
+                  height: fillSource ? 150 : 150,
+                  margin: fillSource ? 0 : 0,
+                  resizeMode: 'cover',
                   borderWidth: 0,
                   alignItems:'center',
                   justifyContent: 'center',

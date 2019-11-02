@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Dimensions ,Linking } from 'react-native'
+import { Dimensions ,Linking ,ActivityIndicator } from 'react-native'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 
 import {
@@ -68,9 +68,25 @@ class ContactUs extends Component {
           address ,website ,email ,phone,
           facebook,twitter,linkedin,
         },
+        isFetching,
       },
     } = this.props
 
+    if (isFetching) { return (
+      <Group
+        style={{
+          position: 'absolute',
+          left: 0,
+          right: 0,
+          top: 0,
+          bottom: 0,
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <ActivityIndicator size="large" />
+      </Group>
+    ) }
     return (
       <Group style={{ backgroundColor: '#F6F6F6' }}>
         <CurvedHeader type="text" content="Contact us" />

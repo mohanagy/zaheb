@@ -59,7 +59,7 @@ class CustomerService extends Component {
   }
 
   handleSubmit =async () => {
-    const { actions:{ sendCustomerService },navigation:{ navigate } } = this.props
+    const { actions:{ sendCustomerService } } = this.props
     const { title,message } = this.state
     await sendCustomerService({ title,message })
     this.setState({
@@ -69,6 +69,7 @@ class CustomerService extends Component {
 
   render() {
     const { title,message } = this.state
+    const { userData:{ isFetching } } = this.props
     return (
       <ScrollContainer>
         <CurvedHeader type="text" content="Customer Service" style={{ marginBottom: 30 }} />
@@ -97,6 +98,7 @@ class CustomerService extends Component {
           />
           <SplashButton
             title="Contact Us"
+            loading={isFetching}
             onPress={() => this.handleSubmit()}
             style={{
               buttonStyle: {
@@ -140,7 +142,7 @@ const mapDispatchToProps = (dispatch) => ({
 })
 
 const mapStateToProps = (state) => ({
-  common: state.common,
+  generalData:state.generalData,
   userData:state.userData,
 })
 

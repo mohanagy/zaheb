@@ -30,10 +30,10 @@ class Register extends Component {
     const {
       phone,email,name,password,location,
     } = this.state
-    await register({
+    const check =  await register({
       phone,email,name,password,location,
     })
-    navigate('Login')
+    if (check) navigate('Login')
   }
 
   static navigationOptions = {
@@ -41,7 +41,7 @@ class Register extends Component {
   };
 
   render() {
-    const { navigation: { navigate } } = this.props
+    const { navigation: { navigate },userData:{ isFetching } } = this.props
     const {
       name,email,phone,password,location,
     } = this.props
@@ -73,15 +73,15 @@ class Register extends Component {
               <TouchableOpacity
                 onPress={() => navigate('Login')}
               >
+                <Details
+                  text="Sign in"
+                  style={{
+                    color: '#BE1522',
+                    textDecorationLine: 'underline',
+                    marginHorizontal:5,
+                  }}
+                />
               </TouchableOpacity>
-              <Details
-                text="Sign in"
-                style={{
-                  color: '#BE1522',
-                  textDecorationLine: 'underline',
-                  marginHorizontal:5,
-                }}
-              />
             </Group>
 
           </Group>
@@ -102,6 +102,7 @@ class Register extends Component {
             ]}
           />
           <LabeledInput
+            isRequired
             label="Full name"
             inputStyle={inputStyle}
             labelStyle={inputLabelStyle}
@@ -150,6 +151,7 @@ class Register extends Component {
             title="Sign Up"
             onPress={() => this.handleSubmit()}
             style={buttonStyle}
+            loading={isFetching}
           />
         </Group>
       </SimpleForm>
@@ -202,7 +204,8 @@ const mapDispatchToProps = (dispatch) => ({
 
 const mapStateToProps = (state) => ({
   user: state.userData.user,
-  common: state.common,
+  userData: state.userData,
+  generalData:state.generalData,
 })
 
 Register.propTypes = {

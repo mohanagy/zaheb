@@ -66,7 +66,7 @@ class Payment extends Component {
   }
 
 componentDidMount= () => {
-  PayPal.initialize(PayPal.SANDBOX,'AVlUoWineWrnrXuiTCGYzepYq_hlESVomdWgW2kDo-o9Pn_Ohbn4t63x1vU-ve-wlQ7kfc1IhmRqqcyC')
+  PayPal.initialize(PayPal.SANDBOX,'AW6JspNUrdZgH925eKygGOqVU1M4sx8-0sJLxd5KlQfSdQug4iIgVB3p2sn6fMBXbc03mhx9T7lFUUXR')
 }
 
   onPress = async (method) => {
@@ -94,15 +94,17 @@ componentDidMount= () => {
         shipping_phone:shippingDetails.phoneNumber,
       }
       await placeOrder(order)
-      await navigate('HomeStore')
+      await navigate('MyPurchases')
     }
     catch (error) {
-      await navigate('HomeStore')
+      await navigate('MyPurchases')
     }
   }
 
   render() {
     const { activePaymentMethod,methods } = this.state
+
+
     return (
       <ScrollContainer>
         <Group style={{ backgroundColor: '#F6F6F6', minHeight: screen.height }}>

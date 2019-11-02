@@ -30,6 +30,13 @@ export function errorHappened(alert) {
   }
 }
 
+export const alertWithType = (type, title, message) => ({
+  type: actionsTypes.SHOW_ALERT,
+  payload: { alert: { type, title, message } },
+})
+export const resetAlert = () => ({
+  type: actionsTypes.RESET_ALERT,
+})
 
 export const getWhoWeAre = () => async (dispatch, getState) => {
   dispatch(startGeneralFetching())
@@ -48,7 +55,7 @@ export const getWhoWeAre = () => async (dispatch, getState) => {
     if (error) {
       dispatch(errorHappened({
         type: 'error',
-        title: 'خطأ',
+        title: 'Error',
         message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
       }))
       return false
@@ -58,7 +65,7 @@ export const getWhoWeAre = () => async (dispatch, getState) => {
   } catch (e) {
     dispatch(errorHappened({
       type: 'error',
-      title: 'خطأ',
+      title: 'Error',
       message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
     }))
     return false
@@ -83,7 +90,7 @@ export const getContactUs = () => async (dispatch, getState) => {
     if (error) {
       dispatch(errorHappened({
         type: 'error',
-        title: 'خطأ',
+        title: 'Error',
         message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
       }))
       return false
@@ -93,7 +100,7 @@ export const getContactUs = () => async (dispatch, getState) => {
   } catch (e) {
     dispatch(errorHappened({
       type: 'error',
-      title: 'خطأ',
+      title: 'Error',
       message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
     }))
     return false
@@ -118,7 +125,7 @@ export const getTermsAndConditions = () => async (dispatch, getState) => {
     if (error) {
       dispatch(errorHappened({
         type: 'error',
-        title: 'خطأ',
+        title: 'Error',
         message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
       }))
       return false
@@ -128,7 +135,7 @@ export const getTermsAndConditions = () => async (dispatch, getState) => {
   } catch (e) {
     dispatch(errorHappened({
       type: 'error',
-      title: 'خطأ',
+      title: 'Error',
       message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
     }))
     return false
@@ -150,22 +157,19 @@ export const getNotifications = () => async (dispatch, getState) => {
     const json = await response.json()
     const { error, notification } = json
 
-    dispatch(getDataSuccess({ notifications:notification }))
-
     if (error) {
       dispatch(errorHappened({
         type: 'error',
-        title: 'خطأ',
+        title: 'Error',
         message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
       }))
       return false
     }
-
-    return dispatch(getDataSuccess({ terms }))
+    dispatch(getDataSuccess({ notifications:notification }))
   } catch (e) {
     dispatch(errorHappened({
       type: 'error',
-      title: 'خطأ',
+      title: 'Error',
       message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
     }))
     return false

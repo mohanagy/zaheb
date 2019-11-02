@@ -56,17 +56,14 @@ class NearestServiceCenter extends Component {
 
   state={
     isModalVisible: false,
-    date: new Date('2020-06-12T14:42:42'),
+    date: null,
     showTime: false,
     showDate: false,
-    time: new Date('2020-06-12T14:42:42'),
+    time: null,
     driver:1,
     description:'',
     image:null,
     video:null,
-    price:50,
-    workshop:{},
-
   }
 
 
@@ -268,6 +265,7 @@ class NearestServiceCenter extends Component {
               <SplashButton
                 title="Confirm"
                 onPress={() => this.toggleModal()}
+                loading={isFetching}
                 style={{
                   buttonStyle: {
                     backgroundColor: '#1E1E1E',
@@ -283,7 +281,7 @@ class NearestServiceCenter extends Component {
           </Group>
           { showDate && (
             <DateTimePicker
-              value={date}
+              value={date || new Date()}
               mode="date"
               is24Hour
               display="default"
@@ -292,7 +290,7 @@ class NearestServiceCenter extends Component {
           )}
           { showTime && (
             <DateTimePicker
-              value={time}
+              value={time || new Date()}
               mode="time"
               is24Hour
               display="default"
@@ -322,6 +320,9 @@ class NearestServiceCenter extends Component {
                 video={video}
                 description={description}
                 handleChangeText={(value) => this.handleChangeText(value)}
+                date={date}
+                time={time}
+                isFetching={isFetching}
 
               />
 

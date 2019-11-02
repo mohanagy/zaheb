@@ -22,8 +22,8 @@ class ForgotPassword extends Component {
   handleSubmit =async () => {
     const { actions:{ forgetPassword },navigation:{ navigate } } = this.props
     const { phone,email } = this.state
-    await forgetPassword({ email ,phone })
-    navigate('Login')
+    const check = await forgetPassword({ email ,phone })
+    if (check)navigate('Login')
   }
 
   static navigationOptions = {
@@ -32,7 +32,7 @@ class ForgotPassword extends Component {
 
 
   render() {
-    const { navigation: { navigate } } = this.props
+    const { userData:{ isFetching } } = this.props
     const { phone,email } = this.state
     return (
       <SimpleForm
@@ -84,6 +84,7 @@ class ForgotPassword extends Component {
             onChangeText={(value) => this.handleChange('phone',value)}
           />
           <SplashButton
+            loading={isFetching}
             title="Send"
             onPress={() => this.handleSubmit()}
             style={buttonStyle}
@@ -139,7 +140,8 @@ const mapDispatchToProps = (dispatch) => ({
 
 const mapStateToProps = (state) => ({
   user: state.userData.user,
-  common: state.common,
+  userData:state.userData,
+  generalData: state.generalData,
 })
 
 ForgotPassword.propTypes = {

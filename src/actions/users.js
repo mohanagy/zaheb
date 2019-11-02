@@ -66,8 +66,9 @@ export const login = ({ email, password }) => async (dispatch) => {
     if (error) {
       dispatch(errorHappened({
         type: 'error',
-        title: 'خطأ',
-        message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
+        title: 'Error',
+        message: error,
+        error,
       }))
       return false
     }
@@ -76,11 +77,12 @@ export const login = ({ email, password }) => async (dispatch) => {
     await AsyncStorage.setItem('@access_token', accessToken)
     dispatch(getDataSuccess({ user ,accessToken }))
     return user
-  } catch (e) {
+  } catch (error) {
     dispatch(errorHappened({
       type: 'error',
-      title: 'خطأ',
+      title: 'Error',
       message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
+      error,
     }))
     return false
   } finally {
@@ -133,8 +135,9 @@ export const getUserProfile =  () =>  async (dispatch,getState) => {
   catch (error) {
     dispatch(errorHappened({
       type: 'error',
-      title: 'خطأ',
+      title: 'Error',
       message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
+      error,
     }))
     return false
   }
@@ -161,12 +164,13 @@ export const updateProfile =  (field,value) => async (dispatch,getState) => {
       body: data,
     })
     const json = await response.json()
-    const { status } = json
+    const { status,error } = json
 
     if (!status) { dispatch(errorHappened({
       type: 'error',
-      title: 'خطأ',
+      title: 'Error',
       message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
+      error,
     }))
     return false
     }
@@ -176,8 +180,9 @@ export const updateProfile =  (field,value) => async (dispatch,getState) => {
   catch (error) {
     dispatch(errorHappened({
       type: 'error',
-      title: 'خطأ',
+      title: 'Error',
       message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
+      error,
     }))
     return false
   }
@@ -203,8 +208,9 @@ export const getConversations =  () =>  async (dispatch,getState) => {
   catch (error) {
     dispatch(errorHappened({
       type: 'error',
-      title: 'خطأ',
+      title: 'Error',
       message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
+      error,
     }))
     return false
   }
@@ -230,8 +236,9 @@ export const getConversationByReceiverId =  (id) =>  async (dispatch,getState) =
   catch (error) {
     dispatch(errorHappened({
       type: 'error',
-      title: 'خطأ',
+      title: 'Error',
       message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
+      error,
     }))
     return false
   }
@@ -260,8 +267,9 @@ export const sendConversationMessage =  (receiverId,message) =>  async (dispatch
   catch (error) {
     dispatch(errorHappened({
       type: 'error',
-      title: 'خطأ',
+      title: 'Error',
       message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
+      error,
     }))
     return false
   }
@@ -289,14 +297,16 @@ export const forgetPassword =  ({ email,phone }) =>  async (dispatch,getState) =
     })
     const json = await response.json()
     const { status,msg } = json
+
     if (!status) throw new Error(msg)
-    // dispatch(getDataSuccess({  }))
+    return true
   }
   catch (error) {
     dispatch(errorHappened({
       type: 'error',
-      title: 'خطأ',
-      message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
+      title: 'Error',
+      message: error.message,
+      error,
     }))
     return false
   }
@@ -327,14 +337,16 @@ export const register =  ({
     })
     const json = await response.json()
     const { status,msg } = json
-    if (!status) throw new Error(msg)
+
+    if (!status) throw new Error(msg.error.email || msg.error.username || msg.error.password)
     // dispatch(getDataSuccess({  }))
   }
   catch (error) {
     dispatch(errorHappened({
       type: 'error',
-      title: 'خطأ',
-      message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
+      title: 'Error',
+      message: error.message,
+      error,
     }))
     return false
   }
@@ -369,8 +381,9 @@ export const sendCustomerService =  ({  title,message }) =>  async (dispatch,get
   catch (error) {
     dispatch(errorHappened({
       type: 'error',
-      title: 'خطأ',
+      title: 'Error',
       message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
+      error,
     }))
     return false
   }

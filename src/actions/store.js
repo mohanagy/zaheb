@@ -49,7 +49,7 @@ export const getCars = () => async (dispatch, getState) => {
     if (error) {
       dispatch(errorHappened({
         type: 'error',
-        title: 'خطأ',
+        title: 'Error',
         message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
       }))
       return false
@@ -58,7 +58,7 @@ export const getCars = () => async (dispatch, getState) => {
   } catch (e) {
     dispatch(errorHappened({
       type: 'error',
-      title: 'خطأ',
+      title: 'Error',
       message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
     }))
     return false
@@ -98,7 +98,7 @@ export const getWorkShopsByServiceId = (id) => async (dispatch, getState) => {
     if (error) {
       dispatch(errorHappened({
         type: 'error',
-        title: 'خطأ',
+        title: 'Error',
         message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
       }))
       return false
@@ -107,7 +107,7 @@ export const getWorkShopsByServiceId = (id) => async (dispatch, getState) => {
   } catch (e) {
     dispatch(errorHappened({
       type: 'error',
-      title: 'خطأ',
+      title: 'Error',
       message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
     }))
     return false
@@ -132,7 +132,7 @@ export const getServicesByCarId = (id) => async (dispatch, getState) => {
     if (error) {
       dispatch(errorHappened({
         type: 'error',
-        title: 'خطأ',
+        title: 'Error',
         message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
       }))
       return false
@@ -141,7 +141,7 @@ export const getServicesByCarId = (id) => async (dispatch, getState) => {
   } catch (e) {
     dispatch(errorHappened({
       type: 'error',
-      title: 'خطأ',
+      title: 'Error',
       message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
     }))
     return false
@@ -166,7 +166,7 @@ export const getProductsClassification = (id) => async (dispatch, getState) => {
     if (error) {
       dispatch(errorHappened({
         type: 'error',
-        title: 'خطأ',
+        title: 'Error',
         message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
       }))
       return false
@@ -175,7 +175,7 @@ export const getProductsClassification = (id) => async (dispatch, getState) => {
   } catch (e) {
     dispatch(errorHappened({
       type: 'error',
-      title: 'خطأ',
+      title: 'Error',
       message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
     }))
     return false
@@ -200,7 +200,7 @@ export const getMyPurchases = () => async (dispatch, getState) => {
     if (error) {
       dispatch(errorHappened({
         type: 'error',
-        title: 'خطأ',
+        title: 'Error',
         message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
       }))
       return false
@@ -209,7 +209,7 @@ export const getMyPurchases = () => async (dispatch, getState) => {
   } catch (e) {
     dispatch(errorHappened({
       type: 'error',
-      title: 'خطأ',
+      title: 'Error',
       message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
     }))
     return false
@@ -234,7 +234,7 @@ export const getMyRequests = () => async (dispatch, getState) => {
     if (error) {
       dispatch(errorHappened({
         type: 'error',
-        title: 'خطأ',
+        title: 'Error',
         message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
       }))
       return false
@@ -243,7 +243,7 @@ export const getMyRequests = () => async (dispatch, getState) => {
   } catch (e) {
     dispatch(errorHappened({
       type: 'error',
-      title: 'خطأ',
+      title: 'Error',
       message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
     }))
     return false
@@ -271,7 +271,7 @@ export const getMyRequestedOffers =  () =>  async (dispatch,getState) => {
   catch (error) {
     dispatch(errorHappened({
       type: 'error',
-      title: 'خطأ',
+      title: 'Error',
       message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
     }))
     return false
@@ -298,7 +298,7 @@ export const getWorkshopOffers =  () =>  async (dispatch,getState) => {
   catch (error) {
     dispatch(errorHappened({
       type: 'error',
-      title: 'خطأ',
+      title: 'Error',
       message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
     }))
     return false
@@ -325,7 +325,7 @@ export const getMyOffers =  () =>  async (dispatch,getState) => {
   catch (error) {
     dispatch(errorHappened({
       type: 'error',
-      title: 'خطأ',
+      title: 'Error',
       message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
     }))
     return false
@@ -352,7 +352,7 @@ export const getMyFavorites =  () =>  async (dispatch,getState) => {
   catch (error) {
     dispatch(errorHappened({
       type: 'error',
-      title: 'خطأ',
+      title: 'Error',
       message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
     }))
     return false
@@ -377,7 +377,7 @@ export const cancelMyRequestedOffers =  (id) =>  async (dispatch,getState) => {
   catch (error) {
     dispatch(errorHappened({
       type: 'error',
-      title: 'خطأ',
+      title: 'Error',
       message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
     }))
     return false
@@ -416,7 +416,7 @@ export const createOrder =  (newOrder) =>  async (dispatch,getState) => {
     const { status,order } = result
     if (!status) { return dispatch(errorHappened({
       type: 'error',
-      title: 'خطأ',
+      title: 'Error',
       message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
     })) }
     const { id } = order
@@ -425,7 +425,7 @@ export const createOrder =  (newOrder) =>  async (dispatch,getState) => {
   catch (error) {
     dispatch(errorHappened({
       type: 'error',
-      title: 'خطأ',
+      title: 'Error',
       message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
     }))
     return false
@@ -454,7 +454,7 @@ export const getOrderById =  (id) =>  async (dispatch,getState) => {
   catch (error) {
     dispatch(errorHappened({
       type: 'error',
-      title: 'خطأ',
+      title: 'Error',
       message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
     }))
     return false
@@ -484,7 +484,7 @@ export const changeOrderStatus =  (status) =>  async (dispatch,getState) => {
 
     if (!statusResponse) { dispatch(errorHappened({
       type: 'error',
-      title: 'خطأ',
+      title: 'Error',
       message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
     }))
     return false
@@ -494,7 +494,7 @@ export const changeOrderStatus =  (status) =>  async (dispatch,getState) => {
   catch (error) {
     dispatch(errorHappened({
       type: 'error',
-      title: 'خطأ',
+      title: 'Error',
       message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
     }))
     return false
@@ -522,7 +522,7 @@ export const getCarManufacturingYears =  (id) =>  async (dispatch,getState) => {
   catch (error) {
     dispatch(errorHappened({
       type: 'error',
-      title: 'خطأ',
+      title: 'Error',
       message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
     }))
     return false
@@ -549,7 +549,7 @@ export const getCarModels =  (id) =>  async (dispatch,getState) => {
   catch (error) {
     dispatch(errorHappened({
       type: 'error',
-      title: 'خطأ',
+      title: 'Error',
       message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
     }))
     return false
@@ -583,7 +583,7 @@ export const getProductsByFilters =  (productsFilter) =>  async (dispatch,getSta
   catch (error) {
     dispatch(errorHappened({
       type: 'error',
-      title: 'خطأ',
+      title: 'Error',
       message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
     }))
     return false
@@ -640,7 +640,7 @@ export const placeOrder =  (newOrder) =>  async (dispatch,getState) => {
     const { status,order } = result
     if (!status) { return dispatch(errorHappened({
       type: 'error',
-      title: 'خطأ',
+      title: 'Error',
       message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
     })) }
     const { id } = order
@@ -649,7 +649,7 @@ export const placeOrder =  (newOrder) =>  async (dispatch,getState) => {
   catch (error) {
     dispatch(errorHappened({
       type: 'error',
-      title: 'خطأ',
+      title: 'Error',
       message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
     }))
     return false
