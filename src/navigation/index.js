@@ -176,6 +176,11 @@ const PaymentInformationStack = createStackNavigator({
   navigationOptions: () => ({ header: null, headerMode: 'none' }),
 
 })
+const ProfileWorkshopStack = createStackNavigator({
+  ProfileWorkshop,
+  navigationOptions: () => ({ header: null, headerMode: 'none' }),
+
+})
 
 const TabNavigator = createBottomTabNavigator(
   {
@@ -302,7 +307,7 @@ const Navigator = createStackNavigator(
     WhoWeAre:WhoWeAreStack,
     ProfileSupplier,
     ProfileDriver,
-    ProfileWorkshop,
+    ProfileWorkshop:ProfileWorkshopStack,
     Favorites:FavoritesStack,
     HomePage: TabNavigator,
     HomeStarterPage,

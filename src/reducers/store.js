@@ -28,6 +28,7 @@ const initialState = {
     car_model_id:null,
   },
   filteredProducts:[],
+  workShopProfile:{},
 }
 const carsReducer = (state = initialState, action) => {
   const { payload } = action

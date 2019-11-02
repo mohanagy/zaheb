@@ -12,11 +12,11 @@ class Tabs extends Component {
   state = { activeTab: this.props.defaultActiveTab }
 
   onTabChange = (nextTab) => {
-    this.setState(state => ({ ...state, activeTab: nextTab }))
+    this.setState((state) => ({ ...state, activeTab: nextTab }))
   }
 
   render() {
-    const { options, tabsWrapperStyle } = this.props
+    const { options, tabsWrapperStyle,workShopProfile } = this.props
     const { activeTab } = this.state
     const { activeContent: ContentComponent = EmptyContent } = options.find(({ key }) => key === activeTab)
 
@@ -36,7 +36,7 @@ class Tabs extends Component {
           }
         </Group>
         <Group style={styles.tabContentStyle}>
-          <ContentComponent />
+          <ContentComponent workShopProfile={workShopProfile} />
         </Group>
       </Group>
     )

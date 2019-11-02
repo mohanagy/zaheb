@@ -3,8 +3,9 @@ import PropTypes from 'prop-types'
 import { Input } from 'react-native-elements'
 
 
-const InputField = ({ placeholder, style }) => (
+const InputField = ({ placeholder, style,disabled }) => (
   <Input
+    disabled={disabled}
     placeholder={placeholder}
     {...style}
   >

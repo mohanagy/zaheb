@@ -34,6 +34,7 @@ module.exports = {
     getProductsByFilters: `${APIV1}/getProducts`,
     getWorkshopOffers: `${APIV1}/myOffers`,
     getNotifications: `${APIV1}/getNotification`,
+    getWorkshopProfile: `${APIV1}/workshop-profile?workshop_id=`,
     forgetPassword: `${APIV1}/forgetPassword`,
     userRegister: `${APIV1}/userRegister`,
     createCustomerServices: `${APIV1}/createCustomerServices`,

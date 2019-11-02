@@ -1,5 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import { TouchableOpacity } from 'react-native'
 import {
   Group, Details, SplashButton,
 } from 'components'
@@ -7,7 +7,7 @@ import { Image, AirbnbRating } from 'react-native-elements'
 
 
 export const ProductCard = ({
-  name, user_cars, source, rating,onPress,
+  name, user_cars, source, rating,onPress,onPressWorkShopName,
 }) => (
   <Group
     style={{
@@ -33,15 +33,20 @@ export const ProductCard = ({
         borderColor: '#000',
       }}
     >
-      <Image
-        source={source}
-        style={{
-          width: '100%',
-          height: '100%',
-          resizeMode: 'contain',
-          borderWidth: 0,
-        }}
-      />
+      <TouchableOpacity
+        onPress={onPressWorkShopName}
+      >
+
+        <Image
+          source={source}
+          style={{
+            width: '100%',
+            height: '100%',
+            resizeMode: 'contain',
+            borderWidth: 0,
+          }}
+        />
+      </TouchableOpacity>
     </Group>
     <Group style={{ flex: 1, marginHorizontal: 6 }}>
       <Group
@@ -50,9 +55,11 @@ export const ProductCard = ({
         }}
       >
         <Group style={{ alignItems: 'flex-start', justifyContent: 'space-between' }}>
-          <Details text={name} style={{ ...textsStyle, fontSize: 20, fontWeight: '900' }} />
+          <TouchableOpacity onPress={onPressWorkShopName}>
+            <Details text={name} style={{ ...textsStyle, fontSize: 20, fontWeight: '900' }} />
+          </TouchableOpacity>
           <Group style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center' }}>
-            <Details text={(user_cars[0].types_of_cars.en_name+'/'+user_cars[1].types_of_cars.en_name+'...')} style={{ ...textsStyle, fontSize: 18, fontWeight: '600' }} />
+            <Details text={(`${user_cars[0].types_of_cars.en_name}/${user_cars[1].types_of_cars.en_name}...`)} style={{ ...textsStyle, fontSize: 18, fontWeight: '600' }} />
           </Group>
           <AirbnbRating
             showRating={false}

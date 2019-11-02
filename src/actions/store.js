@@ -558,6 +558,39 @@ export const getCarModels =  (id) =>  async (dispatch,getState) => {
     dispatch(finishStoreFetching())
   }
 }
+export const getWorkshopProfile =  (id) =>  async (dispatch,getState) => {
+  dispatch(startStoreFetching())
+  try {
+    const { userData: { accessToken } } = getState()
+    const response = await fetch(`${api.getWorkshopProfile}${id}`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+    const json = await response.json()
+    console.log({
+      json,
+    })
+    const {  workshop:workShopProfile } = json
+    dispatch(getDataSuccess({ workShopProfile }))
+  }
+  catch (error) {
+    console.log({
+      error,
+    })
+    dispatch(errorHappened({
+      type: 'error',
+      title: 'Error',
+      message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
+    }))
+    return false
+  }
+  finally {
+    dispatch(finishStoreFetching())
+  }
+}
 export const getProductsByFilters =  (productsFilter) =>  async (dispatch,getState) => {
   dispatch(startStoreFetching())
   try {
