@@ -154,6 +154,12 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
+        release {
+            storeFile file('key')
+            storePassword '482106'
+            keyAlias 'aliaskey'
+            keyPassword '482106'
+        }
     }
     buildTypes {
         debug {
@@ -193,6 +199,7 @@ dependencies {
     implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
     implementation 'androidx.appcompat:appcompat:1.1.0-rc01'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0-alpha02'
+    implementation "com.braintreepayments.api:braintree:2.17.0" 
    implementation(project(':react-native-maps')){
        exclude group: 'com.google.android.gms', module: 'play-services-base'
        exclude group: 'com.google.android.gms', module: 'play-services-maps'

@@ -1,15 +1,14 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import { TouchableOpacity } from 'react-native'
 import {
   Group, Details, SplashButton,
 } from 'components'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import { Image, AirbnbRating } from 'react-native-elements'
 
-import purchaseImage from '../../assets/purchase_image.png'
 
 export const MyOfferCard = ({
-  image,description,
+  workshop:{ commercial_register_image,name },offer:{ description },cost,handleMap,handleSelectProfile,
 }) => (
   <Group
     style={{
@@ -35,15 +34,20 @@ export const MyOfferCard = ({
         borderColor: '#000',
       }}
     >
-      <Image
-        source={purchaseImage}
-        style={{
-          width: '100%',
-          height: '100%',
-          resizeMode: 'contain',
-          borderWidth: 0,
-        }}
-      />
+      <TouchableOpacity
+        onPress={handleSelectProfile}
+      >
+
+        <Image
+          source={{ uri:commercial_register_image }}
+          style={{
+            width: '100%',
+            height: '100%',
+            resizeMode: 'contain',
+            borderWidth: 0,
+          }}
+        />
+      </TouchableOpacity>
     </Group>
     <Group style={{ flex: 1, marginHorizontal: 6 }}>
       <Group
@@ -52,7 +56,11 @@ export const MyOfferCard = ({
         }}
       >
         <Group style={{ alignItems: 'flex-start', justifyContent: 'center' }}>
-          <Details text="Rear view mirror" style={{ ...textsStyle, fontSize: 20, fontWeight: '900' }} />
+          <TouchableOpacity
+            onPress={handleSelectProfile}
+          >
+            <Details text={name} style={{ ...textsStyle, fontSize: 20, fontWeight: '900' }} />
+          </TouchableOpacity>
           <Details
             text={description}
             style={{
@@ -68,11 +76,11 @@ export const MyOfferCard = ({
             />
             <Details text="(300 Reviews)" style={{ ...textsStyle, fontSize: 12, color: '#898989' }} />
           </Group>
-          <Details text="Price: 50$" style={textsStyle} />
+          <Details text={`Price: ${cost}$`} style={textsStyle} />
         </Group>
         <Group style={{ justifyContent: 'space-between', alignItems: 'flex-end', marginVertical: 10 }}>
           <SplashButton title={<FontAwesome5 name="plus" />} style={buttonStyle} />
-          <SplashButton style={buttonStyle} title={<FontAwesome5 name="map-marker" />} />
+          <SplashButton onPress={handleMap} style={buttonStyle} title={<FontAwesome5 name="map-marker" />} />
           <SplashButton title="accept" style={buttonStyle} titleStyle={{ fontSize:10 }} />
         </Group>
       </Group>

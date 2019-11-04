@@ -28,7 +28,7 @@ class RequestDetails extends Component {
       <FontAwesome5
         name="bell"
         size={18}
-        onPress={() => {}}
+        onPress={() => navigation.navigate('Notifications')}
         solid
         style={{
           marginRight: 10,
@@ -51,7 +51,11 @@ class RequestDetails extends Component {
 
   componentDidMount =async () => {
     const { actions:{ getOrderById },storeData:{ orderId } } = this.props
+    console.log('sakldklsamd',orderId)
     await getOrderById(orderId)
+    console.log({
+      orderId,
+    })
   }
 
   handleChangeStatus =async (status) => {
@@ -64,6 +68,9 @@ class RequestDetails extends Component {
 
   render() {
     const { storeData:{ order ,isFetching } } = this.props
+    console.log({
+      order,
+    })
     if (isFetching) { return (
       <Group
         style={{

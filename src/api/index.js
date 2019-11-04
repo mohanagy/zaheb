@@ -1,7 +1,7 @@
 
 // const API_URL = 'http://192.168.1.251:3000'
 // const API_URL = 'http://192.168.1.252:3000'
-const API_URL = 'http://mahmoudskaik.website'
+const API_URL = 'http://Marenksa.com'
 const APIV1 = `${API_URL}/api`
 
 module.exports = {
@@ -23,11 +23,26 @@ module.exports = {
     getContactUs:`${APIV1}/contact-us`,
     getConversations:`${APIV1}/conversations`,
     createOrder:`${APIV1}/createOrder`,
+    createProductOrder:`${APIV1}/createProductOrder`,
     getOrderById:`${APIV1}/getOrderByOrderId?order_id=`,
     changeOrderStatus:`${APIV1}/changeOrderStatus?order_id=`,
     getConversationByReceiverId:`${APIV1}/conversation?receiver_id=`,
     sendConversationMessage:`${APIV1}/conversation/send-message?receiver_id=`,
     getMyRequestedOffers: `${APIV1}/myRequestedOffers`,
+    getCarManufacturingYears: `${APIV1}/getCarManufacturingYearsByCarTypeId?car_id=`,
+    getCarModels: `${APIV1}/getCarModelsByCarTypeId?car_id=`,
+    getProductsByFilters: `${APIV1}/getProducts`,
+    getWorkshopOffers: `${APIV1}/myOffers`,
+    removeFavourite: `${APIV1}/removeFavourite`,
+    addFavourite: `${APIV1}/addFavourite`,
+    getProductByProductId: `${APIV1}/getProductByProductId?product_id=`,
+    getProductOrderByOrderId: `${APIV1}/getProductOrderByOrderId?product_order_id=`,
+    getNotifications: `${APIV1}/getNotification`,
+    getWorkshopProfile: `${APIV1}/workshop-profile?workshop_id=`,
+    forgetPassword: `${APIV1}/forgetPassword`,
+    userRegister: `${APIV1}/userRegister`,
+    createCustomerServices: `${APIV1}/createCustomerServices`,
+    getProductsClassificationByCarTypeId: `${APIV1}/getProductsClassificationByCarTypeId`,
     cancelMyRequestedOffers: `${APIV1}/cancelMyRequestedOffers?offer_id=`,
     getMyFavorites: `${APIV1}/getMyFavourite`,
     complain: `${APIV1}/user/complain`,

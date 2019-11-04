@@ -3,9 +3,9 @@ module.exports = {
   plugins: [
     ['module-resolver', {
       root: ['./src'],
-      "alias": {
-        "navigation": "./src/navigation",
-      }
+      'alias': {
+        'navigation': './src/navigation',
+      },
     }],
     [
       '@babel/plugin-transform-modules-commonjs',

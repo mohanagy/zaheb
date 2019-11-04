@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import { ScrollContainer, OfferCard } from 'components'
+import { ScrollContainer, MyOfferCard,Group } from 'components'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import { connect } from 'react-redux'
+import { ActivityIndicator } from 'react-native'
 import { bindActionCreators } from 'redux'
 import * as storeActions from 'actions/store'
 import * as usersActions from 'actions/users'
@@ -23,7 +24,7 @@ class MyOffers extends Component {
       <FontAwesome5
         name="bell"
         size={18}
-        onPress={() => {}}
+        onPress={() => navigation.navigate('Notifications')}
         solid
         style={{
           marginRight: 10,
@@ -45,17 +46,51 @@ class MyOffers extends Component {
       />),
   });
 
-componentDidMount =async () => {
-  const { actions:{ getMyRequestedOffers } } = this.props
-  await getMyRequestedOffers()
+componentDidMount = async () => {
+  const { actions:{ getWorkshopOffers } } = this.props
+  await getWorkshopOffers()
+}
+
+handleMap =async (workshopId,serviceId) => {
+  const { actions:{ selectWorkShop,selectService },navigation:{ navigate } } = this.props
+  await selectWorkShop(workshopId)
+  await selectService(serviceId)
+  navigate('NearestServiceCenter')
+}
+
+handleSelectProfile =async (id) => {
+  const { actions:{ selectOfferId },navigation:{ navigate } } = this.props
+  await selectOfferId(id)
+  // navigate('NearestServiceCenter')
 }
 
 render() {
-  const { storeData:{ myOffers } } = this.props
+  const { storeData:{ workshopOffers,isFetching } } = this.props
+  if (isFetching) { return (
+    <Group
+      style={{
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
+      <ActivityIndicator size="large" />
+    </Group>
+  ) }
   return (
     <ScrollContainer contentContainerStyle={{ marginTop: 20 }}>
       {
-        myOffers.map((offer) => <OfferCard {...offer} />)
+        workshopOffers.map((offer) => (
+          <MyOfferCard
+            handleSelectProfile={() => this.handleSelectProfile(offer.id)}
+            {...offer}
+            handleMap={() => this.handleMap(offer.workshop_id,offer.offer.service_id)}
+          />
+        ))
       }
     </ScrollContainer>
   )
@@ -68,7 +103,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const mapStateToProps = (state) => ({
   storeData: state.storeData,
-  common: state.common,
+  generalData:state.generalData,
   userData:state.userData,
 })
 

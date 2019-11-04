@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {
-  Group, ScrollContainer,PaymentCredit,PaymentButton,PaymentPayPal,
+  Group, ScrollContainer,PaymentCredit,PaymentButton,PaymentBank ,
 } from 'components'
 import { Dimensions } from 'react-native'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
@@ -8,12 +8,13 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as storeActions from 'actions/store'
 import PropTypes from 'prop-types'
+import PayPal from 'react-native-paypal-wrapper'
 
 const screen = Dimensions.get('screen')
 
 class Payment extends Component {
   static navigationOptions = ({ navigation }) => ({
-    headerTitle: 'Home',
+    headerTitle: 'Payment',
     headerTitleStyle: {
       textAlign: 'center',
       flexGrow: 1,
@@ -27,7 +28,7 @@ class Payment extends Component {
       <FontAwesome5
         name="bell"
         size={18}
-        onPress={() => {}}
+        onPress={() => navigation.navigate('Notifications')}
         solid
         style={{
           marginRight: 10,
@@ -51,7 +52,11 @@ class Payment extends Component {
 
   state = {
     activePaymentMethod: 'cashcard',
-    methods:[{ method:'cashcard',icon:'credit-card' ,title:'Credit-Card' },{ method:'paypal',icon:'paypal',title:'PayPal' }],
+    methods:[
+      { method:'cashcard',icon:'credit-card' ,title:'Credit-Card' },
+      { method:'paypal',icon:'paypal',title:'PayPal' },
+      { method:'bank',icon:'piggy-bank',title:'Bank Transfer' },
+      { method:'cash',icon:'money-bill-alt',title:'Cash' }],
   }
 
   selectActivePaymentMethod =(method) => {
@@ -60,13 +65,59 @@ class Payment extends Component {
     })
   }
 
+componentDidMount= () => {
+  PayPal.initialize(PayPal.SANDBOX,'AW6JspNUrdZgH925eKygGOqVU1M4sx8-0sJLxd5KlQfSdQug4iIgVB3p2sn6fMBXbc03mhx9T7lFUUXR')
+}
+
+  onPress = async (method) => {
+    const {
+      storeData:{ shippingDetails ,filteredProducts ,selectedProductId },actions:{ placeOrder,fireError },navigation:{
+        navigate,
+      },
+    } = this.props
+    const product = filteredProducts.find(({ id }) => id === selectedProductId)
+
+    try {
+      console.log(
+        { ...this.props }
+      )
+      if (method !== 'cash') {
+        const result = await PayPal.pay({
+          price: '50',
+          currency: 'USD',
+          description: 'Your description goes here',
+        })
+        console.log({
+          result,
+        })
+      }
+      const order = {
+        supplier_id:product.user_id,
+        product_id:product.id,
+        need_driver:shippingDetails.need_driver || 0,
+        payment_type:method === 'cash' ? 1 : 2,
+        shipping_name:shippingDetails.receiverName,
+        shipping_city:shippingDetails.city,
+        shipping_street:shippingDetails.street,
+        shipping_phone:shippingDetails.phoneNumber,
+      }
+      await placeOrder(order)
+      await navigate('MyPurchases')
+    }
+    catch (error) {
+      await fireError(error)
+    }
+  }
+
   render() {
     const { activePaymentMethod,methods } = this.state
+
+
     return (
       <ScrollContainer>
         <Group style={{ backgroundColor: '#F6F6F6', minHeight: screen.height }}>
           <Group
-            style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}
+            style={{ flexDirection: 'row' }}
           >
             {methods.map(({ method ,icon,title }) => (
               <PaymentButton
@@ -78,7 +129,12 @@ class Payment extends Component {
               />
             ))}
           </Group>
-          {activePaymentMethod === 'cashcard' ? <PaymentCredit /> : <PaymentPayPal />}
+          {activePaymentMethod !== 'bank' ? (
+            <PaymentCredit
+              title={activePaymentMethod === 'cash' ? 'Done' : 'Pay'}
+              onPress={() => this.onPress(activePaymentMethod)}
+            />
+          ) : <PaymentBank  />}
         </Group>
       </ScrollContainer>
     )

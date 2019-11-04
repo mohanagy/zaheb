@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Group, Details, SplashButton } from 'components'
-import { Picker, Dimensions } from 'react-native'
+import { Picker, Dimensions ,ActivityIndicator } from 'react-native'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -10,19 +10,6 @@ import PropTypes from 'prop-types'
 
 const screen = Dimensions.get('screen')
 
-const manufacturingYears = [
-  { label: '2018', value: '2018' },
-  { label: '2019', value: '2019' },
-  { label: '2020', value: '2020' },
-]
-
-const vehicleModels = [
-  { label: 'AYCO', value: 'AYCO' },
-  { label: 'DKIR', value: 'DKIR' },
-  { label: 'SKIR', value: 'SKIR' },
-  { label: 'MMKI', value: 'MMKI' },
-  { label: 'PIER', value: 'PIER' },
-]
 
 const bodyNumbers = [
   { label: 'KSIRQQ', value: 'KSIRQQ' },
@@ -33,12 +20,6 @@ const bodyNumbers = [
 ]
 
 class DetailsOfYourCar extends Component {
-  state = {
-    manufacturingYear: manufacturingYears[0],
-    vehicleModel: vehicleModels[0],
-    bodyNumber: bodyNumbers[0],
-  }
-
   static navigationOptions = ({ navigation }) => ({
     headerTitle: 'Details of your car',
     headerTitleStyle: {
@@ -54,7 +35,7 @@ class DetailsOfYourCar extends Component {
       <FontAwesome5
         name="bell"
         size={18}
-        onPress={() => {}}
+        onPress={() => navigation.navigate('Notifications')}
         solid
         style={{
           marginRight: 10,
@@ -76,8 +57,51 @@ class DetailsOfYourCar extends Component {
       />),
   });
 
+  state = {
+    manufacturingYear: null,
+    vehicleModel: null,
+    bodyNumber: null,
+  }
+
+  componentDidMount =async () => {
+    const { actions:{ getCarManufacturingYears,getCarModels },storeData:{ selectedCarId } } = this.props
+    await getCarManufacturingYears(selectedCarId)
+    await getCarModels(selectedCarId)
+    const { storeData:{ models, manufacturingYears } } = this.props
+    this.setState({
+      manufacturingYear:manufacturingYears[0].id,
+      vehicleModel:models[0].id,
+    })
+  }
+
+  handleNextButton =async (manufacturingYear,vehicleModel,bodyNumber) => {
+    const { actions:{ setFilters },navigation:{ navigate },storeData:{ selectedProductId } } = this.props
+    await setFilters({ manufacturingYear,vehicleModel,selectedProductId })
+    navigate('Products')
+  }
+
   render() {
-    const { vehicleModel, manufacturingYear, bodyNumber } = this.state
+    const {
+      storeData:{
+        models, manufacturingYears ,isFetching,
+      },
+    } = this.props
+    const { manufacturingYear,vehicleModel,bodyNumber } = this.state
+    if (isFetching) { return (
+      <Group
+        style={{
+          position: 'absolute',
+          left: 0,
+          right: 0,
+          top: 0,
+          bottom: 0,
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <ActivityIndicator size="large" />
+      </Group>
+    ) }
     return (
       <Group style={{ backgroundColor: '#F6F6F6', minHeight: screen.height }}>
         <Group style={{ alignItems: 'flex-start', marginHorizontal: 20, marginTop: 40 }}>
@@ -89,7 +113,7 @@ class DetailsOfYourCar extends Component {
             }}
             onValueChange={(itemValue) => this.setState({ manufacturingYear: itemValue })}
           >
-            {manufacturingYears.map((year) => <Picker.Item {...year} />)}
+            {manufacturingYears.map(({ year,id }) => <Picker.Item label={year} value={id} />)}
           </Picker>
           <Details text="Vehicle Model" style={{ marginHorizontal: 0, marginBottom: 5, color: '#1E1E1E' }} />
           <Picker
@@ -99,7 +123,7 @@ class DetailsOfYourCar extends Component {
             }}
             onValueChange={(itemValue) => this.setState({ vehicleModel: itemValue })}
           >
-            {vehicleModels.map((model) => <Picker.Item {...model} />)}
+            {models.map(({ id,en_name }) => <Picker.Item value={id} label={en_name} />)}
           </Picker>
           <Details text="Body Number" style={{ marginHorizontal: 0, marginBottom: 5, color: '#1E1E1E' }} />
           <Picker
@@ -112,6 +136,7 @@ class DetailsOfYourCar extends Component {
             {bodyNumbers.map((number) => <Picker.Item {...number} />)}
           </Picker>
           <SplashButton
+            onPress={() => this.handleNextButton(manufacturingYear,vehicleModel,bodyNumber)}
             title="Next"
             style={{
               buttonStyle: {
@@ -136,7 +161,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const mapStateToProps = (state) => ({
   storeData: state.storeData,
-  common: state.common,
+  generalData:state.generalData,
   userData:state.userData,
 })
 

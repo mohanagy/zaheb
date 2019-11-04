@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import {
   Title, Group, SplashButton, LabeledInput, Details, SimpleForm,
 } from 'components'
+import { TouchableOpacity } from 'react-native'
 import blurredBackground from 'assets/blurred-background.png'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -12,19 +13,23 @@ import * as userActions from 'actions/users'
 
 class Login extends Component {
   state={
-    loginData:{
-      email:'mahmoudskek-user@gmail.com',
-      password:'123456789',
-    },
+    email:'mahmoudskek-user@gmail.com',
+    password:'123456789',
   }
 
 
   handleSubmitLogin= async () => {
     const { actions:{ login } , navigation: { navigate } } = this.props
-    const { loginData } = this.state
-    await login(loginData)
-    const { user } = this.props
+    const { email,password }  = this.state
+    const user = await login({ email,password })
+
     if (user)navigate('HomePage')
+  }
+
+  handleChange =(field,value) => {
+    this.setState({
+      [field]:value,
+    })
   }
 
       static navigationOptions = {
@@ -32,6 +37,8 @@ class Login extends Component {
       };
 
       render() {
+        const { navigation:{ navigate },userData:{ isFetching } } = this.props
+        const { email,password } = this.state
         return (
           <SimpleForm
             backgroundOverlay="#00000095"
@@ -44,22 +51,39 @@ class Login extends Component {
                   justifyContent: 'center',
                 }}
               >
-                <Details text="Forgot password?" />
-                <Details
-                  text={(
-                    <>
-                  Don't have an account?
-                      <Details
-                        text="Create now"
-                        style={{
-                          color: '#BE1522',
-                          textDecorationLine: 'underline',
-                        }}
-                      />
-                    </>
-                  )}
+                <TouchableOpacity
+                  onPress={() => navigate('ForgotPassword')}
                 >
-                </Details>
+                  <Details text="Forgot password?" />
+                </TouchableOpacity>
+                <Group
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent:'center',
+                  }}
+                >
+
+                  <Details
+                    text="Don't have an account?"
+                    style={{
+                      marginHorizontal:10,
+                    }}
+                  />
+                  <TouchableOpacity
+                    onPress={() => navigate('Register')}
+                  >
+
+                    <Details
+                      text="Create now"
+                      style={{
+                        color: '#BE1522',
+                        marginHorizontal:0,
+                        textDecorationLine: 'underline',
+                      }}
+                    />
+                  </TouchableOpacity>
+                </Group>
+
               </Group>
             )}
           >
@@ -82,17 +106,26 @@ class Login extends Component {
                 inputStyle={inputStyle}
                 labelStyle={inputLabelStyle}
                 containerStyle={{ ...inputContainerStyle, marginBottom: 20 }}
+                value={email}
+                onChangeText={(value) => this.handleChange('email',value)}
+
+
               />
               <LabeledInput
                 label="Password"
+                secureTextEntry
                 inputStyle={inputStyle}
                 labelStyle={inputLabelStyle}
                 containerStyle={{ ...inputContainerStyle, marginBottom: 60 }}
+                value={password}
+                onChangeText={(value) => this.handleChange('password',value)}
+
               />
               <SplashButton
                 title="Sign in"
                 onPress={() => this.handleSubmitLogin()}
                 style={buttonStyle}
+                loading={isFetching}
               />
             </Group>
           </SimpleForm>
@@ -123,9 +156,10 @@ const buttonStyle = {
   },
   containerStyle: {
     position: 'absolute',
-    bottom: -25,
+    bottom: -45,
     width: '100%',
     paddingHorizontal: 10,
+    padding:35,
   },
   titleStyle: {
     color: '#FFFFFF',
@@ -145,7 +179,8 @@ const mapDispatchToProps = (dispatch) => ({
 
 const mapStateToProps = (state) => ({
   user: state.userData.user,
-  common: state.common,
+  userData:state.userData,
+  generalData: state.generalData,
 })
 
 Login.propTypes = {

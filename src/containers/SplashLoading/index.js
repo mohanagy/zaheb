@@ -10,8 +10,8 @@ import { bindActionCreators } from 'redux'
 import * as userActions from 'actions/users'
 
 export class SplashLoading extends Component {
-  componentDidMount() {
-    this.checkInformation()
+  async componentDidMount() {
+    await this.checkInformation()
   }
 
   checkInformation=async () => {
@@ -66,7 +66,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const mapStateToProps = (state) => ({
   user: state.userData.user,
-  common: state.common,
+  generalData:state.generalData,
 })
 
 SplashLoading.propTypes = {

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { ScrollContainer, PurchaseCard } from 'components'
+import { ActivityIndicator } from 'react-native'
+import { ScrollContainer, PurchaseCard ,Group } from 'components'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import moment from 'moment'
 import { connect } from 'react-redux'
@@ -8,8 +9,6 @@ import * as storeActions from 'actions/store'
 import * as usersActions from 'actions/users'
 import PropTypes from 'prop-types'
 
-
-import purchases from './_data'
 
 class Purchases extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -27,7 +26,7 @@ class Purchases extends Component {
       <FontAwesome5
         name="bell"
         size={18}
-        onPress={() => {}}
+        onPress={() => navigation.navigate('Notifications')}
         solid
         style={{
           marginRight: 10,
@@ -54,8 +53,32 @@ class Purchases extends Component {
     await getMyPurchases()
   }
 
+  handleSelectProduct=async (id) => {
+    const { actions:{ selectProduct } ,navigation:{ navigate } } = this.props
+    await selectProduct(id)
+    console.log({
+      id,
+    })
+    navigate('PurchaseDetail')
+  }
+
   render() {
-    const { storeData:{ myPurchases } } = this.props
+    const { storeData:{ myPurchases,isFetching } } = this.props
+    if (isFetching) { return (
+      <Group
+        style={{
+          position: 'absolute',
+          left: 0,
+          right: 0,
+          top: 0,
+          bottom: 0,
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <ActivityIndicator size="large" />
+      </Group>
+    ) }
     return (
       <ScrollContainer
         contentContainerStyle={{
@@ -65,7 +88,16 @@ class Purchases extends Component {
         {
           myPurchases && myPurchases.map(({
             id,product,created_at,cost,
-          }) => <PurchaseCard key={id} name={product.name} date={moment(created_at).format('DD/MM/YYYY')} source={{ uri:product.image }} cost={cost} />)
+          }) => (
+            <PurchaseCard
+              key={id}
+              name={product.name}
+              handleSelectProduct={() => this.handleSelectProduct(id)}
+              date={moment(created_at).format('DD/MM/YYYY')}
+              source={{ uri:product.image }}
+              cost={cost}
+            />
+          ))
         }
       </ScrollContainer>
     )
@@ -79,7 +111,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const mapStateToProps = (state) => ({
   storeData: state.storeData,
-  common: state.common,
+  generalData:state.generalData,
   userData:state.userData,
 })
 

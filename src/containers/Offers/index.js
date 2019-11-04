@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { ScrollContainer, OfferCard } from 'components'
+import { ScrollContainer, OfferCard ,Group } from 'components'
+import { ActivityIndicator } from 'react-native'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -22,7 +23,7 @@ class Offers extends Component {
       <FontAwesome5
         name="bell"
         size={18}
-        onPress={() => {}}
+        onPress={() => navigation.navigate('Notifications')}
         solid
         style={{
           marginRight: 10,
@@ -47,22 +48,56 @@ class Offers extends Component {
 componentDidMount =async () => {
   const { actions:{ getMyRequestedOffers } } = this.props
   await getMyRequestedOffers()
-  console.log('aslkdklsadmklsamd')
 }
 
 handleCancel =async (id) => {
   const { actions:{ cancelMyRequestedOffers,getMyRequestedOffers } } = this.props
   await cancelMyRequestedOffers(id)
-  console.log('sadklsad')
   await getMyRequestedOffers()
 }
 
+handleSelectWorkShop= async (id) => {
+}
+
+
+handleMap =async (workshopId,serviceId) => {
+  const { actions:{ selectWorkShop,selectService },navigation:{ navigate } } = this.props
+  await selectWorkShop(workshopId)
+  await selectService(serviceId)
+  navigate('NearestServiceCenter')
+}
+
 render() {
-  const { storeData:{ offers } } = this.props
+  const { storeData:{ offers,isFetching } } = this.props
+  if (isFetching) { return (
+    <Group
+      style={{
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
+      <ActivityIndicator size="large" />
+    </Group>
+  ) }
   return (
     <ScrollContainer contentContainerStyle={{ marginTop: 20 }}>
       {
-        offers.map(({ description,service,id }) => <OfferCard description={description} service={service} key={id} handleCancel={() => this.handleCancel(id)} />)
+        offers.map(({ description,service,id }) => (
+          <OfferCard
+            isFetching={isFetching}
+            description={description}
+            service={service}
+            key={id}
+            handleCancel={() => this.handleCancel(id)}
+            handlePlus={() => this.handlePlus()}
+            handleMap={() => this.handleMap(id,service.id)}
+          />
+        ))
       }
     </ScrollContainer>
   )

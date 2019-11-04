@@ -24,7 +24,7 @@ class Purchases extends Component {
       <FontAwesome5
         name="bell"
         size={18}
-        onPress={() => {}}
+        onPress={() => navigation.navigate('Notifications')}
         solid
         style={{
           marginRight: 10,
@@ -52,10 +52,16 @@ class Purchases extends Component {
     await getWorkShopsByServiceId(selectedServiceId)
   }
 
-  handleSelectWorkShop= async (id) => {
+  handleBooking= async (id) => {
     const { actions:{ selectWorkShop },navigation:{ navigate } } = this.props
     await selectWorkShop(id)
     navigate('NearestServiceCenter')
+  }
+
+  handleSelectWorkShop= async (id) => {
+    const { actions:{ selectWorkShop },navigation:{ navigate } } = this.props
+    await selectWorkShop(id)
+    navigate('ProfileWorkshop')
   }
 
   render() {
@@ -84,7 +90,17 @@ class Purchases extends Component {
         {
           workshops.map(({
             name,id,image,bio,user_cars,
-          }) => <WorkshopCard source={{ uri:image }} bio={bio} key={id} name={name} user_cars={user_cars} onPress={() => this.handleSelectWorkShop(id)} />)
+          }) => (
+            <WorkshopCard
+              source={{ uri:image }}
+              bio={bio}
+              key={id}
+              name={name}
+              user_cars={user_cars}
+              onPressWorkShopName={() => this.handleSelectWorkShop(id)}
+              onPress={() => this.handleBooking(id)}
+            />
+          ))
         }
       </ScrollContainer>
     )
@@ -98,7 +114,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const mapStateToProps = (state) => ({
   storeData: state.storeData,
-  common: state.common,
+  generalData:state.generalData,
   userData:state.userData,
 })
 

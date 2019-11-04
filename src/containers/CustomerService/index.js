@@ -25,7 +25,7 @@ class CustomerService extends Component {
       <FontAwesome5
         name="bell"
         size={18}
-        onPress={() => {}}
+        onPress={() => navigation.navigate('Notifications')}
         solid
         style={{
           marginRight: 10,
@@ -47,7 +47,29 @@ class CustomerService extends Component {
       />),
   });
 
+  state={
+    title:null,
+    message:null,
+  }
+
+  handleChange =(field,value) => {
+    this.setState({
+      [field]:value,
+    })
+  }
+
+  handleSubmit =async () => {
+    const { actions:{ sendCustomerService } } = this.props
+    const { title,message } = this.state
+    await sendCustomerService({ title,message })
+    this.setState({
+      title:null,
+      message:null,
+    })  }
+
   render() {
+    const { title,message } = this.state
+    const { userData:{ isFetching } } = this.props
     return (
       <ScrollContainer>
         <CurvedHeader type="text" content="Customer Service" style={{ marginBottom: 30 }} />
@@ -59,6 +81,8 @@ class CustomerService extends Component {
             labelStyle={{
               marginVertical:10,
             }}
+            value={title}
+            onChangeText={(value) => this.handleChange('title',value)}
           />
           <Input
             multiline
@@ -69,9 +93,13 @@ class CustomerService extends Component {
             labelStyle={{
               marginVertical:10,
             }}
+            value={message}
+            onChangeText={(value) => this.handleChange('message',value)}
           />
           <SplashButton
             title="Contact Us"
+            loading={isFetching}
+            onPress={() => this.handleSubmit()}
             style={{
               buttonStyle: {
                 width: 250,
@@ -114,7 +142,7 @@ const mapDispatchToProps = (dispatch) => ({
 })
 
 const mapStateToProps = (state) => ({
-  common: state.common,
+  generalData:state.generalData,
   userData:state.userData,
 })
 

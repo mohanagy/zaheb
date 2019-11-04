@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Dimensions } from 'react-native'
+import { Dimensions,ActivityIndicator } from 'react-native'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -31,7 +31,7 @@ class WhoWeAre extends Component {
       <FontAwesome5
         name="bell"
         size={18}
-        onPress={() => {}}
+        onPress={() => navigation.navigate('Notifications')}
         solid
         style={{
           marginRight: 10,
@@ -64,8 +64,24 @@ class WhoWeAre extends Component {
         whoWeAre:{
           value,
         },
+        isFetching,
       },
     } = this.props
+    if (isFetching) { return (
+      <Group
+        style={{
+          position: 'absolute',
+          left: 0,
+          right: 0,
+          top: 0,
+          bottom: 0,
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <ActivityIndicator size="large" />
+      </Group>
+    ) }
     return (
       <Group style={{ backgroundColor: '#F6F6F6' }}>
         <CurvedHeader type="text" content="Who We Are" />

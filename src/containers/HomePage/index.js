@@ -29,7 +29,7 @@ class HomePage extends Component {
      <FontAwesome5
        name="bell"
        size={18}
-       onPress={() => {}}
+       onPress={() => navigation.navigate('Notifications')}
        solid
        style={{
          marginRight: 10,
@@ -51,11 +51,15 @@ class HomePage extends Component {
      />),
  });
 
+
 componentDidMount =async () => {
-  const { actions:{ checkAuth } ,navigation:{ navigate },userData:{ accessToken } } = this.props
+  const {
+    actions:{ checkAuth } ,navigation:{ navigate },userData:{ accessToken },
+  } = this.props
   const valid = await checkAuth(accessToken)
   if (!valid)navigate('Login')
 }
+
 
 render() {
   const { navigation: { navigate } } = this.props
@@ -68,26 +72,31 @@ render() {
       }}
     >
       <BackgroundImageWrapper source={background}>
-        <Group
+        {/* <Group
           style={{
-            backgroundColor: '#ffffff91',
+            backgroundColor: 'red',
             position: 'absolute',
             top: 0,
             bottom: 0,
             right: 0,
             left: 0,
+            flex:1,
           }}
-        />
-        <Group style={{ minHeight: screen.height }}>
-          <CurvedHeader style={{ marginBottom: 40 }} />
-          <Group style={{ alignItems: 'center' }}>
+        /> */}
+        <Group style={{ minHeight: screen.height,backgroundColor:'red',justifyContent:'center' }}>
+          <CurvedHeader style={{  marginBottom:0 }} />
+          <Group
+            style={{
+              alignItems: 'center',justifyContent:'flex-start',backgroundColor:'yellow',
+            }}
+          >
             <Group
               style={{
                 marginBottom: 15, backgroundColor: '#1E1E1E', borderRadius: 99 ** 9, padding: 20,
               }}
-              onPress={() => navigate('HomeStore')}
+              onPress={() => navigate('MaintenancePage')}
             >
-              <FontAwesome5 name="tools" size={55} style={{ color: '#FFF' }} onPress={() => navigate('HomeStore')} />
+              <FontAwesome5 name="tools" size={55} style={{ color: '#FFF' }} onPress={() => navigate('MaintenancePage')} />
             </Group>
             <Details text="Maintenance Services" style={{ marginBottom: 20, color: '#1E1E1E', fontSize: 22 }} />
             <Group
@@ -114,7 +123,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const mapStateToProps = (state) => ({
   userData: state.userData,
-  common: state.common,
+  generalData:state.generalData  ,
 })
 
 HomePage.propTypes = {

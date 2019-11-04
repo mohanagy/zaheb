@@ -20,7 +20,7 @@ export const Select = ({ options, onValueChange, selectedValue }) => (
     onValueChange={onValueChange}
 
   >
-    {options.map(element => (
+    {options.map((element) => (
       <Picker.Item
         label={element.label}
         value={element.value}

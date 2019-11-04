@@ -7,9 +7,10 @@ import { Image } from 'react-native-elements'
 
 
 export const OfferCard = ({
-  description,service:{ car_service_classification },handleCancel,
+  description,service:{ car_service_classification },handleCancel,isFetching,
+  handleMap,handlePlus,
 }) => (
-  <Group 
+  <Group
     style={{
       flexDirection: 'row',
       justifyContent: 'flex-start',
@@ -67,9 +68,9 @@ export const OfferCard = ({
             justifyContent: 'space-between', alignItems: 'flex-end', marginVertical: 5,marginRight: 10,
           }}
         >
-          <SplashButton title={<FontAwesome5 name="plus" />} style={buttonStyle} />
-          <SplashButton style={buttonStyle} title={<FontAwesome5 name="map-marker" />} />
-          <SplashButton title="cancel" style={buttonStyle} titleStyle={{ fontSize:10 }} onPress={handleCancel} />
+          <SplashButton title={<FontAwesome5 name="plus" />} style={buttonStyle} loading={isFetching} onPress={handlePlus} />
+          <SplashButton style={buttonStyle} title={<FontAwesome5 name="map-marker" />} loading={isFetching} onPress={handleMap} />
+          <SplashButton title="cancel" style={buttonStyle} titleStyle={{ fontSize:10 }} onPress={handleCancel} loading={isFetching} />
         </Group>
       </Group>
     </Group>

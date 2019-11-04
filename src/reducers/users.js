@@ -1,6 +1,8 @@
 import * as actionTypes from '../actions/actionTypes'
 
 const initialState = {
+  isFetching:false,
+  error:null,
   user: {},
   conversations:[],
   selectedReceiver:{
@@ -20,6 +22,11 @@ const userReducer = (state = initialState, action) => {
       return { ...state,user:payload }
     case actionTypes.SEND_NEW_MESSAGE:
       return { ...state,conversation:state.conversation.concat(payload) }
+    case actionTypes.START_USER_FETCHING:
+      return { ...state, ...payload }
+    case actionTypes.FINISH_USER_FETCHING:
+      return { ...state, ...payload }
+
     default:
       return state
   }

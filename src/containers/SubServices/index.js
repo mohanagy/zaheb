@@ -27,7 +27,7 @@ class SubServices extends Component {
       <FontAwesome5
         name="bell"
         size={18}
-        onPress={() => {}}
+        onPress={() => navigation.navigate('Notifications')}
         solid
         style={{
           marginRight: 10,
@@ -106,7 +106,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const mapStateToProps = (state) => ({
   storeData: state.storeData,
-  common: state.common,
+  generalData:state.generalData,
   userData:state.userData,
 })
 

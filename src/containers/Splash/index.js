@@ -25,7 +25,7 @@ const mapDispatchToProps = (dispatch) => ({
 const mapStateToProps = (state) => ({
   user: state.loginData,
   orders: state.orders,
-  common: state.common,
+  generalData:state.generalData,
 })
 
 Splash.propTypes = {

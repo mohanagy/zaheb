@@ -8,6 +8,7 @@ const initialState = {
   selectedCarId: null,
   selectedServiceId: null,
   selectedWorkShopId: null,
+  selectedMyOfferId: null,
   myRequests: [],
   myPurchases:[],
   myOffers:[],
@@ -15,6 +16,22 @@ const initialState = {
   favorites:[],
   orderId:null,
   order:{
+    service:{},
+  },
+  workshopOffers:[],
+  products:[],
+  selectedProductId:null,
+  models:[],
+  manufacturingYears:[],
+  productsFilter:{
+    product_classification_id:null,
+    manufacturing_year_id:null,
+    car_model_id:null,
+  },
+  filteredProducts:[],
+  workShopProfile:{},
+  product:{
+    user:{},
     service:{},
   },
 }

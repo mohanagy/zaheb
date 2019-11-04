@@ -23,7 +23,7 @@ export const Maps = ({
         <MapView.Marker
           coordinate={{ latitude: Number(workshop.lat), longitude: Number(workshop.lng) }}
           title={workshop.name || ''}
-          image={workshop.id === selectedWorkShopId ? selectedWorkShopIcon : workShopIcon}
+          image={workshop.id === Number(selectedWorkShopId) ? selectedWorkShopIcon : workShopIcon}
         />
 
       ))

@@ -1,20 +1,14 @@
-import { MyInformation, MyPayments } from './MyAccount'
-import MyOrders from './MyOrders'
-import OrderTube from './OrderTube'
 import Login from './Login'
 import SplashLoading from './SplashLoading'
 import Splash from './Splash'
 import Register from './Register'
-import CurrentOrders from './CurrentOrders'
-import PreviousOrders from './PreviousOrders'
-import OrdersNotPaid from './OrdersNotPaid'
-import CurrentOrderDetails from './CurrentOrderDetails'
 import ForgotPassword from './ForgotPassword'
 import ContactUs from './ContactUs'
 import MyPurchases from './MyPurchases'
 import MyRequests from './MyRequests'
 import Conversations from './Conversations'
 import HomeStore from './HomeStore'
+import MaintenancePage from './MaintenancePage'
 import HomeType from './HomeType'
 import Products from './Products'
 import Workshops from './Workshops'
@@ -35,26 +29,20 @@ import Profile from './Profile'
 import Notifications from './Notifications'
 import PaymentCredit from '../components/PaymentCredit'
 import Payment from './Payment'
-import PaymentPayPal from '../components/PaymentPayPal'
+import PaymentBank from '../components/PaymentBank'
 import PaymentInformation from './PaymentInformation'
 import ProductOptions from './ProductOptions'
 import Chat from './Chat'
 import ProfileDriver from './ProfileDriver'
 import NearestServiceCenter from './NearestServiceCenter'
+import OfferDetails from './OfferDetails'
+import PurchaseDetails from './PurchaseDetails'
 
 export {
-  MyInformation,
-  MyPayments,
-  MyOrders,
-  OrderTube,
   Login,
   Splash,
   SplashLoading,
   Register,
-  CurrentOrders,
-  PreviousOrders,
-  OrdersNotPaid,
-  CurrentOrderDetails,
   ForgotPassword,
   ContactUs,
   MyPurchases,
@@ -80,11 +68,14 @@ export {
   Notifications,
   PaymentCredit,
   Payment,
-  PaymentPayPal,
+  PaymentBank,
   PaymentInformation,
   ProductOptions,
   Chat,
   ProfileDriver,
   NearestServiceCenter,
   HomeStarterPage,
+  MaintenancePage,
+  OfferDetails,
+  PurchaseDetails,
 }

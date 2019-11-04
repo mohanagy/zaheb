@@ -1,12 +1,17 @@
 import React, { Component } from 'react'
-import { Dimensions } from 'react-native'
+import { Dimensions ,ActivityIndicator } from 'react-native'
 import { AirbnbRating } from 'react-native-elements'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 
 import {
   Group, CurvedHeader, Details, Tabs, LabeledInput, ScrollContainer, SelectLogo, InputField,
 } from 'components'
-import logo from '../../assets/logo.png'
+import { connect } from 'react-redux'
+import { bindActionCreators  } from 'redux'
+import * as storeActions from 'actions/store'
+import * as usersActions from 'actions/users'
+import PropTypes from 'prop-types'
+
 import nissan from '../../assets/nissan-logo-64.png'
 import bmw from '../../assets/bmw-logo-64.png'
 import hyundai from '../../assets/hyundai-logo-64.png'
@@ -15,7 +20,7 @@ import skoda from '../../assets/skoda-logo-64.png'
 
 const screen = Dimensions.get('screen')
 
-const WorkshopProfileTab = () => (
+const WorkshopProfileTab = ({ workShopProfile }) => (
   <Group style={{ width: '100%', alignItems: 'stretch' }}>
     <Details
       text="Private details"
@@ -24,29 +29,32 @@ const WorkshopProfileTab = () => (
       }}
     />
     <LabeledInput
+      disabled
       label="Name"
-      placeholder="Dream workshop"
+      placeholder={workShopProfile.name}
       {...styles.inputStyle}
     />
     <LabeledInput
+      disabled
       label="Email"
-      placeholder="username@domain.com"
+      placeholder={workShopProfile.email}
       {...styles.inputStyle}
     />
     <LabeledInput
+      disabled
       label="Adress"
-      placeholder="Dream workshop"
+      placeholder={workShopProfile.address}
       {...styles.inputStyle}
     />
     <LabeledInput
+      disabled
       label="Mobile Number"
-      placeholder="00972 5900000000"
+      placeholder={workShopProfile.phone}
       {...styles.inputStyle}
     />
   </Group>
 )
-
-const WorkshopTimesTab = () => (
+const WorkshopTimesTab = ({ workShopProfile })  => (
   <Group style={{ alignItems: 'flex-start' }}>
     <Details text="Work-days" style={{ color: '#1E1E1E', fontSize: 22, marginHorizontal: 0 }} />
     <Group
@@ -69,15 +77,15 @@ const WorkshopTimesTab = () => (
   </Group>
 )
 
-const WorkshopSettingsTab = () => (
+const WorkshopSettingsTab = ({ workShopProfile })  => (
   <Group style={{ alignItems: 'flex-start', width: '100%' }}>
     <Details text="Service:" style={{ color: '#1E1E1E', fontSize: 22 }} />
     <Details text="Supplier" style={{ color: '#1E1E1E', fontSize: 18, fontWeight: '800' }} />
     <Details text="Sub Service:" style={{ color: '#1E1E1E', fontSize: 22 }} />
     <Group style={{ width: '100%' }}>
-      <InputField style={{ inputStyle: { ...styles.inputStyle.inputStyle, width: '100%' } }} />
-      <InputField style={{ inputStyle: { ...styles.inputStyle.inputStyle, width: '100%' } }} />
-      <InputField style={{ inputStyle: { ...styles.inputStyle.inputStyle, width: '100%' } }} />
+      <InputField disabled style={{ inputStyle: { ...styles.inputStyle.inputStyle, width: '100%' } }} />
+      <InputField disabled style={{ inputStyle: { ...styles.inputStyle.inputStyle, width: '100%' } }} />
+      <InputField disabled style={{ inputStyle: { ...styles.inputStyle.inputStyle, width: '100%' } }} />
     </Group>
     <Details text="Car Type:" style={{ color: '#1E1E1E', fontSize: 22 }} />
     <SelectLogo
@@ -93,11 +101,71 @@ const WorkshopSettingsTab = () => (
 )
 
 class WorkshopSupplier extends Component {
-  static navigationOptions = {
-    header: null,
-  };
+  static navigationOptions = ({ navigation }) => ({
+    headerTitle: 'Workshop Profile',
+    headerTitleStyle: {
+      textAlign: 'center',
+      flexGrow: 1,
+      alignSelf: 'center',
+      color: '#ffffff',
+    },
+    headerStyle: {
+      backgroundColor: '#1E1E1E',
+    },
+    headerRight: (
+      <FontAwesome5
+        name="bell"
+        size={18}
+        onPress={() => navigation.navigate('Notifications')}
+        solid
+        style={{
+          marginRight: 10,
+          color: '#ffffff',
+
+        }}
+      />),
+    headerLeft: (
+      <FontAwesome5
+        name="stream"
+        size={18}
+        onPress={() => navigation.toggleDrawer()}
+        solid
+        style={{
+          marginLeft: 10,
+          color: '#ffffff',
+
+        }}
+      />),
+  });
+
+  componentDidMount =async () => {
+    const { actions:{ getWorkshopProfile },storeData:{ selectedWorkShopId } } = this.props
+    await getWorkshopProfile(selectedWorkShopId)
+  }
+
+  handleChatIcon =async (id,name,image) => {
+    const { actions:{ setSelectedConversation },navigation:{ navigate } } = this.props
+    await  setSelectedConversation(id,name,image)
+    navigate('Chat')
+  }
 
   render() {
+    const { storeData:{ isFetching ,workShopProfile } } = this.props
+    if (isFetching) { return (
+      <Group
+        style={{
+          position: 'absolute',
+          left: 0,
+          right: 0,
+          top: 0,
+          bottom: 0,
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <ActivityIndicator size="large" />
+      </Group>
+    ) }
     return (
       <ScrollContainer
         contentContainerStyle={{
@@ -107,11 +175,11 @@ class WorkshopSupplier extends Component {
         }}
       >
         <Group style={{ backgroundColor: '#F6F6F6' }}>
-          <CurvedHeader type="image" source={logo} />
+          <CurvedHeader type="image" source={{ uri:workShopProfile.image }} />
           <Group style={{ marginTop: 40, marginHorizontal: 20, minHeight: screen.height }}>
-            <Details text="Dream workshop" style={{ color: '#1A2960', fontSize: 18 }} />
-            <Details text="No. 006641" style={{ color: '#1A2960', fontSize: 16 }} />
-            <Details text="Gaza, Palestine" style={{ color: '#1A2960', fontSize: 12 }} />
+            <Details text={workShopProfile.name} style={{ color: '#1A2960', fontSize: 18 }} />
+            <Details text={workShopProfile.number} style={{ color: '#1A2960', fontSize: 16 }} />
+            <Details text={workShopProfile.address} style={{ color: '#1A2960', fontSize: 12 }} />
             <AirbnbRating
               showRating={false}
               count={5}
@@ -119,12 +187,13 @@ class WorkshopSupplier extends Component {
               size={10}
             />
             <Tabs
-              defaultActiveTab="settings"
+              workShopProfile={workShopProfile}
+              defaultActiveTab="user"
               options={[
                 { icon: 'user', key: 'user', activeContent: WorkshopProfileTab },
                 { icon: 'clock', key: 'clock', activeContent: WorkshopTimesTab },
                 { icon: 'cog', key: 'settings', activeContent: WorkshopSettingsTab },
-                { icon: 'comment', key: 'comment' },
+                { icon: 'comment', key: 'comment',handleChatIcon:(id,name,image) => this.handleChatIcon(id,name,image) },
                 { icon: 'calendar-check', key: 'calendar-check' },
               ]}
             />
@@ -156,4 +225,21 @@ const styles = {
   },
 }
 
-export default WorkshopSupplier
+const mapDispatchToProps = (dispatch) => ({
+  actions: bindActionCreators({ ...storeActions,...usersActions },dispatch),
+})
+
+const mapStateToProps = (state) => ({
+  storeData: state.storeData,
+  generalData:state.generalData,
+  userData:state.userData,
+})
+
+WorkshopSupplier.propTypes = {
+  actions: PropTypes.object.isRequired,
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(WorkshopSupplier)

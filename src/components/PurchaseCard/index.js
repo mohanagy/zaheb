@@ -1,12 +1,12 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import { TouchableOpacity } from 'react-native'
 import { Group, Title, Details } from 'components'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import { Image } from 'react-native-elements'
 
 
 export const PurchaseCard = ({
-  name, date, cost,source,
+  name, date, cost,source,handleSelectProduct,
 }) => (
   <Group
     style={{
@@ -32,15 +32,17 @@ export const PurchaseCard = ({
         borderColor: '#000',
       }}
     >
-      <Image
-        source={source}
-        style={{
-          width: '100%',
-          height: '100%',
-          resizeMode: 'contain',
-          borderWidth: 0,
-        }}
-      />
+      <TouchableOpacity onPress={handleSelectProduct}>
+        <Image
+          source={source}
+          style={{
+            width: '100%',
+            height: '100%',
+            resizeMode: 'contain',
+            borderWidth: 0,
+          }}
+        />
+      </TouchableOpacity>
     </Group>
     <Group style={{ flex: 1, marginHorizontal: 6 }}>
       <Group
@@ -53,7 +55,9 @@ export const PurchaseCard = ({
           alignItems: 'flex-start',
         }}
       >
-        <Title style={{ color: '#000', fontSize: 18, marginHorizontal: 0 }} text={name} />
+        <TouchableOpacity onPress={handleSelectProduct}>
+          <Title style={{ color: '#000', fontSize: 18, marginHorizontal: 0 }} text={name} />
+        </TouchableOpacity>
       </Group>
       <Group
         style={{

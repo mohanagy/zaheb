@@ -40,12 +40,23 @@ const initialState = {
       'value': 'https://www.linkedin.com',
     },
   },
+  notifications:[],
+  alert: {
+    type: null,
+    title: null,
+    message: null,
+  },
 }
 const userReducer = (state = initialState, action) => {
   const { payload } = action
   switch (action.type) {
     case actionTypes.GET_GENERAL_DATA_SUCCESS:
       return { ...state, ...payload }
+    case actionTypes.SHOW_ALERT:
+      return { ...state, ...payload }
+    case actionTypes.RESET_ALERT:
+      return { ...state, alert: { type: null, title: null, message: null } }
+
     default:
       return state
   }

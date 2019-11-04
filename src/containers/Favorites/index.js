@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Dimensions } from 'react-native'
+import { Dimensions ,ActivityIndicator } from 'react-native'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -16,7 +16,7 @@ const screen = Dimensions.get('screen')
 
 class Favorites extends Component {
   static navigationOptions = ({ navigation }) => ({
-    headerTitle: 'Home Store',
+    headerTitle: 'Favorites',
     headerTitleStyle: {
       textAlign: 'center',
       flexGrow: 1,
@@ -30,7 +30,7 @@ class Favorites extends Component {
       <FontAwesome5
         name="bell"
         size={18}
-        onPress={() => {}}
+        onPress={() => navigation.navigate('Notifications')}
         solid
         style={{
           marginRight: 10,
@@ -57,13 +57,39 @@ class Favorites extends Component {
       await getMyFavorites()
     }
 
-    handlePress =async () => {
-      const { navigation:{ navigate } } = this.props
-      navigate('Products')
+    handleSelectProfile =async (id) => {
+      const { actions:{ selectProduct } ,navigation:{ navigate } } = this.props
+      console.log({
+        id,
+      })
+      await selectProduct(id)
+      navigate('ProductOptions')
     }
 
+    handleRemove =async (id) => {
+      const { actions:{ removeFavorite,getMyFavorites } } = this.props
+      await removeFavorite(id)
+      await getMyFavorites()
+    }
+
+
     render() {
-      const { storeData:{ favorites } } = this.props
+      const { storeData:{ favorites ,isFetching } } = this.props
+      if (isFetching) { return (
+        <Group
+          style={{
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            top: 0,
+            bottom: 0,
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <ActivityIndicator size="large" />
+        </Group>
+      ) }
       return (
         <ScrollContainer
           contentContainerStyle={{
@@ -73,8 +99,15 @@ class Favorites extends Component {
           }}
         >
           <Group style={{ backgroundColor: '#F6F6F6', minHeight: screen.height }}>
-            <CurvedHeader type="image" source={redHeart} style={{ marginBottom: 100 }} />
-            {favorites.map(({ id ,product }) => <FavoriteCard key={id} product={product} onPress={this.handlePress} />)}
+            <CurvedHeader type="image" source={redHeart} style={{ marginBottom: 110 }} />
+            {favorites.map(({ id ,product ,product_id }) => (
+              <FavoriteCard
+                key={id}
+                product={product}
+                handleSelectProfile={() => this.handleSelectProfile(product_id)}
+                handleRemove={() => this.handleRemove(product_id)}
+              />
+            ))}
           </Group>
         </ScrollContainer>
       )
@@ -90,7 +123,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const mapStateToProps = (state) => ({
   storeData: state.storeData,
-  common: state.common,
+  generalData:state.generalData,
   userData:state.userData,
 })
 
