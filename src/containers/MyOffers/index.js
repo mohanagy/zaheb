@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollContainer, MyOfferCard } from 'components'
+import { ScrollContainer, MyOfferCard,Group } from 'components'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import { connect } from 'react-redux'
 import { ActivityIndicator } from 'react-native'
@@ -51,6 +51,19 @@ componentDidMount = async () => {
   await getWorkshopOffers()
 }
 
+handleMap =async (workshopId,serviceId) => {
+  const { actions:{ selectWorkShop,selectService },navigation:{ navigate } } = this.props
+  await selectWorkShop(workshopId)
+  await selectService(serviceId)
+  navigate('NearestServiceCenter')
+}
+
+handleSelectProfile =async (id) => {
+  const { actions:{ selectOfferId },navigation:{ navigate } } = this.props
+  await selectOfferId(id)
+  // navigate('NearestServiceCenter')
+}
+
 render() {
   const { storeData:{ workshopOffers,isFetching } } = this.props
   if (isFetching) { return (
@@ -71,7 +84,13 @@ render() {
   return (
     <ScrollContainer contentContainerStyle={{ marginTop: 20 }}>
       {
-        workshopOffers.map((offer) => <MyOfferCard {...offer} />)
+        workshopOffers.map((offer) => (
+          <MyOfferCard
+            handleSelectProfile={() => this.handleSelectProfile(offer.id)}
+            {...offer}
+            handleMap={() => this.handleMap(offer.workshop_id,offer.offer.service_id)}
+          />
+        ))
       }
     </ScrollContainer>
   )

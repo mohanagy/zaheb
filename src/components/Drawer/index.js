@@ -12,7 +12,7 @@ import * as usersActions from 'actions/users'
 import PropTypes from 'prop-types'
 
 
-class Drawer extends Component {
+export class Drawer extends Component {
   handleSignOut=async () => {
     const { navigation:{ navigate } } = this.props
     await AsyncStorage.removeItem('@user')

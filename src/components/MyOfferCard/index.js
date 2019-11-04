@@ -1,4 +1,5 @@
 import React from 'react'
+import { TouchableOpacity } from 'react-native'
 import {
   Group, Details, SplashButton,
 } from 'components'
@@ -7,7 +8,7 @@ import { Image, AirbnbRating } from 'react-native-elements'
 
 
 export const MyOfferCard = ({
-  workshop:{ commercial_register_image,name },offer:{ description },cost,
+  workshop:{ commercial_register_image,name },offer:{ description },cost,handleMap,handleSelectProfile,
 }) => (
   <Group
     style={{
@@ -33,15 +34,20 @@ export const MyOfferCard = ({
         borderColor: '#000',
       }}
     >
-      <Image
-        source={{ uri:commercial_register_image }}
-        style={{
-          width: '100%',
-          height: '100%',
-          resizeMode: 'contain',
-          borderWidth: 0,
-        }}
-      />
+      <TouchableOpacity
+        onPress={handleSelectProfile}
+      >
+
+        <Image
+          source={{ uri:commercial_register_image }}
+          style={{
+            width: '100%',
+            height: '100%',
+            resizeMode: 'contain',
+            borderWidth: 0,
+          }}
+        />
+      </TouchableOpacity>
     </Group>
     <Group style={{ flex: 1, marginHorizontal: 6 }}>
       <Group
@@ -50,7 +56,11 @@ export const MyOfferCard = ({
         }}
       >
         <Group style={{ alignItems: 'flex-start', justifyContent: 'center' }}>
-          <Details text={name} style={{ ...textsStyle, fontSize: 20, fontWeight: '900' }} />
+          <TouchableOpacity
+            onPress={handleSelectProfile}
+          >
+            <Details text={name} style={{ ...textsStyle, fontSize: 20, fontWeight: '900' }} />
+          </TouchableOpacity>
           <Details
             text={description}
             style={{
@@ -70,7 +80,7 @@ export const MyOfferCard = ({
         </Group>
         <Group style={{ justifyContent: 'space-between', alignItems: 'flex-end', marginVertical: 10 }}>
           <SplashButton title={<FontAwesome5 name="plus" />} style={buttonStyle} />
-          <SplashButton style={buttonStyle} title={<FontAwesome5 name="map-marker" />} />
+          <SplashButton onPress={handleMap} style={buttonStyle} title={<FontAwesome5 name="map-marker" />} />
           <SplashButton title="accept" style={buttonStyle} titleStyle={{ fontSize:10 }} />
         </Group>
       </Group>

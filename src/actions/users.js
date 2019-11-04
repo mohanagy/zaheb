@@ -280,11 +280,11 @@ export const sendConversationMessage =  (receiverId,message) =>  async (dispatch
 export const setSelectedConversation = (id,name,image) => async (dispatch) => {
   dispatch(getDataSuccess({ selectedReceiver: { id,name ,image } }))
 }
-export const forgetPassword =  ({ email,phone }) =>  async (dispatch,getState) => {
+export const forgetPassword =  ({ email = 'salkdmklsamdkl',phone }) =>  async (dispatch,getState) => {
   dispatch(startUserFetching())
   try {
     const data = new FormData()
-    email && data.append('email', email)
+    data.append('email', email)
     phone && data.append('phone', phone)
     const response = await fetch(`${api.forgetPassword}`, {
       method: 'POST',
@@ -315,12 +315,13 @@ export const forgetPassword =  ({ email,phone }) =>  async (dispatch,getState) =
   }
 }
 export const register =  ({
-  phone,email,name,password,location,
+  phone,email,name,password,location,username,
 }) =>  async (dispatch,getState) => {
   dispatch(startUserFetching())
   try {
     const data = new FormData()
     data.append('email', email)
+    data.append('username', username)
     data.append('phone', phone)
     data.append('name', name)
     data.append('password', password)
@@ -336,10 +337,15 @@ export const register =  ({
       body:data,
     })
     const json = await response.json()
-    const { status,msg } = json
+    const { user,msg } = json
 
-    if (!status) throw new Error(msg.error.email || msg.error.username || msg.error.password)
-    // dispatch(getDataSuccess({  }))
+    if (!user) throw new Error(msg.error ? (msg.error.email || msg.error.username || msg.error.password) : msg)
+    dispatch(errorHappened({
+      type: 'success',
+      title: 'Done',
+      message: 'Your account created!' ,
+    }))
+    return true
   }
   catch (error) {
     dispatch(errorHappened({

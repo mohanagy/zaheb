@@ -41,6 +41,8 @@ import {
   ProductOptions,
   Chat,
   NearestServiceCenter,
+  OfferDetails,
+  PurchaseDetails,
 } from 'containers'
 
 import { BottomTab } from 'components'
@@ -178,6 +180,16 @@ const PaymentInformationStack = createStackNavigator({
 })
 const ProfileWorkshopStack = createStackNavigator({
   ProfileWorkshop,
+  navigationOptions: () => ({ header: null, headerMode: 'none' }),
+
+})
+const OfferDetailsStack = createStackNavigator({
+  OfferDetails,
+  navigationOptions: () => ({ header: null, headerMode: 'none' }),
+
+})
+const PurchaseDetailsStack = createStackNavigator({
+  PurchaseDetails,
   navigationOptions: () => ({ header: null, headerMode: 'none' }),
 
 })
@@ -322,6 +334,8 @@ const Navigator = createStackNavigator(
     ProductOptions:ProductOptionsStack,
     Chat,
     NearestServiceCenter:NearestServiceCenterStack,
+    OfferDetails:OfferDetailsStack,
+    PurchaseDetail:PurchaseDetailsStack,
   },
   {
     initialRouteName: 'SplashLoading',
@@ -335,11 +349,16 @@ const MyDrawerNavigator = createDrawerNavigator(
   {
     Home: {
       screen: Navigator,
-      navigationOptions: {
+      navigationOptions:({ navigation }) => ({
+
         drawerIcon: ({ tintColor }) => (
-          <FontAwesome5 name="home" size={24} style={{ color: tintColor }} />
+          <FontAwesome5
+            name="home"
+            size={24}
+            style={{ color: tintColor }}
+          />
         ),
-      },
+      }),
     },
     'My requests': {
       screen: MyRequestsStack,

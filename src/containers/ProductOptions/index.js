@@ -46,16 +46,13 @@ class ProductOptions extends Component {
       />),
   });
 
-  state={
-    product:null,
-  }
 
 componentDidMount =async () => {
-  const { storeData :{ selectedProductId ,filteredProducts } } = this.props
-  const product = filteredProducts.find(({ id }) => id === selectedProductId)
-  this.setState({
-    product,
+  const { actions:{ getProductByProductId },storeData :{ selectedProductId  } } = this.props
+  console.log({
+    selectedProductId,
   })
+  await getProductByProductId(selectedProductId)
 }
 
 handlePressButton =async () => {
@@ -64,9 +61,12 @@ handlePressButton =async () => {
 }
 
 render() {
-  const { storeData:{ isFetching } } = this.props
-  const { product } = this.state
-  if (!product || isFetching) { return (
+  const { storeData:{ isFetching,product } } = this.props
+  console.log({
+    product,
+  })
+
+  if (isFetching) { return (
     <Group
       style={{
         position: 'absolute',

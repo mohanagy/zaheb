@@ -3,7 +3,7 @@ import { Text } from 'react-native'
 import profilePic from 'assets/profilePic.png'
 import LinearGradient from 'react-native-linear-gradient'
 import { ProfileAvatar, Group } from 'components'
-export const Header = props => (
+export const Header = (props) => (
   <LinearGradient
     colors={['#0092c9', '#ffffff']}
     start={{ x: 0, y: -1 }}

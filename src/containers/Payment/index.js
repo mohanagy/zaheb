@@ -71,18 +71,26 @@ componentDidMount= () => {
 
   onPress = async (method) => {
     const {
-      storeData:{ shippingDetails ,filteredProducts ,selectedProductId },actions:{ placeOrder },navigation:{
+      storeData:{ shippingDetails ,filteredProducts ,selectedProductId },actions:{ placeOrder,fireError },navigation:{
         navigate,
       },
     } = this.props
     const product = filteredProducts.find(({ id }) => id === selectedProductId)
 
     try {
-      if (method !== 'cash') { await PayPal.pay({
-        price: '50',
-        currency: 'USD',
-        description: 'Your description goes here',
-      }) }
+      console.log(
+        { ...this.props }
+      )
+      if (method !== 'cash') {
+        const result = await PayPal.pay({
+          price: '50',
+          currency: 'USD',
+          description: 'Your description goes here',
+        })
+        console.log({
+          result,
+        })
+      }
       const order = {
         supplier_id:product.user_id,
         product_id:product.id,
@@ -97,7 +105,7 @@ componentDidMount= () => {
       await navigate('MyPurchases')
     }
     catch (error) {
-      await navigate('MyPurchases')
+      await fireError(error)
     }
   }
 

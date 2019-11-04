@@ -64,6 +64,8 @@ class NearestServiceCenter extends Component {
     description:'',
     image:null,
     video:null,
+    lat:22.90162,
+    lng:47.02226,
   }
 
 
@@ -121,12 +123,13 @@ class NearestServiceCenter extends Component {
     }
 
     componentDidMount =async () => {
-      const {  storeData: { selectedWorkShopId  }, navigation: { navigate } } = this.props
+      const {  storeData: { selectedWorkShopId,workshops,selectedServiceId  },actions:{ getWorkShopsByServiceId }, navigation: { navigate } } = this.props
       if (!selectedWorkShopId) { return navigate('WorksShops') }
+      if (!workshops.length) await getWorkShopsByServiceId(selectedServiceId)
       Geolocation.getCurrentPosition((result) => {
         const { coords:{ latitude,longitude } } = result
         this.setState({ lat:latitude,lng:longitude })
-      },(error) => {}, { enableHighAccuracy:true })
+      },(error) => {      }, { enableHighAccuracy:true })
     }
 
     setDriver =async (driver) => {
@@ -192,7 +195,7 @@ class NearestServiceCenter extends Component {
 
     render() {
       const {
-        isModalVisible, showDate, showTime, date, time,driver,image,video,description,
+        isModalVisible, showDate, showTime, date, time,driver,image,video,description,lat,lng,
       } = this.state
       const { storeData:{ workshops,selectedWorkShopId ,isFetching } } = this.props
       if (isFetching) { return (
@@ -236,14 +239,14 @@ class NearestServiceCenter extends Component {
                 showUserLocationButton: true,
                 followsUserLocation: true,
                 initialRegion: {
-                  latitude: 22.90162,
-                  longitude: 47.02226,
+                  latitude: lat,
+                  longitude: lng,
                   latitudeDelta: 1,
                   longitudeDelta: 1,
                 },
                 region: {
-                  latitude: 22.90162,
-                  longitude: 47.02226,
+                  latitude: lat,
+                  longitude: lng,
                   latitudeDelta: 0.0922,
                   longitudeDelta: 0.0421,
                 },

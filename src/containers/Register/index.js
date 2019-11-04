@@ -17,6 +17,7 @@ class Register extends Component {
     phone:null,
     password:null,
     location:null,
+    username:null,
   }
 
   handleChange =(field,value) => {
@@ -28,10 +29,10 @@ class Register extends Component {
   handleSubmit =async () => {
     const { actions:{ register },navigation:{ navigate } } = this.props
     const {
-      phone,email,name,password,location,
+      phone,email,name,password,location,username,
     } = this.state
     const check =  await register({
-      phone,email,name,password,location,
+      phone,email,name,password,location,username,
     })
     if (check) navigate('Login')
   }
@@ -43,8 +44,8 @@ class Register extends Component {
   render() {
     const { navigation: { navigate },userData:{ isFetching } } = this.props
     const {
-      name,email,phone,password,location,
-    } = this.props
+      name,email,phone,password,location,username,
+    } = this.state
     return (
       <SimpleForm
         backgroundSource={blurredBackground}
@@ -111,6 +112,15 @@ class Register extends Component {
             onChangeText={(value) => this.handleChange('name',value)}
           />
           <LabeledInput
+            isRequired
+            label="User name"
+            inputStyle={inputStyle}
+            labelStyle={inputLabelStyle}
+            containerStyle={inputContainerStyle}
+            value={username}
+            onChangeText={(value) => this.handleChange('username',value)}
+          />
+          <LabeledInput
             label="E-Mail"
             inputStyle={inputStyle}
             labelStyle={inputLabelStyle}
@@ -152,6 +162,7 @@ class Register extends Component {
             onPress={() => this.handleSubmit()}
             style={buttonStyle}
             loading={isFetching}
+
           />
         </Group>
       </SimpleForm>
@@ -186,9 +197,11 @@ const buttonStyle = {
   },
   containerStyle: {
     position: 'absolute',
-    bottom: -25,
+    bottom: -45,
     width: '100%',
     paddingHorizontal: 10,
+    padding:35,
+
   },
   titleStyle: {
     color: '#FFFFFF',

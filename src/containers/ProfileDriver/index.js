@@ -62,7 +62,7 @@ class ProfileDriver extends Component {
   state = { values: { status: false } }
 
   onStatusChange = () => {
-    this.setState(state => ({ ...state, values: { ...state.values, status: !state.values.status } }))
+    this.setState((state) => ({ ...state, values: { ...state.values, status: !state.values.status } }))
   }
 
   render() {

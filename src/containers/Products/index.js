@@ -58,6 +58,12 @@ class Products extends Component {
     navigate('ProductOptions')
   }
 
+  handleAddToFavorite =async (id) => {
+    const { actions:{ addToFavorite,getProductsByFilters } ,storeData:{ productsFilter } } = this.props
+    await addToFavorite(id)
+    await getProductsByFilters(productsFilter)
+  }
+
   render() {
     const { storeData:{ filteredProducts,isFetching } } = this.props
     if (isFetching) { return (
@@ -84,6 +90,7 @@ class Products extends Component {
         {
           filteredProducts.map(({ id,...purchase }) => (
             <ProductCard
+              handleAddToFavorite={() => this.handleAddToFavorite(id)}
               key={id}
               {...purchase}
               onPress={() => this.handleSelectProduct(id)}

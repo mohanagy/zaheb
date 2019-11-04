@@ -12,7 +12,6 @@ import * as storeActions from 'actions/store'
 import * as usersActions from 'actions/users'
 import PropTypes from 'prop-types'
 
-import logo from '../../assets/logo.png'
 import nissan from '../../assets/nissan-logo-64.png'
 import bmw from '../../assets/bmw-logo-64.png'
 import hyundai from '../../assets/hyundai-logo-64.png'
@@ -144,6 +143,12 @@ class WorkshopSupplier extends Component {
     await getWorkshopProfile(selectedWorkShopId)
   }
 
+  handleChatIcon =async (id,name,image) => {
+    const { actions:{ setSelectedConversation },navigation:{ navigate } } = this.props
+    await  setSelectedConversation(id,name,image)
+    navigate('Chat')
+  }
+
   render() {
     const { storeData:{ isFetching ,workShopProfile } } = this.props
     if (isFetching) { return (
@@ -188,7 +193,7 @@ class WorkshopSupplier extends Component {
                 { icon: 'user', key: 'user', activeContent: WorkshopProfileTab },
                 { icon: 'clock', key: 'clock', activeContent: WorkshopTimesTab },
                 { icon: 'cog', key: 'settings', activeContent: WorkshopSettingsTab },
-                { icon: 'comment', key: 'comment' },
+                { icon: 'comment', key: 'comment',handleChatIcon:(id,name,image) => this.handleChatIcon(id,name,image) },
                 { icon: 'calendar-check', key: 'calendar-check' },
               ]}
             />

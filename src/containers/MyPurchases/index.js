@@ -53,6 +53,15 @@ class Purchases extends Component {
     await getMyPurchases()
   }
 
+  handleSelectProduct=async (id) => {
+    const { actions:{ selectProduct } ,navigation:{ navigate } } = this.props
+    await selectProduct(id)
+    console.log({
+      id,
+    })
+    navigate('PurchaseDetail')
+  }
+
   render() {
     const { storeData:{ myPurchases,isFetching } } = this.props
     if (isFetching) { return (
@@ -79,7 +88,16 @@ class Purchases extends Component {
         {
           myPurchases && myPurchases.map(({
             id,product,created_at,cost,
-          }) => <PurchaseCard key={id} name={product.name} date={moment(created_at).format('DD/MM/YYYY')} source={{ uri:product.image }} cost={cost} />)
+          }) => (
+            <PurchaseCard
+              key={id}
+              name={product.name}
+              handleSelectProduct={() => this.handleSelectProduct(id)}
+              date={moment(created_at).format('DD/MM/YYYY')}
+              source={{ uri:product.image }}
+              cost={cost}
+            />
+          ))
         }
       </ScrollContainer>
     )

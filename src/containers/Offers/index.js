@@ -60,9 +60,10 @@ handleSelectWorkShop= async (id) => {
 }
 
 
-handleMap =async (id) => {
-  const { actions:{ selectWorkShop },navigation:{ navigate } } = this.props
-  await selectWorkShop(id)
+handleMap =async (workshopId,serviceId) => {
+  const { actions:{ selectWorkShop,selectService },navigation:{ navigate } } = this.props
+  await selectWorkShop(workshopId)
+  await selectService(serviceId)
   navigate('NearestServiceCenter')
 }
 
@@ -94,7 +95,7 @@ render() {
             key={id}
             handleCancel={() => this.handleCancel(id)}
             handlePlus={() => this.handlePlus()}
-            handleMap={(id) => this.handleMap(id)}
+            handleMap={() => this.handleMap(id,service.id)}
           />
         ))
       }

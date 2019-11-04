@@ -156,9 +156,10 @@ const buttonStyle = {
   },
   containerStyle: {
     position: 'absolute',
-    bottom: -25,
+    bottom: -45,
     width: '100%',
     paddingHorizontal: 10,
+    padding:35,
   },
   titleStyle: {
     color: '#FFFFFF',

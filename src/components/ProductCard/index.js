@@ -7,7 +7,7 @@ import { Image } from 'react-native-elements'
 
 
 export const ProductCard = ({
-  name,number,image,description, user,onPress,cost,
+  name,number,image,description, user,onPress,cost,handleAddToFavorite,
 }) => (
   <Group
     style={{
@@ -55,7 +55,7 @@ export const ProductCard = ({
           <Details text={`$${cost}`} style={{ ...textsStyle }} />
         </Group>
         <Group style={{ justifyContent: 'space-between', alignItems: 'center', marginVertical: 10 }}>
-          <FontAwesome5 name="heart" size={20} />
+          <FontAwesome5 name="heart" size={20} onPress={handleAddToFavorite} />
           <SplashButton
             onPress={onPress}
             title="Buy"

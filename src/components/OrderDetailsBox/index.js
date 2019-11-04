@@ -92,9 +92,7 @@ export class OrderDetailsBox extends Component {
                 }}
               />
             </Group>
-          )
-
-          }
+          )}
         </Group>
       </Group>
 

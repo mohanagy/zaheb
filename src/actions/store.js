@@ -81,6 +81,19 @@ export const selectWorkShop = (id) => async (dispatch) => {
 export const setShippingDetails = (shippingDetails) => async (dispatch) => {
   dispatch(getDataSuccess({ shippingDetails }))
 }
+export const selectOfferId = (selectedMyOfferId) => async (dispatch) => {
+  dispatch(getDataSuccess({ selectedMyOfferId }))
+}
+export const selectOrderId = (orderId) => async (dispatch) => {
+  dispatch(getDataSuccess({ orderId }))
+}
+export const fireError = (error) => async (dispatch) => {
+  dispatch(errorHappened({
+    type: 'error',
+    title: 'Error',
+    message: error,
+  }))
+}
 
 export const getWorkShopsByServiceId = (id) => async (dispatch, getState) => {
   dispatch(startStoreFetching())
@@ -463,6 +476,34 @@ export const getOrderById =  (id) =>  async (dispatch,getState) => {
     dispatch(finishStoreFetching())
   }
 }
+export const getProductOrderByOrderId =  (id) =>  async (dispatch,getState) => {
+  dispatch(startStoreFetching())
+  try {
+    const { userData: { accessToken } } = getState()
+    const response = await fetch(`${api.getProductOrderByOrderId}${id}`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+    const json = await response.json()
+    const {  product_order:product } = json
+
+    dispatch(getDataSuccess({ product }))
+  }
+  catch (error) {
+    dispatch(errorHappened({
+      type: 'error',
+      title: 'Error',
+      message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
+    }))
+    return false
+  }
+  finally {
+    dispatch(finishStoreFetching())
+  }
+}
 export const changeOrderStatus =  (status) =>  async (dispatch,getState) => {
   dispatch(startStoreFetching())
   try {
@@ -570,16 +611,11 @@ export const getWorkshopProfile =  (id) =>  async (dispatch,getState) => {
       },
     })
     const json = await response.json()
-    console.log({
-      json,
-    })
+
     const {  workshop:workShopProfile } = json
     dispatch(getDataSuccess({ workShopProfile }))
   }
   catch (error) {
-    console.log({
-      error,
-    })
     dispatch(errorHappened({
       type: 'error',
       title: 'Error',
@@ -618,6 +654,104 @@ export const getProductsByFilters =  (productsFilter) =>  async (dispatch,getSta
       type: 'error',
       title: 'Error',
       message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
+    }))
+    return false
+  }
+  finally {
+    dispatch(finishStoreFetching())
+  }
+}
+export const getProductByProductId =  (id) =>  async (dispatch,getState) => {
+  dispatch(startStoreFetching())
+  try {
+    const { userData: { accessToken } } = getState()
+
+    const url = `${api.getProductByProductId}${id}`
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+    const json = await response.json()
+
+    const {  product } = json
+
+    dispatch(getDataSuccess({ product }))
+  }
+  catch (error) {
+    dispatch(errorHappened({
+      type: 'error',
+      title: 'Error',
+      message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
+    }))
+    return false
+  }
+  finally {
+    dispatch(finishStoreFetching())
+  }
+}
+export const removeFavorite =  (id) =>  async (dispatch,getState) => {
+  dispatch(startStoreFetching())
+  try {
+    const { userData: { accessToken } } = getState()
+
+    const data = new FormData()
+    data.append('product_id', Number(id))
+
+    const url = `${api.removeFavourite}`
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body:data,
+    })
+    const json = await response.json()
+    const {  msg } = json
+    if (msg !== 'Product removed form your favourite') throw new Error(msg)
+  }
+  catch (error) {
+    dispatch(errorHappened({
+      type: 'error',
+      title: 'Error',
+      message: error.message,
+    }))
+    return false
+  }
+  finally {
+    dispatch(finishStoreFetching())
+  }
+}
+export const addToFavorite =  (id) =>  async (dispatch,getState) => {
+  dispatch(startStoreFetching())
+  try {
+    const { userData: { accessToken } } = getState()
+
+    const data = new FormData()
+    data.append('product_id', Number(id))
+
+    const url = `${api.addFavourite}`
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body:data,
+    })
+    const json = await response.json()
+    const {  msg } = json
+
+    if (msg !== 'Product Added To Your Favourite') throw new Error(msg)
+  }
+  catch (error) {
+    dispatch(errorHappened({
+      type: 'error',
+      title: 'Error',
+      message: error.message,
     }))
     return false
   }

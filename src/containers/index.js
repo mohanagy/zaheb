@@ -35,6 +35,8 @@ import ProductOptions from './ProductOptions'
 import Chat from './Chat'
 import ProfileDriver from './ProfileDriver'
 import NearestServiceCenter from './NearestServiceCenter'
+import OfferDetails from './OfferDetails'
+import PurchaseDetails from './PurchaseDetails'
 
 export {
   Login,
@@ -74,4 +76,6 @@ export {
   NearestServiceCenter,
   HomeStarterPage,
   MaintenancePage,
+  OfferDetails,
+  PurchaseDetails,
 }

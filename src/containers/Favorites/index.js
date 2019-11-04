@@ -16,7 +16,7 @@ const screen = Dimensions.get('screen')
 
 class Favorites extends Component {
   static navigationOptions = ({ navigation }) => ({
-    headerTitle: 'Home Store',
+    headerTitle: 'Favorites',
     headerTitleStyle: {
       textAlign: 'center',
       flexGrow: 1,
@@ -57,10 +57,21 @@ class Favorites extends Component {
       await getMyFavorites()
     }
 
-    handlePress =async () => {
-      const { navigation:{ navigate } } = this.props
-      navigate('Products')
+    handleSelectProfile =async (id) => {
+      const { actions:{ selectProduct } ,navigation:{ navigate } } = this.props
+      console.log({
+        id,
+      })
+      await selectProduct(id)
+      navigate('ProductOptions')
     }
+
+    handleRemove =async (id) => {
+      const { actions:{ removeFavorite,getMyFavorites } } = this.props
+      await removeFavorite(id)
+      await getMyFavorites()
+    }
+
 
     render() {
       const { storeData:{ favorites ,isFetching } } = this.props
@@ -88,8 +99,15 @@ class Favorites extends Component {
           }}
         >
           <Group style={{ backgroundColor: '#F6F6F6', minHeight: screen.height }}>
-            <CurvedHeader type="image" source={redHeart} style={{ marginBottom: 100 }} />
-            {favorites.map(({ id ,product }) => <FavoriteCard key={id} product={product} onPress={this.handlePress} />)}
+            <CurvedHeader type="image" source={redHeart} style={{ marginBottom: 110 }} />
+            {favorites.map(({ id ,product ,product_id }) => (
+              <FavoriteCard
+                key={id}
+                product={product}
+                handleSelectProfile={() => this.handleSelectProfile(product_id)}
+                handleRemove={() => this.handleRemove(product_id)}
+              />
+            ))}
           </Group>
         </ScrollContainer>
       )

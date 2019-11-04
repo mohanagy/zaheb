@@ -53,6 +53,12 @@ componentDidMount =async () => {
   await getMyRequests()
 }
 
+handleSelectRequest =async (id) => {
+  const { actions:{ selectOrderId },navigation:{ navigate } } = this.props
+  await selectOrderId(id)
+  navigate('RequestDetails')
+}
+
 render() {
   const { storeData:{ myRequests,isFetching } } = this.props
   if (isFetching) { return (
@@ -79,7 +85,16 @@ render() {
       {
         myRequests.map(({
           image,id ,service_time,service_date,service,
-        }) => <RequestCard key={id} name={service.en_name} date={service_date} time={service_time} source={{ uri:image }} />)
+        }) => (
+          <RequestCard
+            key={id}
+            name={service.en_name}
+            handleSelectRequest={() => this.handleSelectRequest(id)}
+            date={service_date}
+            time={service_time}
+            source={{ uri:image }}
+          />
+        ))
       }
     </ScrollContainer>
   )
