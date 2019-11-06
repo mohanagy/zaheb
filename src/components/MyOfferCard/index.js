@@ -9,6 +9,7 @@ import { Image, AirbnbRating } from 'react-native-elements'
 
 export const MyOfferCard = ({
   workshop:{ commercial_register_image,name },offer:{ description },cost,handleMap,handleSelectProfile,
+  handleAcceptOffer,
 }) => (
   <Group
     style={{
@@ -81,7 +82,7 @@ export const MyOfferCard = ({
         <Group style={{ justifyContent: 'space-between', alignItems: 'flex-end', marginVertical: 10 }}>
           <SplashButton title={<FontAwesome5 name="plus" />} style={buttonStyle} />
           <SplashButton onPress={handleMap} style={buttonStyle} title={<FontAwesome5 name="map-marker" />} />
-          <SplashButton title="accept" style={buttonStyle} titleStyle={{ fontSize:10 }} />
+          <SplashButton title="accept" style={buttonStyle} onPress={handleAcceptOffer} titleStyle={{ fontSize:10 }} />
         </Group>
       </Group>
     </Group>

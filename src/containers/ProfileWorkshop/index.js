@@ -149,6 +149,12 @@ class WorkshopSupplier extends Component {
     navigate('Chat')
   }
 
+  handleBooking= async (id) => {
+    const { actions:{ selectWorkShop },navigation:{ navigate } } = this.props
+    await selectWorkShop(id)
+    navigate('NearestServiceCenter')
+  }
+
   render() {
     const { storeData:{ isFetching ,workShopProfile } } = this.props
     if (isFetching) { return (
@@ -194,7 +200,7 @@ class WorkshopSupplier extends Component {
                 { icon: 'clock', key: 'clock', activeContent: WorkshopTimesTab },
                 { icon: 'cog', key: 'settings', activeContent: WorkshopSettingsTab },
                 { icon: 'comment', key: 'comment',handleChatIcon:(id,name,image) => this.handleChatIcon(id,name,image) },
-                { icon: 'calendar-check', key: 'calendar-check' },
+                { icon: 'calendar-check', key: 'calendar-check', handleBooking:(id) => this.handleBooking(id) },
               ]}
             />
           </Group>

@@ -399,6 +399,33 @@ export const cancelMyRequestedOffers =  (id) =>  async (dispatch,getState) => {
     dispatch(finishStoreFetching())
   }
 }
+export const acceptWorkshopOfferId =  (id) =>  async (dispatch,getState) => {
+  dispatch(startStoreFetching())
+  try {
+    const { userData: { accessToken } } = getState()
+    const response = await fetch(`${api.acceptWorkshopOfferId}${id}`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+    const json = await response.json()
+    const { status } = json
+    if (status) return true
+  }
+  catch (error) {
+    dispatch(errorHappened({
+      type: 'error',
+      title: 'Error',
+      message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
+    }))
+    return false
+  }
+  finally {
+    dispatch(finishStoreFetching())
+  }
+}
 export const createOrder =  (newOrder) =>  async (dispatch,getState) => {
   dispatch(startStoreFetching())
   try {

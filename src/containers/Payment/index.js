@@ -78,17 +78,11 @@ componentDidMount= () => {
     const product = filteredProducts.find(({ id }) => id === selectedProductId)
 
     try {
-      console.log(
-        { ...this.props }
-      )
       if (method !== 'cash') {
         const result = await PayPal.pay({
           price: '50',
           currency: 'USD',
           description: 'Your description goes here',
-        })
-        console.log({
-          result,
         })
       }
       const order = {

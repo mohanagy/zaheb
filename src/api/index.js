@@ -38,6 +38,7 @@ module.exports = {
     getProductByProductId: `${APIV1}/getProductByProductId?product_id=`,
     getProductOrderByOrderId: `${APIV1}/getProductOrderByOrderId?product_order_id=`,
     getNotifications: `${APIV1}/getNotification`,
+    acceptWorkshopOfferId: `${APIV1}/acceptWorkshopOfferId?workshop_offer_id=`,
     getWorkshopProfile: `${APIV1}/workshop-profile?workshop_id=`,
     forgetPassword: `${APIV1}/forgetPassword`,
     userRegister: `${APIV1}/userRegister`,

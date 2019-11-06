@@ -56,10 +56,7 @@ class Purchases extends Component {
   handleSelectProduct=async (id) => {
     const { actions:{ selectProduct } ,navigation:{ navigate } } = this.props
     await selectProduct(id)
-    console.log({
-      id,
-    })
-    navigate('PurchaseDetail')
+    navigate('PurchaseDetails')
   }
 
   render() {

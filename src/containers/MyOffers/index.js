@@ -64,6 +64,12 @@ handleSelectProfile =async (id) => {
   // navigate('NearestServiceCenter')
 }
 
+handleAcceptOffer =async (id) => {
+  const { actions:{ acceptWorkshopOfferId,getWorkshopOffers } } = this.props
+  await acceptWorkshopOfferId(id)
+  await getWorkshopOffers()
+}
+
 render() {
   const { storeData:{ workshopOffers,isFetching } } = this.props
   if (isFetching) { return (
@@ -89,6 +95,7 @@ render() {
             handleSelectProfile={() => this.handleSelectProfile(offer.id)}
             {...offer}
             handleMap={() => this.handleMap(offer.workshop_id,offer.offer.service_id)}
+            handleAcceptOffer={() => this.handleAcceptOffer(offer.id)}
           />
         ))
       }

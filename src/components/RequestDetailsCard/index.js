@@ -13,12 +13,12 @@ const requestDetailsFields = [
   { title: 'location', fieldName: 'Location', icon: 'map-marker-alt' },
   { title: 'orderStatus', fieldName: 'Order status', icon: 'exclamation-circle' },
   { title: 'driverName', fieldName: 'Driver name', icon: 'car' },
-  { title: 'supplierName', fieldName: 'Supplier name', icon: 'hand-holding-usd' },
+  { title: 'supplierName', fieldName: 'workShop name', icon: 'hand-holding-usd' },
 ]
 
 class RequestDetailsCard extends Component {
   render() {
-    const { style, ...fields } = this.props
+    const { style,request, ...fields } = this.props
     return (
       <Group style={{ marginHorizontal: '5%', ...style }}>
         {
@@ -38,7 +38,7 @@ class RequestDetailsCard extends Component {
                 <FontAwesome5 name={icon} size={30} style={{ color: '#FFF' }} />
               </Group>
               <Group
-                style={{
+                style={{ 
                   backgroundColor: '#FFF',
                   width: 0.9 * screen.width - 50,
                   justifyContent: 'center',

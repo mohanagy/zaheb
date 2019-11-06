@@ -8,6 +8,8 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as generalActions from 'actions/general'
+import * as storeActions from 'actions/store'
+import * as usersActions from 'actions/users'
 import PropTypes from 'prop-types'
 import bg from '../../assets/blurred-background.png'
 
@@ -57,6 +59,28 @@ class Notifications extends Component {
     await getNotifications()
   }
 
+  handleClickOnNotification =async (notification) => {
+    const { navigation:{ navigate },actions:{ setSelectedConversation,selectProduct } } = this.props
+    const { url } = notification
+
+    if (url.includes('myOffers')) {
+      navigate('MyOffers')
+    }
+    else if (url.includes('conversation')) {
+      const { sender_id ,image } = notification
+      await  setSelectedConversation(sender_id,'',image)
+
+      navigate('Chat')
+    }
+    else if (url.includes('getCustomerServiceById')) {
+
+    } else if (url.includes('getProductOrderByOrderId')) {
+      const [,id] = url.split('=')
+      await selectProduct(id)
+      navigate('PurchaseDetails')
+    }
+  }
+
   render() {
     const { generalData:{ notifications,isFetching } } = this.props
     if (isFetching) { return (
@@ -78,7 +102,12 @@ class Notifications extends Component {
       <BackgroundImageWrapper source={bg}>
         <ScrollContainer>
           <Group style={{ minHeight: screen.height, backgroundColor: '#FFF8' }}>
-            {notifications.map((datum) => <NotificationRow {...datum} />)}
+            {notifications.map((datum) => (
+              <NotificationRow
+                {...datum}
+                handleClickOnNotification={() => this.handleClickOnNotification(datum)}
+              />
+            ))}
           </Group>
         </ScrollContainer>
       </BackgroundImageWrapper>
@@ -92,7 +121,7 @@ Notifications.propTypes = {
 
 
 const mapDispatchToProps = (dispatch) => ({
-  actions: bindActionCreators({ ...generalActions },dispatch),
+  actions: bindActionCreators({ ...generalActions,...usersActions,...storeActions },dispatch),
 })
 
 const mapStateToProps = (state) => ({

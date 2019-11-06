@@ -12,7 +12,7 @@ import { storeActions } from 'actions'
 
 const screen = Dimensions.get('screen')
 
-class RequestDetails extends Component {
+class OfferDetails extends Component {
   static navigationOptions = ({ navigation }) => ({
     headerTitle: 'Offer Details',
     headerTitleStyle: {
@@ -127,7 +127,7 @@ class RequestDetails extends Component {
   }
 }
 
-RequestDetails.propTypes = {
+OfferDetails.propTypes = {
   actions: PropTypes.object.isRequired,
   storeData: PropTypes.object.isRequired,
 
@@ -142,4 +142,4 @@ const mapStateToProps = (state) => ({
   storeData: state.storeData,
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(RequestDetails)
+export default connect(mapStateToProps, mapDispatchToProps)(OfferDetails)

@@ -67,6 +67,12 @@ handleMap =async (workshopId,serviceId) => {
   navigate('NearestServiceCenter')
 }
 
+handlePlus =async (id) => {
+  const { actions:{ selectOrderId },navigation:{ navigate } } = this.props
+  await selectOrderId(id)
+  navigate('OfferDetails')
+}
+
 render() {
   const { storeData:{ offers,isFetching } } = this.props
   if (isFetching) { return (
@@ -94,7 +100,7 @@ render() {
             service={service}
             key={id}
             handleCancel={() => this.handleCancel(id)}
-            handlePlus={() => this.handlePlus()}
+            handlePlus={() => this.handlePlus(id)}
             handleMap={() => this.handleMap(id,service.id)}
           />
         ))

@@ -335,7 +335,7 @@ const Navigator = createStackNavigator(
     Chat,
     NearestServiceCenter:NearestServiceCenterStack,
     OfferDetails:OfferDetailsStack,
-    PurchaseDetail:PurchaseDetailsStack,
+    PurchaseDetails:PurchaseDetailsStack,
   },
   {
     initialRouteName: 'SplashLoading',

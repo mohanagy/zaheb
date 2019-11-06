@@ -33,6 +33,7 @@ const initialState = {
   product:{
     user:{},
     service:{},
+    product:{},
   },
 }
 const carsReducer = (state = initialState, action) => {

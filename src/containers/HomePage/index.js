@@ -51,15 +51,11 @@ class HomePage extends Component {
      />),
  });
 
-
 componentDidMount =async () => {
-  const {
-    actions:{ checkAuth } ,navigation:{ navigate },userData:{ accessToken },
-  } = this.props
+  const { actions:{ checkAuth } ,navigation:{ navigate },userData:{ accessToken } } = this.props
   const valid = await checkAuth(accessToken)
   if (!valid)navigate('Login')
 }
-
 
 render() {
   const { navigation: { navigate } } = this.props
@@ -72,24 +68,19 @@ render() {
       }}
     >
       <BackgroundImageWrapper source={background}>
-        {/* <Group
+        <Group
           style={{
-            backgroundColor: 'red',
+            backgroundColor: '#ffffff91',
             position: 'absolute',
             top: 0,
             bottom: 0,
             right: 0,
             left: 0,
-            flex:1,
           }}
-        /> */}
-        <Group style={{ minHeight: screen.height,backgroundColor:'red',justifyContent:'center' }}>
-          <CurvedHeader style={{  marginBottom:0 }} />
-          <Group
-            style={{
-              alignItems: 'center',justifyContent:'flex-start',backgroundColor:'yellow',
-            }}
-          >
+        />
+        <Group style={{ minHeight: screen.height }}>
+          <CurvedHeader style={{ marginBottom: 40 }} />
+          <Group style={{ alignItems: 'center' }}>
             <Group
               style={{
                 marginBottom: 15, backgroundColor: '#1E1E1E', borderRadius: 99 ** 9, padding: 20,
