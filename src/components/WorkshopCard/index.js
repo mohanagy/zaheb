@@ -13,7 +13,7 @@ export const ProductCard = ({
     style={{
       flexDirection: 'row',
       justifyContent: 'flex-start',
-      height: 100,
+      height: 120,
       marginHorizontal: 15,
       backgroundColor: '#FFF',
       marginBottom: 12,
@@ -58,7 +58,7 @@ export const ProductCard = ({
           <TouchableOpacity onPress={onPressWorkShopName}>
             <Details text={name} style={{ ...textsStyle, fontSize: 20, fontWeight: '900' }} />
           </TouchableOpacity>
-          <Group style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center' }}>
+          <Group style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', marginBottom: 10 }}>
             <Details text={(`${user_cars[0].types_of_cars.en_name}/${user_cars[1].types_of_cars.en_name}...`)} style={{ ...textsStyle, fontSize: 18, fontWeight: '600' }} />
           </Group>
           <AirbnbRating
@@ -78,7 +78,8 @@ export const ProductCard = ({
                 borderRadius: 200,
                 paddingHorizontal: 10,
                 paddingVertical: 3,
-              },
+                marginBottom: -15,
+              }
             }}
           />
         </Group>

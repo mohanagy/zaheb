@@ -102,7 +102,7 @@ class CustomerService extends Component {
             onPress={() => this.handleSubmit()}
             style={{
               buttonStyle: {
-                width: 250,
+                paddingHorizontal: 45,
                 backgroundColor: '#1E1E1E',
                 borderRadius: 99 * 9,
                 alignSelf: 'center',
@@ -121,12 +121,9 @@ const styles = {
   inputStyle: {
     inputStyle: {
       backgroundColor: '#FFF',
-      borderRadius: 0,
-      shadowColor: '#BF1E1E1E',
-      shadowOffset: { width: 1, height: 1 },
-      shadowOpacity: 0.8,
-      shadowRadius: 1,
-      elevation: 3,
+      borderColor: '#1E1E1E',
+      borderRadius: 5,
+      borderWidth: .5,
       marginBottom: 15,
     },
 

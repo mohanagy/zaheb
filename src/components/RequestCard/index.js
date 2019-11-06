@@ -63,7 +63,7 @@ export const RequestCard = ({
           onPress={handleSelectRequest}
         >
 
-          <Title style={{ color: '#000', fontSize: 18, marginHorizontal: 0 }} text={name} />
+          <Title style={{ color: '#000', fontSize: 16, marginHorizontal: 0 }} text={name} />
         </TouchableOpacity>
         <Details
           style={{

@@ -86,9 +86,12 @@ class SubServices extends Component {
               <SubServiceCard
                 source={{ uri: image }}
                 style={{
-                  width:100,
-                  height:70,
+                  width:120,
+                  height:120,
+                  borderTopLeftRadius: 15,
+                  borderBottomLeftRadius: 15,
                 }}
+                containerStyle={{ overflow: 'hidden' }}
                 key={id}
                 name={en_name}
                 onPress={() => this.handleSelectService(id)}
