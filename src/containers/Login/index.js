@@ -4,12 +4,14 @@ import PropTypes from 'prop-types'
 import {
   Title, Group, SplashButton, LabeledInput, Details, SimpleForm,
 } from 'components'
-import { TouchableOpacity } from 'react-native'
+import { Dimensions, TouchableOpacity, Image } from 'react-native'
 import blurredBackground from 'assets/blurred-background.png'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as userActions from 'actions/users'
+import logo from 'assets/logo.png'
 
+const screen = Dimensions.get('screen')
 
 class Login extends Component {
   state={
@@ -95,6 +97,19 @@ class Login extends Component {
                 backgroundColor: '#FFFFFF',
               }}
             >
+            <Group style={{
+                position: 'absolute',
+                top: -80,
+                left: (screen.width * .5) - 28 - 70,
+                backgroundColor: '#FFF',
+                borderTopLeftRadius: 9 ** 9,
+                borderTopRightRadius: 9 ** 9,
+                paddingHorizontal: 10,
+                width: 140,
+                height: 140,
+              }}>
+              <Image source={logo} style={{ width: 120, height: 120 }}/>
+            </Group>
               <Title
                 text={[
                   (<Title text="Z" style={{ color: '#BE1522' }} />),
@@ -146,6 +161,8 @@ const inputLabelStyle = {
 
 const inputContainerStyle = {
   marginHorizontal: 18,
+  borderBottomColor: '#B0ABAB',
+  borderBottomWidth: .5,
 }
 
 const buttonStyle = {
@@ -156,7 +173,7 @@ const buttonStyle = {
   },
   containerStyle: {
     position: 'absolute',
-    bottom: -45,
+    bottom: -55,
     width: '100%',
     paddingHorizontal: 10,
     padding:35,

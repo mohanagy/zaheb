@@ -7,6 +7,13 @@ import blurredBackground from 'assets/blurred-background.png'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as userActions from 'actions/users'
+import { Dimensions, TouchableOpacity, Image } from 'react-native'
+
+import logo from 'assets/logo.png'
+
+const screen = Dimensions.get('screen')
+
+
 class ForgotPassword extends Component {
   state={
     phone:null,
@@ -48,6 +55,19 @@ class ForgotPassword extends Component {
             backgroundColor: '#FFFFFF',
           }}
         >
+        <Group style={{
+            position: 'absolute',
+            top: -80,
+            left: (screen.width * .5) - 28 - 70,
+            backgroundColor: '#FFF',
+            borderTopLeftRadius: 9 ** 9,
+            borderTopRightRadius: 9 ** 9,
+            paddingHorizontal: 10,
+            width: 140,
+            height: 140,
+          }}>
+          <Image source={logo} style={{ width: 120, height: 120 }}/>
+        </Group>
           <Title
             text={[
               (<Title text="Z" style={{ color: '#BE1522' }} />),
@@ -109,6 +129,8 @@ const inputLabelStyle = {
 const inputContainerStyle = {
   marginHorizontal: 18,
   marginTop: 20,
+  borderBottomColor: '#B0ABAB',
+  borderBottomWidth: .5,
 }
 ForgotPassword.propTypes = {
   navigation: PropTypes.object.isRequired,

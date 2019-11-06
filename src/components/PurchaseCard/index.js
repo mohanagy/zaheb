@@ -39,6 +39,7 @@ export const PurchaseCard = ({
             width: '100%',
             height: '100%',
             resizeMode: 'contain',
+            borderRadius: 100,
             borderWidth: 0,
           }}
         />

@@ -72,40 +72,27 @@ render() {
       }}
     >
       <BackgroundImageWrapper source={background}>
-        {/* <Group
-          style={{
-            backgroundColor: 'red',
-            position: 'absolute',
-            top: 0,
-            bottom: 0,
-            right: 0,
-            left: 0,
-            flex:1,
-          }}
-        /> */}
-        <Group style={{ minHeight: screen.height,backgroundColor:'red',justifyContent:'center' }}>
+        <Group style={{ minHeight: screen.height, backgroundColor:'#FFFFFFA8',justifyContent:'flex-start' }}>
           <CurvedHeader style={{  marginBottom:0 }} />
           <Group
             style={{
-              alignItems: 'center',justifyContent:'flex-start',backgroundColor:'yellow',
+              alignItems: 'center',justifyContent:'flex-start', marginTop: 75
             }}
           >
             <Group
-              style={{
-                marginBottom: 15, backgroundColor: '#1E1E1E', borderRadius: 99 ** 9, padding: 20,
-              }}
               onPress={() => navigate('MaintenancePage')}
             >
+            <Group style={{ marginBottom: 15, backgroundColor: '#000', borderRadius: 99 ** 9, padding: 20 }}>
               <FontAwesome5 name="tools" size={55} style={{ color: '#FFF' }} onPress={() => navigate('MaintenancePage')} />
+            </Group>
             </Group>
             <Details text="Maintenance Services" style={{ marginBottom: 20, color: '#1E1E1E', fontSize: 22 }} />
             <Group
-              style={{
-                marginBottom: 15, backgroundColor: '#1E1E1E', borderRadius: 99 ** 9, padding: 20,
-              }}
               onPress={() => navigate('HomeStore')}
             >
+            <Group style={{ marginBottom: 15, backgroundColor: '#000', borderRadius: 99 ** 9, padding: 20 }}>
               <FontAwesome5 name="store" size={55} style={{ color: '#FFF' }} />
+            </Group>
             </Group>
             <Details text="Store" style={{ marginBottom: 20, color: '#1E1E1E', fontSize: 22 }} />
           </Group>

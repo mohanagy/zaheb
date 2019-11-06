@@ -28,7 +28,7 @@ export class CurvedHeader extends Component {
         <Group
           style={{
             position: 'absolute',
-            top: screen.width * -2.7,
+            top: screen.width * -3 + 150,
             left: screen.width * -1,
             width: screen.width * 3,
             height: screen.width * 3,
@@ -41,7 +41,7 @@ export class CurvedHeader extends Component {
             <Group
               style={{
                 alignSelf: 'center',
-                bottom: 25,
+                bottom: 45,
                 position: 'relative',
                 backgroundColor: '#FFF',
                 borderRadius: 200,
@@ -50,6 +50,7 @@ export class CurvedHeader extends Component {
                 shadowOpacity: 0.8,
                 shadowRadius: 2,
                 elevation: 5,
+                paddingHorizontal: 25,
               }}
             >
               <Title
@@ -58,6 +59,7 @@ export class CurvedHeader extends Component {
                   color: '#000',
                   textAlignVertical: 'center',
                   marginBottom: 8,
+                  fontSize: 22
                 }}
               />
             </Group>

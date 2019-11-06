@@ -34,9 +34,11 @@ export class SimpleForm extends Component {
         />
         <ScrollContainer
           contentContainerStyle={{
+            marginTop: 15,
             marginBottom: 0,
             paddingBottom: 0,
-            justifyContent: 'flex-start',
+            justifyContent: 'center',
+            minHeight: screen.height - 100
           }}
         >
           <Group>
