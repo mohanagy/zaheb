@@ -49,9 +49,7 @@ class ProductOptions extends Component {
 
 componentDidMount =async () => {
   const { actions:{ getProductByProductId },storeData :{ selectedProductId  } } = this.props
-  console.log({
-    selectedProductId,
-  })
+
   await getProductByProductId(selectedProductId)
 }
 
@@ -62,9 +60,6 @@ handlePressButton =async () => {
 
 render() {
   const { storeData:{ isFetching,product } } = this.props
-  console.log({
-    product,
-  })
 
   if (isFetching) { return (
     <Group

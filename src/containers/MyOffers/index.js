@@ -59,9 +59,9 @@ handleMap =async (workshopId,serviceId) => {
 }
 
 handleSelectProfile =async (id) => {
-  const { actions:{ selectOfferId },navigation:{ navigate } } = this.props
-  await selectOfferId(id)
-  // navigate('NearestServiceCenter')
+  const { actions:{ selectWorkShop },navigation:{ navigate } } = this.props
+  await selectWorkShop(id)
+  navigate('ProfileWorkshop')
 }
 
 render() {
@@ -86,7 +86,7 @@ render() {
       {
         workshopOffers.map((offer) => (
           <MyOfferCard
-            handleSelectProfile={() => this.handleSelectProfile(offer.id)}
+            handleSelectProfile={() => this.handleSelectProfile(offer.workshop_id)}
             {...offer}
             handleMap={() => this.handleMap(offer.workshop_id,offer.offer.service_id)}
           />

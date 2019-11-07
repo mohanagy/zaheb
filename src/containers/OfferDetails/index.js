@@ -49,6 +49,19 @@ class RequestDetails extends Component {
       />),
   });
 
+  state={
+    requestDetailsFields : [
+      { title: 'requestName', fieldName: 'Request name', icon: 'clipboard-list' },
+      { title: 'requestDate', fieldName: 'Request date', icon: 'calendar' },
+      { title: 'startingDate', fieldName: 'Starting date', icon: 'calendar' },
+      { title: 'ofToHour', fieldName: 'Of to hour', icon: 'clock' },
+      { title: 'location', fieldName: 'Location', icon: 'map-marker-alt' },
+      { title: 'orderStatus', fieldName: 'Order status', icon: 'exclamation-circle' },
+      { title: 'driverName', fieldName: 'Driver name', icon: 'car' },
+      { title: 'supplierName', fieldName: 'Supplier name', icon: 'hand-holding-usd' },
+    ],
+  }
+
   componentDidMount =async () => {
     const { actions:{ getOrderById },storeData:{ orderId } } = this.props
     await getOrderById(orderId)
@@ -64,6 +77,7 @@ class RequestDetails extends Component {
 
   render() {
     const { storeData:{ order ,isFetching } } = this.props
+    const { requestDetailsFields } = this.state
     if (isFetching) { return (
       <Group
         style={{
@@ -93,6 +107,7 @@ class RequestDetails extends Component {
             orderStatus=""
             driverName={order.driver || ''}
             supplierName=""
+            requestDetailsFields={requestDetailsFields}
           />
           <Group style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' }}>
             <SplashButton

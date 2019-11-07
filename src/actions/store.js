@@ -208,6 +208,7 @@ export const getMyPurchases = () => async (dispatch, getState) => {
       },
     })
     const json = await response.json()
+
     const { error, product_orders:myPurchases = [] } = json
 
     if (error) {
@@ -461,7 +462,6 @@ export const getOrderById =  (id) =>  async (dispatch,getState) => {
     })
     const json = await response.json()
     const {  order } = json
-
     dispatch(getDataSuccess({ order }))
   }
   catch (error) {

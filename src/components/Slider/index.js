@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, Dimensions,Image } from 'react-native'
 import {
-  Group, Logo, Details, Dot, ActiveDot,
+  Group, Details, Dot, ActiveDot,
 } from 'components'
 import Swiper from 'react-native-swiper'
 import logo from 'assets/intro_01-min.png'
@@ -15,7 +15,7 @@ export const Slider = ({ navigate }) => (
     dot={<Dot />}
     activeDot={<ActiveDot />}
     onIndexChanged={(index) => {
-      if (index === 3) { navigate('Login') }
+      // if (index === 3) { navigate('Login') }
     }}
   >
     <Group
@@ -43,9 +43,7 @@ export const Slider = ({ navigate }) => (
         }}
       />
       <Details
-        text="Lorem Ipsum is simply dummy text of the printing
-          and typesetting industry. Lorem Ipsum has been the
-          industry's standard dummy text ever since the 1500s"
+        text="Screen 1"
         style={{
           color: 'black',
           margin: 0,
@@ -56,65 +54,111 @@ export const Slider = ({ navigate }) => (
         }}
       />
     </Group>
-    <Group style={styles.slide2}>
-      <Logo
+    <Group
+      style={{
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginHorizontal:0,
+        backgroundColor: 'white',
+        height: screen.height - 150,
+        width: screen.width,
+      }}
+    >
+      <Image
         source={logo}
         style={{
+          width: screen.width,
+          resizeMode: 'cover',
+          height: '100%',
+          alignSelf:'center',
+
+        }}
+        containerStyle={{
           width: '100%',
-          height: 560,
+
         }}
       />
-
       <Details
-        text="Lorem Ipsum is simply dummy text of the printing
-          and typesetting industry. Lorem Ipsum has been the
-          industry's standard dummy text ever since the 1500s"
+        text="Screen 2"
         style={{
           color: 'black',
-          marginTop: 25,
-
-
+          margin: 0,
+          marginHorizontal:0,
+          alignSelf: 'flex-end',
+          backgroundColor:'white',
+          width:'100%',
         }}
       />
     </Group>
-    <Group style={styles.slide3}>
-      <Logo
+    <Group
+      style={{
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginHorizontal:0,
+        backgroundColor: 'white',
+        height: screen.height - 150,
+        width: screen.width,
+      }}
+    >
+      <Image
         source={logo}
         style={{
+          width: screen.width,
+          resizeMode: 'cover',
+          height: '100%',
+          alignSelf:'center',
+
+        }}
+        containerStyle={{
           width: '100%',
-          height: 560,
+
         }}
       />
-
       <Details
-        text="Lorem Ipsum is simply dummy text of the printing
-          and typesetting industry. Lorem Ipsum has been the
-          industry's standard dummy text ever since the 1500s"
+        text="Screen 3"
         style={{
           color: 'black',
-
-
+          margin: 0,
+          marginHorizontal:0,
+          alignSelf: 'flex-end',
+          backgroundColor:'white',
+          width:'100%',
         }}
       />
     </Group>
-    <Group style={styles.slide4}>
-      <Logo
+    <Group
+      style={{
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginHorizontal:0,
+        backgroundColor: 'white',
+        height: screen.height - 150,
+        width: screen.width,
+      }}
+    >
+      <Image
         source={logo}
         style={{
+          width: screen.width,
+          resizeMode: 'cover',
+          height: '100%',
+          alignSelf:'center',
+
+        }}
+        containerStyle={{
           width: '100%',
-          height: 560,
+
         }}
       />
-
       <Details
-        text="Lorem Ipsum is simply dummy text of the printing
-          and typesetting industry. Lorem Ipsum has been the
-          industry's standard dummy text ever since the 1500s"
+        text="Screen 4"
         style={{
           color: 'black',
-          marginTop: 25,
-
-
+          margin: 0,
+          marginHorizontal:0,
+          alignSelf: 'flex-end',
+          backgroundColor:'white',
+          width:'100%',
         }}
       />
     </Group>

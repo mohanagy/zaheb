@@ -1,24 +1,16 @@
 import React, { Component } from 'react'
 import { Group, Details } from 'components'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
-import { Dimensions } from 'react-native'
+import { Dimensions,TouchableOpacity } from 'react-native'
 
 const screen = Dimensions.get('screen')
 
-const requestDetailsFields = [
-  { title: 'requestName', fieldName: 'Request name', icon: 'clipboard-list' },
-  { title: 'requestDate', fieldName: 'Request date', icon: 'calendar' },
-  { title: 'startingDate', fieldName: 'Starting date', icon: 'calendar' },
-  { title: 'ofToHour', fieldName: 'Of to hour', icon: 'clock' },
-  { title: 'location', fieldName: 'Location', icon: 'map-marker-alt' },
-  { title: 'orderStatus', fieldName: 'Order status', icon: 'exclamation-circle' },
-  { title: 'driverName', fieldName: 'Driver name', icon: 'car' },
-  { title: 'supplierName', fieldName: 'Supplier name', icon: 'hand-holding-usd' },
-]
 
 class RequestDetailsCard extends Component {
   render() {
-    const { style, ...fields } = this.props
+    const {
+      style,requestDetailsFields,handleCords, ...fields
+    } = this.props
     return (
       <Group style={{ marginHorizontal: '5%', ...style }}>
         {
@@ -47,7 +39,14 @@ class RequestDetailsCard extends Component {
                   borderBottomRightRadius: ix === requestDetailsFields.length - 1 ? 15 : 0,
                 }}
               >
-                <Details text={`${fieldName}: ${fields[title]}`} style={{ color: '#1E1E1E' }} />
+                {fields.cords && title === 'location'
+                  ? (
+                    <TouchableOpacity onPress={handleCords}>
+                      <Details text="Click here" style={{ color: '#1E1E1E' }} />
+                    </TouchableOpacity>
+                  )
+                  : <Details text={`${fieldName}: ${fields[title]}`} style={{ color: '#1E1E1E' }} />}
+
               </Group>
             </Group>
           ))

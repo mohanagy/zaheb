@@ -10,6 +10,7 @@ import { bindActionCreators } from 'redux'
 import * as storeActions from 'actions/store'
 import * as usersActions from 'actions/users'
 import PropTypes from 'prop-types'
+import { StackActions, NavigationActions } from 'react-navigation'
 
 
 export class Drawer extends Component {
@@ -18,6 +19,18 @@ export class Drawer extends Component {
     await AsyncStorage.removeItem('@user')
     await AsyncStorage.removeItem('@access_token')
     navigate('Login')
+  }
+
+  handleHomePressed() {
+    const { navigation:{ dispatch } } = this.props
+    const resetAction = StackActions.reset({
+      index: 0,
+      actions: [
+        NavigationActions.navigate({ routeName: 'HomePage' }),
+      ],
+      key:null,
+    })
+    return () => dispatch(resetAction)
   }
 
   render() {
@@ -63,7 +76,14 @@ Total Balance:$59.00
           <Divider style={{ backgroundColor: 'black' }} />
 
 
-          <DrawerNavigatorItems {...this.props} />
+          <DrawerNavigatorItems
+            {...this.props}
+            onItemPress={(router) => {
+              const { onItemPress,activeItemKey } = this.props
+              activeItemKey === 'Home' ? this.handleHomePressed() : null
+              return onItemPress(router)
+            }}
+          />
           <Divider style={{ backgroundColor: 'black' }} />
           <Text
             style={{

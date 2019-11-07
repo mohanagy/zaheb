@@ -43,6 +43,7 @@ import {
   NearestServiceCenter,
   OfferDetails,
   PurchaseDetails,
+  SupportTickets,
 } from 'containers'
 
 import { BottomTab } from 'components'
@@ -90,6 +91,11 @@ const WhoWeAreStack = createStackNavigator({
 })
 const ConversationsStack = createStackNavigator({
   Conversations,
+  navigationOptions: () => ({ header: null, headerMode: 'none' }),
+
+})
+const SupportTicketsStack = createStackNavigator({
+  SupportTickets,
   navigationOptions: () => ({ header: null, headerMode: 'none' }),
 
 })
@@ -308,6 +314,7 @@ const Navigator = createStackNavigator(
     MyPurchases:MyPurchasesStack,
     MyRequests:MyRequestsStack,
     Conversations:ConversationsStack,
+    SupportTickets:SupportTicketsStack,
     HomeStore:HomeStoreStack,
     MaintenancePage:MaintenancePageStack,
     HomeType:HomeTypeStack,
@@ -335,7 +342,7 @@ const Navigator = createStackNavigator(
     Chat,
     NearestServiceCenter:NearestServiceCenterStack,
     OfferDetails:OfferDetailsStack,
-    PurchaseDetail:PurchaseDetailsStack,
+    PurchaseDetails:PurchaseDetailsStack,
   },
   {
     initialRouteName: 'SplashLoading',
@@ -410,6 +417,18 @@ const MyDrawerNavigator = createDrawerNavigator(
     },
     Conversations: {
       screen: ConversationsStack,
+      navigationOptions: {
+        drawerIcon: ({ tintColor }) => (
+          <FontAwesome5
+            name="comment-dots"
+            size={24}
+            style={{ color: tintColor }}
+          />
+        ),
+      },
+    },
+    'Support Tickets': {
+      screen: SupportTicketsStack,
       navigationOptions: {
         drawerIcon: ({ tintColor }) => (
           <FontAwesome5

@@ -11,6 +11,7 @@ const initialState = {
     image:'',
   },
   conversation:[],
+  customerServices:[],
 
 }
 const userReducer = (state = initialState, action) => {

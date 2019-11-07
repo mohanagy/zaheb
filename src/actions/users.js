@@ -218,6 +218,34 @@ export const getConversations =  () =>  async (dispatch,getState) => {
     dispatch(finishUserFetching())
   }
 }
+export const getSupportTickets =  () =>  async (dispatch,getState) => {
+  dispatch(startUserFetching())
+  try {
+    const { userData: { accessToken } } = getState()
+    const response = await fetch(api.getSupportTickets, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+    const json = await response.json()
+    const {  customerServices } = json
+    dispatch(getDataSuccess({ customerServices }))
+  }
+  catch (error) {
+    dispatch(errorHappened({
+      type: 'error',
+      title: 'Error',
+      message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
+      error,
+    }))
+    return false
+  }
+  finally {
+    dispatch(finishUserFetching())
+  }
+}
 export const getConversationByReceiverId =  (id) =>  async (dispatch,getState) => {
   dispatch(startUserFetching())
   try {

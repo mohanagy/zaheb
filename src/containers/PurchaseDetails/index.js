@@ -14,7 +14,7 @@ const screen = Dimensions.get('screen')
 
 class PurchaseDetails extends Component {
   static navigationOptions = ({ navigation }) => ({
-    headerTitle: 'Request Details',
+    headerTitle: 'Purchase Details',
     headerTitleStyle: {
       textAlign: 'center',
       flexGrow: 1,
@@ -49,6 +49,19 @@ class PurchaseDetails extends Component {
       />),
   });
 
+  state={
+    requestDetailsFields : [
+      { title: 'requestName', fieldName: 'Request name', icon: 'clipboard-list' },
+      { title: 'requestDate', fieldName: 'Request date', icon: 'calendar' },
+      { title: 'startingDate', fieldName: 'Starting date', icon: 'calendar' },
+      { title: 'ofToHour', fieldName: 'Of to hour', icon: 'clock' },
+      { title: 'location', fieldName: 'Location', icon: 'map-marker-alt' },
+      { title: 'orderStatus', fieldName: 'Order status', icon: 'exclamation-circle' },
+      { title: 'driverName', fieldName: 'Driver name', icon: 'car' },
+      { title: 'supplierName', fieldName: 'Supplier name', icon: 'hand-holding-usd' },
+    ],
+  }
+
   componentDidMount =async () => {
     const { actions:{ getProductOrderByOrderId },storeData:{ selectedProductId } } = this.props
     await getProductOrderByOrderId(selectedProductId)
@@ -62,8 +75,10 @@ class PurchaseDetails extends Component {
     if (status === 3 && response) { navigate('Payment') }
   }
 
+
   render() {
     const { storeData:{ product ,isFetching } } = this.props
+    const { requestDetailsFields } = this.state
 
     if (isFetching) { return (
       <Group
@@ -94,6 +109,7 @@ class PurchaseDetails extends Component {
             orderStatus=""
             driverName={product.driver || ''}
             supplierName={product.shipping_name}
+            requestDetailsFields={requestDetailsFields}
           />
           <Group style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' }}>
             <SplashButton

@@ -37,6 +37,7 @@ import ProfileDriver from './ProfileDriver'
 import NearestServiceCenter from './NearestServiceCenter'
 import OfferDetails from './OfferDetails'
 import PurchaseDetails from './PurchaseDetails'
+import SupportTickets from './SupportTickets'
 
 export {
   Login,
@@ -78,4 +79,5 @@ export {
   MaintenancePage,
   OfferDetails,
   PurchaseDetails,
+  SupportTickets
 }

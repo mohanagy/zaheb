@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import {
-  View, ActivityIndicator, StatusBar, StyleSheet,
+  View,  StatusBar, StyleSheet,ImageBackground,
 } from 'react-native'
 import AsyncStorage from '@react-native-community/async-storage'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as userActions from 'actions/users'
-
+import image from 'assets/splashImage.png'
 export class SplashLoading extends Component {
   async componentDidMount() {
     await this.checkInformation()
@@ -40,8 +40,20 @@ export class SplashLoading extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <ActivityIndicator />
         <StatusBar barStyle="default" />
+        <ImageBackground
+          source={image}
+          style={{
+            flex:1,width:'120%',height:'120%' ,alignSelf:'center',
+          }}
+        >
+          <ImageBackground
+            source={image}
+            style={{
+              flex:1,width:'100%',height:'100%' ,alignSelf:'center',
+            }}
+          />
+        </ImageBackground>
       </View>
     )
   }

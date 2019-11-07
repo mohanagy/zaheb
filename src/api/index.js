@@ -22,6 +22,7 @@ module.exports = {
     getTerms:`${APIV1}/terms-and-conditions`,
     getContactUs:`${APIV1}/contact-us`,
     getConversations:`${APIV1}/conversations`,
+    getSupportTickets:`${APIV1}/getCustomerServices`,
     createOrder:`${APIV1}/createOrder`,
     createProductOrder:`${APIV1}/createProductOrder`,
     getOrderById:`${APIV1}/getOrderByOrderId?order_id=`,

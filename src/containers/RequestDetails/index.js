@@ -49,13 +49,23 @@ class RequestDetails extends Component {
       />),
   });
 
+  state={
+    requestDetailsFields : [
+      { title: 'requestName', fieldName: 'Request name', icon: 'clipboard-list' },
+      { title: 'requestDate', fieldName: 'Request date', icon: 'calendar' },
+      { title: 'startingDate', fieldName: 'Starting date', icon: 'calendar' },
+      { title: 'ofToHour', fieldName: 'Of to hour', icon: 'clock' },
+      { title: 'location', fieldName: 'Location', icon: 'map-marker-alt' },
+      { title: 'orderStatus', fieldName: 'Order status', icon: 'exclamation-circle' },
+      { title: 'driverName', fieldName: 'Driver name', icon: 'car' },
+      { title: 'supplierName', fieldName: 'WorkShop name', icon: 'hand-holding-usd' },
+    ],
+  }
+
+
   componentDidMount =async () => {
     const { actions:{ getOrderById },storeData:{ orderId } } = this.props
-    console.log('sakldklsamd',orderId)
     await getOrderById(orderId)
-    console.log({
-      orderId,
-    })
   }
 
   handleChangeStatus =async (status) => {
@@ -66,11 +76,16 @@ class RequestDetails extends Component {
     if (status === 3 && response) { navigate('Payment') }
   }
 
+  handleCords=async (workshopId,serviceId) => {
+    const { actions:{ selectWorkShop,selectService },navigation:{ navigate } } = this.props
+    await selectWorkShop(workshopId)
+    await selectService(serviceId)
+    navigate('NearestServiceCenter')
+  }
+
   render() {
     const { storeData:{ order ,isFetching } } = this.props
-    console.log({
-      order,
-    })
+    const { requestDetailsFields } = this.state
     if (isFetching) { return (
       <Group
         style={{
@@ -99,7 +114,10 @@ class RequestDetails extends Component {
             location=""
             orderStatus=""
             driverName={order.driver || ''}
-            supplierName=""
+            supplierName={order.workshop ? order.workshop.name : ''}
+            requestDetailsFields={requestDetailsFields}
+            cords={order.lat ? { lat:order.lat ,lng:order.lng } : null}
+            handleCords={() => this.handleCords(order.workshop_id,order.service_id)}
           />
           <Group style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' }}>
             <SplashButton

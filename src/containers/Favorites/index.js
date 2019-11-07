@@ -59,9 +59,6 @@ class Favorites extends Component {
 
     handleSelectProfile =async (id) => {
       const { actions:{ selectProduct } ,navigation:{ navigate } } = this.props
-      console.log({
-        id,
-      })
       await selectProduct(id)
       navigate('ProductOptions')
     }
