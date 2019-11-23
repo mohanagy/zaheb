@@ -1,27 +1,32 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Input, Text } from 'react-native-elements'
+import { Input } from 'react-native-elements'
 
 import { Group } from 'components'
 
 export const LabeledInput = (props) => {
   const {
-    containerStyle, labelStyle, inputStyle, placeholder, label, onChangeText, secureTextEntry,disabled,
-    isRequired,
+    containerStyle, labelStyle, inputStyle, label, onChangeText, secureTextEntry,disabled,inputContainerStyle,
+    style,    isRequired,rightIcon,placeholder,
   } = props
   return (
     <Group style={containerStyle}>
-      <Text style={labelStyle}>
-        {label}
-      </Text>
+
       <Input
-        placeholder={placeholder}
+        label={label}
         inputStyle={inputStyle}
-        inputContainerStyle={{ borderBottomWidth: 0 }}
+        labelStyle={labelStyle}
+        inputContainerStyle={{ ...inputContainerStyle }}
+        containerStyle={{
+        }}
         onChangeText={onChangeText}
         secureTextEntry={secureTextEntry}
         disabled={disabled}
         required={isRequired}
+        rightIcon={rightIcon}
+        placeholder={placeholder}
+
+
       >
       </Input>
     </Group>

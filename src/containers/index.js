@@ -38,6 +38,9 @@ import NearestServiceCenter from './NearestServiceCenter'
 import OfferDetails from './OfferDetails'
 import PurchaseDetails from './PurchaseDetails'
 import SupportTickets from './SupportTickets'
+import MyOrders from './MyOrders'
+import MyOrderAvailable from './MyOrdersAvailable'
+import SupportTicketChat from './SupportTicketChat'
 
 export {
   Login,
@@ -79,5 +82,8 @@ export {
   MaintenancePage,
   OfferDetails,
   PurchaseDetails,
-  SupportTickets
+  SupportTickets,
+  MyOrders,
+  MyOrderAvailable,
+  SupportTicketChat,
 }

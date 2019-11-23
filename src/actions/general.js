@@ -120,7 +120,7 @@ export const getTermsAndConditions = () => async (dispatch, getState) => {
       },
     })
     const json = await response.json()
-    const { error, terms = { value:'',ar_value:'' } } = json
+    const { error, termsConditions  } = json
 
     if (error) {
       dispatch(errorHappened({
@@ -131,7 +131,7 @@ export const getTermsAndConditions = () => async (dispatch, getState) => {
       return false
     }
 
-    return dispatch(getDataSuccess({ terms }))
+    return dispatch(getDataSuccess({ terms:termsConditions }))
   } catch (e) {
     dispatch(errorHappened({
       type: 'error',

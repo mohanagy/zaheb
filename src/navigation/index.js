@@ -1,10 +1,10 @@
 import React from 'react'
-
+import { Image,View,Dimensions } from 'react-native'
 import { createStackNavigator } from 'react-navigation-stack'
 import { createAppContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from 'react-navigation-tabs'
 import { createDrawerNavigator } from 'react-navigation-drawer'
-
+import logo from 'assets/marinLogo.png'
 import {
   Splash,
   SplashLoading,
@@ -44,12 +44,14 @@ import {
   OfferDetails,
   PurchaseDetails,
   SupportTickets,
+  MyOrders,
+  MyOrderAvailable,
+  SupportTicketChat,
 } from 'containers'
 
-import { BottomTab } from 'components'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import Drawer from '../components/Drawer'
-
+const screen = Dimensions.get('screen')
 const SplashStack = createStackNavigator(
   { Splash },
   { navigationOptions: { header: null } }
@@ -57,6 +59,14 @@ const SplashStack = createStackNavigator(
 
 const HomeStack = createStackNavigator({
   HomePage,
+  navigationOptions: () => ({ header: null, headerMode: 'none' }),
+})
+const MyOrdersStack = createStackNavigator({
+  MyOrders,
+  navigationOptions: () => ({ header: null, headerMode: 'none' }),
+})
+const MyOrderAvailableStack = createStackNavigator({
+  MyOrderAvailable,
   navigationOptions: () => ({ header: null, headerMode: 'none' }),
 })
 const HomeStoreStack = createStackNavigator({
@@ -199,6 +209,11 @@ const PurchaseDetailsStack = createStackNavigator({
   navigationOptions: () => ({ header: null, headerMode: 'none' }),
 
 })
+const SupportTicketChatStack = createStackNavigator({
+  SupportTicketChat,
+  navigationOptions: () => ({ header: null, headerMode: 'none' }),
+
+})
 
 const TabNavigator = createBottomTabNavigator(
   {
@@ -219,10 +234,10 @@ const TabNavigator = createBottomTabNavigator(
     HomePage: {
       screen: HomeStack,
       navigationOptions: () => ({
-        tabBarLabel: 'Home',
-        title: 'Home',
+        title: ' ',
         headerMode: 'none',
       }),
+
     },
     CustomersService: {
       screen: CustomerServiceStack,
@@ -236,7 +251,7 @@ const TabNavigator = createBottomTabNavigator(
         tabBarLabel: 'Profile',
       },
     },
-    tabBarComponent: () => <BottomTab />,
+
   },
   {
     order: [
@@ -248,8 +263,11 @@ const TabNavigator = createBottomTabNavigator(
     ],
     initialRouteName: 'HomePage',
     defaultNavigationOptions: ({ navigation }) => ({
+
+
       tabBarIcon: ({ tintColor }) => {
         const { routeName } = navigation.state
+
         let iconName
         switch (routeName) {
           case 'Purchases':
@@ -257,9 +275,6 @@ const TabNavigator = createBottomTabNavigator(
             break
           case 'MyRequests':
             iconName = 'list'
-            break
-          case 'HomePage':
-            iconName = 'home'
             break
           case 'CustomersService':
             iconName = 'headset'
@@ -272,28 +287,64 @@ const TabNavigator = createBottomTabNavigator(
             break
         }
         return (
-          <FontAwesome5
-            type="font-awesome"
-            name={iconName}
-            size={routeName === 'HomePage' ? 20 : 20}
-            color={tintColor}
-            style={
-              routeName === 'HomePageX'
-                ? {
-                  height: 80,
-                  width: 80,
-                  borderRadius: 100,
-                  paddingTop: 15,
-                }
-                : undefined
-            }
-          />
+
+          routeName === 'HomePage'
+            ? (
+              <View
+                style={{
+                  overflow: 'hidden',
+                  position:'absolute',
+                  borderRadius:40,
+                  zIndex:9999,
+                  justifyContent: 'center',
+                  alignContent:'center',
+                  alignItems:'center',
+                  width:'90%',
+                  height:screen > 600 ? '250%' : '200%',
+
+                }}
+              >
+
+                <Image
+                  source={logo}
+                  style={{
+                    width:'100%',
+                    height:'100%',
+                    resizeMode: 'contain' ,
+                    backgroundColor:'white',
+                    alignSelf:'center',
+                    padding:20,
+                    // overflow:'hidden',
+                  }}
+                />
+              </View>
+            )
+            : (
+              <FontAwesome5
+                type="font-awesome"
+                name={iconName}
+                size={20}
+                color="#ffff"
+
+              />
+            )
         )
       },
+      tabBarOptions: {
+        labelStyle: {
+          fontFamily: 'HelveticaNeueW23forSKY-Reg',
+          zIndex:-10,
+          inactiveTintColor: 'cyan',
+          activeBackgroundColor:'lightgreen',
+
+
+        },
+        style:{
+          backgroundColor:'#1E1E1E',
+
+        },
+      },
     }),
-    tabBarOptions: {
-      labelStyle: { fontFamily: 'HelveticaNeueW23forSKY-Reg' },
-    },
     lazy: true,
     lazyLoading: true,
     navigationOptions: {
@@ -305,11 +356,6 @@ const TabNavigator = createBottomTabNavigator(
 
 const Navigator = createStackNavigator(
   {
-    SplashLoading,
-    Splash: SplashStack,
-    Login,
-    Register,
-    ForgotPassword,
     ContactUs:ContactUsStack,
     MyPurchases:MyPurchasesStack,
     MyRequests:MyRequestsStack,
@@ -343,9 +389,10 @@ const Navigator = createStackNavigator(
     NearestServiceCenter:NearestServiceCenterStack,
     OfferDetails:OfferDetailsStack,
     PurchaseDetails:PurchaseDetailsStack,
+    SupportTicketChat:SupportTicketChatStack,
   },
   {
-    initialRouteName: 'SplashLoading',
+    initialRouteName: 'HomePage',
     header:null,
     headerMode:'none',
 
@@ -385,6 +432,30 @@ const MyDrawerNavigator = createDrawerNavigator(
     },
     'My purchases': {
       screen: MyPurchasesStack,
+      navigationOptions: {
+        drawerIcon: ({ tintColor }) => (
+          <FontAwesome5
+            name="shopping-cart"
+            size={24}
+            style={{ color: tintColor }}
+          />
+        ),
+      },
+    },
+    'My Order': {
+      screen: MyOrdersStack,
+      navigationOptions: {
+        drawerIcon: ({ tintColor }) => (
+          <FontAwesome5
+            name="shopping-cart"
+            size={24}
+            style={{ color: tintColor }}
+          />
+        ),
+      },
+    },
+    'My Order Available': {
+      screen: MyOrderAvailableStack,
       navigationOptions: {
         drawerIcon: ({ tintColor }) => (
           <FontAwesome5
@@ -503,4 +574,24 @@ const MyDrawerNavigator = createDrawerNavigator(
 
   }
 )
-export default createAppContainer(MyDrawerNavigator)
+const rootStack = createStackNavigator({
+  MyDrawerNavigator,
+  SplashLoading,
+  Splash: SplashStack,
+  Login:{
+    navigationOptions:{
+      drawerLockMode: 'locked-closed',
+    },
+    screen:Login,
+
+  },
+  Register,
+  ForgotPassword,
+},  {
+  initialRouteName: 'SplashLoading',
+  header:null,
+  headerMode:'none',
+
+
+})
+export default createAppContainer(rootStack)

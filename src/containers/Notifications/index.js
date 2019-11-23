@@ -8,6 +8,8 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as generalActions from 'actions/general'
+import * as usersActions from 'actions/users'
+import * as storeActions from 'actions/store'
 import PropTypes from 'prop-types'
 import bg from '../../assets/blurred-background.png'
 
@@ -57,6 +59,32 @@ class Notifications extends Component {
     await getNotifications()
   }
 
+  handleNotification=async (url) => {
+    const { navigation:{ navigate } ,actions:{ setSelectedConversation,getConversations,selectProduct } } = this.props
+    if (url.includes('myOffers')) return navigate('MyOffers')
+
+    const [,id] = url.split('=')
+    if (url.includes('conversation?receiver_id')) {
+      await getConversations()
+      const { userData:{ conversations } } = this.props
+      const  [conversation] = conversations.filter((row) => {
+        if (row.room.receiver) { return row.room.receiver_id === id }
+        return false
+      })
+      if (!conversation) return
+      const { room:{ receiver:{ id:receiver_id,name,image } } } = conversation
+      await setSelectedConversation(receiver_id,name,image)
+      return navigate('Chat')
+    }
+    if (url.includes('getCustomerServiceById')) {
+      return navigate('SupportTickets')
+    }
+    if (url.includes('getProductOrderByOrderId?product_order_id')) {
+      await selectProduct(id)
+      return  navigate('PurchaseDetails')
+    }
+  }
+
   render() {
     const { generalData:{ notifications,isFetching } } = this.props
     if (isFetching) { return (
@@ -78,7 +106,7 @@ class Notifications extends Component {
       <BackgroundImageWrapper source={bg}>
         <ScrollContainer>
           <Group style={{ minHeight: screen.height, backgroundColor: '#FFF8' }}>
-            {notifications.map((datum) => <NotificationRow {...datum} />)}
+            {notifications.map((datum) => <NotificationRow {...datum} handleNotification={() => this.handleNotification(datum.url)} />)}
           </Group>
         </ScrollContainer>
       </BackgroundImageWrapper>
@@ -92,11 +120,12 @@ Notifications.propTypes = {
 
 
 const mapDispatchToProps = (dispatch) => ({
-  actions: bindActionCreators({ ...generalActions },dispatch),
+  actions: bindActionCreators({ ...generalActions,...usersActions,...storeActions },dispatch),
 })
 
 const mapStateToProps = (state) => ({
   generalData: state.generalData,
+  userData: state.userData,
 })
 
 Notifications.propTypes = {

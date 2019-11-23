@@ -44,7 +44,7 @@ const styles = {
   selectButtonStyle: {
     paddingVertical: 20,
     marginHorizontal: 10,
-    marginVertical: 10,
+    marginTop: 30,
     borderRadius: 20,
     shadowColor: '#991E1E1E',
     shadowOffset: { width: 0, height: 2 },

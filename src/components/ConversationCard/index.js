@@ -3,9 +3,9 @@ import moment from 'moment'
 import { Group, Title, Details } from 'components'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import { Image } from 'react-native-elements'
-import { TouchableOpacity } from 'react-native'
+import { TouchableOpacity,Dimensions } from 'react-native'
 
-
+const screen = Dimensions.get('screen')
 export const ConversationCard = ({
   messageCount = 0,  room:{ receiver:{ id,name:from,image } ,updated_at },handleSelectConversation,
 }) => (
@@ -32,7 +32,13 @@ export const ConversationCard = ({
     >
       <Group
         style={{
-          width: 80, height: 80, margin: 6, borderRadius: 99 ** 9, borderWidth: 1, borderColor: '#000',
+          width: 80,
+          height: 80,
+          margin: 6,
+          borderRadius: 99 ** 9,
+          borderWidth: 1,
+          borderColor: '#000',
+          overflow: 'hidden',
         }}
       >
         <Image
@@ -59,7 +65,10 @@ export const ConversationCard = ({
         >
           <Title
             style={{
-              color: '#000', fontSize: 18, marginHorizontal: 0, fontWeight: '100',
+              color: '#000',
+              fontSize:screen.width > 600 ? 14 : 10,
+              marginHorizontal: 0,
+              fontWeight: '100',
             }}
             text={from}
           />
@@ -76,6 +85,8 @@ export const ConversationCard = ({
                   alignItems: 'center',
                   padding: 0,
                   verticalAlgin: 'center',
+                  fontSize:screen.width > 600 ? 14 : 10,
+
                 }}
               />
             )
@@ -95,8 +106,15 @@ export const ConversationCard = ({
               alignItems: 'center',
             }}
           >
-            <FontAwesome5 size={20} name="calendar" color="#BE1522" />
-            <Details text={moment(updated_at).format('DD/MM/YYYY')} style={{ color: '#000', marginHorizontal: 5 }} />
+            <FontAwesome5 size={screen.width > 600 ? 20 : 10} name="calendar" color="#BE1522" />
+            <Details
+              text={moment(updated_at).format('DD/MM/YYYY')}
+              style={{
+                color: '#000',
+                marginHorizontal: 5,
+                fontSize:screen.width > 600 ? 14 : 10,
+              }}
+            />
           </Group>
           <Group
             style={{
@@ -105,11 +123,13 @@ export const ConversationCard = ({
               alignItems: 'center',
             }}
           >
-            <FontAwesome5 size={20} name="clock" color="#BE1522" />
+            <FontAwesome5 size={screen.width > 600 ? 20 : 10} name="clock" color="#BE1522" />
             <Details
               text={moment(updated_at).fromNow()}
               style={{
                 color: '#1E1E1E',
+                fontSize:screen.width > 600 ? 14 : 10,
+
               }}
             />
           </Group>

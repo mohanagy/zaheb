@@ -68,31 +68,59 @@ render() {
       contentContainerStyle={{
         marginBottom: 0,
         paddingBottom: 0,
-        justifyContent: 'flex-start',
+        justifyContent: 'center',
       }}
     >
       <BackgroundImageWrapper source={background}>
         <Group style={{ minHeight: screen.height, backgroundColor:'#FFFFFFA8',justifyContent:'flex-start' }}>
-          <CurvedHeader style={{  marginBottom:0 }} />
+          <CurvedHeader style={{   }} />
           <Group
             style={{
-              alignItems: 'center',justifyContent:'flex-start', marginTop: 75
+              alignItems: 'center',
+              justifyContent:'center',
             }}
           >
             <Group
               onPress={() => navigate('MaintenancePage')}
+              style={{
+              }}
+
             >
-            <Group style={{ marginBottom: 15, backgroundColor: '#000', borderRadius: 99 ** 9, padding: 20 }}>
-              <FontAwesome5 name="tools" size={55} style={{ color: '#FFF' }} onPress={() => navigate('MaintenancePage')} />
+              <Group
+                style={{
+                  backgroundColor: '#000',
+                  borderRadius: 90,
+                  width:'100%',
+                  height:'100%',
+                  justifyContent: 'center',
+                  alignItems:'center',
+                  borderWidth:40,
+                  alignContent: 'center',
+                }}
+              >
+                <FontAwesome5 name="tools" size={40} style={{ color: '#FFF' }} onPress={() => navigate('MaintenancePage')} />
+              </Group>
             </Group>
-            </Group>
-            <Details text="Maintenance Services" style={{ marginBottom: 20, color: '#1E1E1E', fontSize: 22 }} />
+            <Details text="Maintenance Services" style={{ color: '#1E1E1E', fontSize: 22 }} />
             <Group
               onPress={() => navigate('HomeStore')}
+              style={{
+              }}
             >
-            <Group style={{ marginBottom: 15, backgroundColor: '#000', borderRadius: 99 ** 9, padding: 20 }}>
-              <FontAwesome5 name="store" size={55} style={{ color: '#FFF' }} />
-            </Group>
+              <Group
+                style={{
+                  backgroundColor: '#000',
+                  borderRadius: 90,
+                  width:'100%',
+                  height:'100%',
+                  justifyContent: 'center',
+                  alignItems:'center',
+                  borderWidth:40,
+                  alignContent: 'center',
+                }}
+              >
+                <FontAwesome5 name="store" size={40} style={{ color: '#FFF' }} />
+              </Group>
             </Group>
             <Details text="Store" style={{ marginBottom: 20, color: '#1E1E1E', fontSize: 22 }} />
           </Group>

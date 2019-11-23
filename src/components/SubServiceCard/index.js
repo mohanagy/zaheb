@@ -19,6 +19,15 @@ const SubServiceCard = ({
         marginHorizontal: 25,
         borderRadius: 15,
         backgroundColor: '#FFF',
+        shadowOffset: {
+          width: 0,
+          height: 3,
+        },
+        shadowOpacity: 0.27,
+        shadowRadius: 4.65,
+
+        elevation: 16,
+
       }}
     >
       <Group
@@ -32,7 +41,7 @@ const SubServiceCard = ({
         }}
       >
         <Image
-          resizeMode={'cover'}
+          resizeMode="contain"
           borderRadius={borderRadius}
           source={source}
           style={style}
@@ -44,7 +53,12 @@ const SubServiceCard = ({
           justifyContent: 'center', alignItems: 'center', width: screen.width - 170,
         }}
       >
-        <Details text={name} style={{ color: '#1E1E1E', marginHorizontal: 0, fontSize: 18, textTransform: 'capitalize' }} />
+        <Details
+          text={name}
+          style={{
+            color: '#1E1E1E', marginHorizontal: 0, fontSize: 18, textTransform: 'capitalize',
+          }}
+        />
       </Group>
 
     </Group>

@@ -4,7 +4,7 @@ import {
   Group, Details, Dot, ActiveDot,
 } from 'components'
 import Swiper from 'react-native-swiper'
-import logo from 'assets/intro_01-min.png'
+import logo from 'assets/splashMareen.png'
 
 const screen = Dimensions.get('screen')
 
@@ -15,32 +15,25 @@ export const Slider = ({ navigate }) => (
     dot={<Dot />}
     activeDot={<ActiveDot />}
     onIndexChanged={(index) => {
-      // if (index === 3) { navigate('Login') }
+      if (index === 3) { navigate('Login') }
     }}
   >
     <Group
       style={{
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginHorizontal:0,
-        backgroundColor: 'white',
-        height: screen.height - 150,
-        width: screen.width,
+        alignItems:'center',
       }}
     >
       <Image
         source={logo}
         style={{
-          width: screen.width,
-          resizeMode: 'cover',
-          height: '100%',
           alignSelf:'center',
+          justifyContent:'center',
+          resizeMode:'stretch',
+          height:screen.height / 1.3,
+          width:screen.width,
 
         }}
-        containerStyle={{
-          width: '100%',
 
-        }}
       />
       <Details
         text="Screen 1"
@@ -56,27 +49,20 @@ export const Slider = ({ navigate }) => (
     </Group>
     <Group
       style={{
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginHorizontal:0,
-        backgroundColor: 'white',
-        height: screen.height - 150,
-        width: screen.width,
+        alignItems:'center',
       }}
     >
       <Image
         source={logo}
         style={{
-          width: screen.width,
-          resizeMode: 'cover',
-          height: '100%',
           alignSelf:'center',
+          justifyContent:'center',
+          resizeMode:'stretch',
+          height:screen.height / 1.3,
+          width:screen.width,
 
         }}
-        containerStyle={{
-          width: '100%',
 
-        }}
       />
       <Details
         text="Screen 2"
@@ -92,27 +78,20 @@ export const Slider = ({ navigate }) => (
     </Group>
     <Group
       style={{
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginHorizontal:0,
-        backgroundColor: 'white',
-        height: screen.height - 150,
-        width: screen.width,
+        alignItems:'center',
       }}
     >
       <Image
         source={logo}
         style={{
-          width: screen.width,
-          resizeMode: 'cover',
-          height: '100%',
           alignSelf:'center',
+          justifyContent:'center',
+          resizeMode:'stretch',
+          height:screen.height / 1.3,
+          width:screen.width,
 
         }}
-        containerStyle={{
-          width: '100%',
 
-        }}
       />
       <Details
         text="Screen 3"
@@ -128,27 +107,20 @@ export const Slider = ({ navigate }) => (
     </Group>
     <Group
       style={{
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginHorizontal:0,
-        backgroundColor: 'white',
-        height: screen.height - 150,
-        width: screen.width,
+        alignItems:'center',
       }}
     >
       <Image
         source={logo}
         style={{
-          width: screen.width,
-          resizeMode: 'cover',
-          height: '100%',
           alignSelf:'center',
+          justifyContent:'center',
+          resizeMode:'stretch',
+          height:screen.height / 1.3,
+          width:screen.width,
 
         }}
-        containerStyle={{
-          width: '100%',
 
-        }}
       />
       <Details
         text="Screen 4"
@@ -162,11 +134,13 @@ export const Slider = ({ navigate }) => (
         }}
       />
     </Group>
+
   </Swiper>
 )
 const styles = StyleSheet.create({
   wrapper: {
-    justifyContent:'center',
+
+
   },
   slide1: {
     flex: 1,

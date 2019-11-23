@@ -1,9 +1,9 @@
 import React from 'react'
-import { Text } from 'react-native'
+import { Text ,Dimensions } from 'react-native'
 import { Group } from 'components'
 import PropTypes from 'prop-types'
 import { Icon } from 'react-native-elements'
-
+const screen = Dimensions.get('screen')
 export const LabelWithIcon = ({
   label, style, loading, type, onPress, textStyle,
 }) => (
@@ -38,6 +38,7 @@ export const LabelWithIcon = ({
         flexDirection: 'row',
         justifyContent: 'space-between',
         width: '90%',
+        alignItems:'center',
       }}
     >
 
@@ -45,7 +46,7 @@ export const LabelWithIcon = ({
       <Text
         style={{
           fontFamily: 'HelveticaNeueW23forSKY-Reg',
-          fontSize: 12,
+          fontSize:screen.width > 600 ? 12:10,
           color: '#1E1E1E',
           justifyContent: 'center',
           ...textStyle,
@@ -58,6 +59,7 @@ export const LabelWithIcon = ({
       <Icon
         name={type === 'edit' ? 'edit' : 'plus'}
         type="font-awesome"
+        size={12}
         iconStyle={{
           color: '#c0ccda',
         }}

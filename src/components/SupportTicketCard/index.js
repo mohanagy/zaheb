@@ -2,20 +2,20 @@ import React from 'react'
 import moment from 'moment'
 import { Group, Title, Details } from 'components'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
-import { TouchableOpacity } from 'react-native'
+import { TouchableOpacity,Dimensions } from 'react-native'
 
-
+const screen = Dimensions.get('screen')
 export const SupportTicketCard = ({
   messageCount = 0,updated_at ,handleSelectSupportTicket,id,user_id,title,message,
 
 }) => (
-  <TouchableOpacity>
+  <TouchableOpacity onPress={handleSelectSupportTicket}>
 
     <Group
       style={{
         flexDirection: 'row',
         justifyContent: 'flex-start',
-        marginHorizontal: 15,
+        marginHorizontal: 30,
         backgroundColor: '#FFF',
         marginBottom: 12,
         borderRadius: 7,
@@ -40,7 +40,7 @@ export const SupportTicketCard = ({
         >
           <Title
             style={{
-              color: '#000', fontSize: 18, marginHorizontal: 0, fontWeight: '100',
+              color: '#000', fontSize: screen.width > 600 ? 14 : 10, marginHorizontal: 0, fontWeight: '100',
             }}
             text={title}
           />
@@ -67,7 +67,8 @@ export const SupportTicketCard = ({
 
           <Title
             style={{
-              color: '#000', fontSize: 18, marginHorizontal: 0, fontWeight: '100',
+              color: '#000', fontSize: screen.width > 600 ? 14 : 10, marginHorizontal: 0, fontWeight: '100',
+
             }}
             text={message}
           />
@@ -87,8 +88,15 @@ export const SupportTicketCard = ({
               alignItems: 'center',
             }}
           >
-            <FontAwesome5 size={20} name="calendar" color="#BE1522" />
-            <Details text={updated_at && moment(updated_at).format('DD/MM/YYYY')} style={{ color: '#000', marginHorizontal: 5 }} />
+            <FontAwesome5 size={screen.width > 600 ? 20 : 10} name="calendar" color="#BE1522" />
+            <Details
+              text={updated_at && moment(updated_at).format('DD/MM/YYYY')}
+              style={{
+                color: '#000',
+                marginHorizontal: 5,
+                fontSize: screen.width > 600 ? 14 : 10,
+              }}
+            />
           </Group>
           <Group
             style={{
@@ -97,11 +105,12 @@ export const SupportTicketCard = ({
               alignItems: 'center',
             }}
           >
-            <FontAwesome5 size={20} name="clock" color="#BE1522" />
+            <FontAwesome5 size={screen.width > 600 ? 20 : 10} name="clock" color="#BE1522" />
             <Details
               text={updated_at && moment(updated_at).fromNow()}
               style={{
                 color: '#1E1E1E',
+                fontSize: screen.width > 600 ? 14 : 10,
               }}
             />
           </Group>

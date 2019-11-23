@@ -8,7 +8,13 @@ import * as storeActions from 'actions/store'
 import * as usersActions from 'actions/users'
 import PropTypes from 'prop-types'
 
-
+const status = {
+  '1':'New',
+  '2':'In Shipping',
+  '3':'Complete',
+  '4':'Reject',
+  '5':'In Progress',
+}
 class MyRequests extends Component {
   static navigationOptions = ({ navigation }) => ({
     headerTitle: 'My Requests',
@@ -84,7 +90,7 @@ render() {
     >
       {
         myRequests.map(({
-          image,id ,service_time,service_date,service,
+          image,id ,service_time,service_date,service,workshop_status,
         }) => (
           <RequestCard
             key={id}
@@ -92,7 +98,8 @@ render() {
             handleSelectRequest={() => this.handleSelectRequest(id)}
             date={service_date}
             time={service_time}
-            source={{ uri:image }}
+            badge={status[workshop_status]}
+            source={{ uri:  image || service.image }}
           />
         ))
       }

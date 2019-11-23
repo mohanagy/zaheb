@@ -101,10 +101,18 @@ class NearestServiceCenter extends Component {
     }
 
     handleCreateOrder = async () => {
-      const { actions:{ createOrder },storeData:{ selectedWorkShopId,selectedServiceId },navigation:{ navigate } } = this.props
+      const {
+        actions:{ createOrder,errorHappened },storeData:{ selectedWorkShopId,selectedServiceId },navigation:{ navigate },dispatch,
+      } = this.props
       const {
         date,time,driver,description,image,video,lat,lng,
       } = this.state
+      if (!date || !time  || !description) {
+        return       dispatch(errorHappened({
+          type: 'error',
+          title: 'Error',
+          message: 'يرجى تعبئة جميع الحقول',
+        })) }
       const order = {
         workshop_id:selectedWorkShopId ,
         service_id:selectedServiceId ,
@@ -117,9 +125,10 @@ class NearestServiceCenter extends Component {
         image,
         video,
       }
-      await createOrder(order)
-      this.toggleModal()
-      navigate('RequestDetails')
+      const success = await createOrder(order)
+      if (success) {
+        this.toggleModal()
+        navigate('RequestDetails') }
     }
 
     componentDidMount =async () => {
@@ -133,7 +142,7 @@ class NearestServiceCenter extends Component {
     }
 
     setDriver =async (driver) => {
-      this.setDriver({
+      this.setState({
         driver,
       })
     }
@@ -197,7 +206,12 @@ class NearestServiceCenter extends Component {
       const {
         isModalVisible, showDate, showTime, date, time,driver,image,video,description,lat,lng,
       } = this.state
-      const { storeData:{ workshops,selectedWorkShopId ,isFetching } } = this.props
+      const {
+        storeData:{
+          workshops,selectedWorkShopId ,isFetching,
+          noButton,
+        },
+      } = this.props
       if (isFetching) { return (
         <Group
           style={{
@@ -232,9 +246,9 @@ class NearestServiceCenter extends Component {
                     PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION
                   )),
 
-                zoomEnabled: true,
+                zoomEnabled: false,
                 minZoomLevel: 0,
-                defaultZoom: 1,
+                defaultZoom: 4,
                 showsUserLocation: true,
                 showUserLocationButton: true,
                 followsUserLocation: true,
@@ -247,8 +261,8 @@ class NearestServiceCenter extends Component {
                 region: {
                   latitude: lat,
                   longitude: lng,
-                  latitudeDelta: 0.0922,
-                  longitudeDelta: 0.0421,
+                  latitudeDelta:20.1022,
+                  longitudeDelta: 20.4021,
                 },
               }}
               workshops={workshops}
@@ -258,28 +272,30 @@ class NearestServiceCenter extends Component {
 
             </Maps>
 
-            <Group
-              style={{
-                position: 'absolute', // use absolute position to show button on top of the map
-                bottom: '2%', // for center align
-                alignSelf: 'center', // for align to right
-              }}
-            >
-              <SplashButton
-                title="Confirm"
-                onPress={() => this.toggleModal()}
-                loading={isFetching}
+            {!noButton && (
+              <Group
                 style={{
-                  buttonStyle: {
-                    backgroundColor: '#1E1E1E',
-                    paddingHorizontal: 15,
-                    borderRadius: 99 ** 9,
-                    width: 180,
-                    alignSelf: 'center',
-                  },
+                  position: 'absolute', // use absolute position to show button on top of the map
+                  bottom: '2%', // for center align
+                  alignSelf: 'center', // for align to right
                 }}
-              />
-            </Group>
+              >
+                <SplashButton
+                  title="Confirm"
+                  onPress={() => this.toggleModal()}
+                  loading={isFetching}
+                  style={{
+                    buttonStyle: {
+                      backgroundColor: '#1E1E1E',
+                      paddingHorizontal: 15,
+                      borderRadius: 99 ** 9,
+                      width: 180,
+                      alignSelf: 'center',
+                    },
+                  }}
+                />
+              </Group>
+            )}
 
           </Group>
           { showDate && (
@@ -318,7 +334,7 @@ class NearestServiceCenter extends Component {
                 selectPhotoTapped={() => this.selectPhotoTapped()}
                 selectVideoTapped={() => this.selectVideoTapped()}
                 driver={driver}
-                setDriver={() => this.setDriver}
+                setDriver={this.setDriver}
                 image={image}
                 video={video}
                 description={description}

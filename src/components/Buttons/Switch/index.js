@@ -6,7 +6,7 @@ export class Switch extends Component {
   constructor() {
     super()
     this.state = {
-      selectedIndex: 0,
+      selectedIndex:1,
     }
     this.updateIndex = this.updateIndex.bind(this)
   }
@@ -17,11 +17,13 @@ export class Switch extends Component {
 
   render() {
     const { selectedIndex } = this.state
-    const { options, style } = this.props
+    const {
+      options, style ,value ,onStatusChange,
+    } = this.props
     return (
       <ButtonGroup
-        onPress={this.updateIndex}
-        selectedIndex={selectedIndex}
+        onPress={onStatusChange}
+        selectedIndex={value}
         buttons={options}
         textStyle={{
           fontFamily: 'HelveticaNeueW23forSKY-Reg',

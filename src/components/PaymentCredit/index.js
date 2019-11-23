@@ -21,8 +21,6 @@ const PaymentCredit = ({ onPress,title }) => (
       }}
     />
   </Group>
-
-
 )
 
 export default PaymentCredit

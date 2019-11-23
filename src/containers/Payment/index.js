@@ -55,7 +55,6 @@ class Payment extends Component {
     methods:[
       { method:'cashcard',icon:'credit-card' ,title:'Credit-Card' },
       { method:'paypal',icon:'paypal',title:'PayPal' },
-      { method:'bank',icon:'piggy-bank',title:'Bank Transfer' },
       { method:'cash',icon:'money-bill-alt',title:'Cash' }],
   }
 
@@ -66,17 +65,18 @@ class Payment extends Component {
   }
 
 componentDidMount= () => {
-  PayPal.initialize(PayPal.SANDBOX,'AW6JspNUrdZgH925eKygGOqVU1M4sx8-0sJLxd5KlQfSdQug4iIgVB3p2sn6fMBXbc03mhx9T7lFUUXR')
+  PayPal.initialize(PayPal.SANDBOX,'AVlUoWineWrnrXuiTCGYzepYq_hlESVomdWgW2kDo-o9Pn_Ohbn4t63x1vU-ve-wlQ7kfc1IhmRqqcyC')
 }
 
   onPress = async (method) => {
     const {
-      storeData:{ shippingDetails ,filteredProducts ,selectedProductId },actions:{ placeOrder,fireError },navigation:{
+      storeData:{
+        shippingDetails ,filteredProducts ,selectedProductId,order,
+      },actions:{ placeOrder,fireError },navigation:{
         navigate,
       },
     } = this.props
-    const product = filteredProducts.find(({ id }) => id === selectedProductId)
-
+    const product = filteredProducts.find(({ id }) => id === selectedProductId) || order
     try {
       if (method !== 'cash') {
         const result = await PayPal.pay({
@@ -84,6 +84,7 @@ componentDidMount= () => {
           currency: 'USD',
           description: 'Your description goes here',
         })
+          .catch((e) => console.log(e))
       }
       const order = {
         supplier_id:product.user_id,
@@ -96,7 +97,7 @@ componentDidMount= () => {
         shipping_phone:shippingDetails.phoneNumber,
       }
       await placeOrder(order)
-      await navigate('MyPurchases')
+      navigate('MyPurchases')
     }
     catch (error) {
       await fireError(error)
@@ -111,7 +112,7 @@ componentDidMount= () => {
       <ScrollContainer>
         <Group style={{ backgroundColor: '#F6F6F6', minHeight: screen.height }}>
           <Group
-            style={{ flexDirection: 'row' }}
+            style={{ flexDirection: 'row' ,height:'20%',marginTop:'20%' }}
           >
             {methods.map(({ method ,icon,title }) => (
               <PaymentButton
@@ -123,12 +124,11 @@ componentDidMount= () => {
               />
             ))}
           </Group>
-          {activePaymentMethod !== 'bank' ? (
-            <PaymentCredit
-              title={activePaymentMethod === 'cash' ? 'Done' : 'Pay'}
-              onPress={() => this.onPress(activePaymentMethod)}
-            />
-          ) : <PaymentBank  />}
+          <PaymentCredit
+            title={activePaymentMethod === 'cash' ? 'Done' : 'Pay'}
+            onPress={() => this.onPress(activePaymentMethod)}
+          />
+
         </Group>
       </ScrollContainer>
     )

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import SafeAreaView from 'react-native-safe-area-view'
 import { DrawerNavigatorItems } from 'react-navigation-drawer'
 import { ScrollView, Text, StyleSheet } from 'react-native'
-import { ProfileAvatar } from 'components'
+import { ProfileAvatar ,Group } from 'components'
 import AsyncStorage from '@react-native-community/async-storage'
 import { Divider } from 'react-native-elements'
 import { connect } from 'react-redux'
@@ -10,8 +10,17 @@ import { bindActionCreators } from 'redux'
 import * as storeActions from 'actions/store'
 import * as usersActions from 'actions/users'
 import PropTypes from 'prop-types'
-import { StackActions, NavigationActions } from 'react-navigation'
+import { StackActions } from 'react-navigation'
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 
+
+const userItems = ['Home','My requests','Customers service',
+  'My purchases','Profile','Who are we',
+  'Conversations','Support Tickets','Offers',
+  'My offers','Favorites','Terms and conditions','Contact us']
+const driverItems = ['Home','Profile','Customers service',
+  'My Order','My Order Available','Who are we','Chat',
+  'Terms and conditions','Contact us']
 
 export class Drawer extends Component {
   handleSignOut=async () => {
@@ -22,19 +31,24 @@ export class Drawer extends Component {
   }
 
   handleHomePressed() {
-    const { navigation:{ dispatch } } = this.props
-    const resetAction = StackActions.reset({
-      index: 0,
-      actions: [
-        NavigationActions.navigate({ routeName: 'HomePage' }),
-      ],
-      key:null,
+    const { navigation:{ dispatch  } } = this.props
+    const pushAction = StackActions.push({
+      routeName: 'HomePage',
+
     })
-    return () => dispatch(resetAction)
+
+    dispatch(pushAction)
   }
 
+
   render() {
-    const { userData:{ user:{ image,name } } } = this.props
+    const { userData:{ user:{ image,name,type } },items } = this.props
+
+    const newItems = items.filter((item) => {
+      if (Number(type) === 3) return  driverItems.includes(item.key)
+      else return userItems.includes(item.key)
+    })
+
     return (
       <ScrollView style={{ filter: 'blur(5)' }}>
         <SafeAreaView style={styles.container} forceInset={{ top: 'always', horizontal: 'never' }}>
@@ -66,15 +80,6 @@ export class Drawer extends Component {
           </Text>
           <Divider style={{ backgroundColor: 'black' }} />
 
-          <Text
-            style={{
-              marginLeft: 20,
-            }}
-          >
-Total Balance:$59.00
-          </Text>
-          <Divider style={{ backgroundColor: 'black' }} />
-
 
           <DrawerNavigatorItems
             {...this.props}
@@ -83,18 +88,42 @@ Total Balance:$59.00
               activeItemKey === 'Home' ? this.handleHomePressed() : null
               return onItemPress(router)
             }}
+            items={newItems}
           />
           <Divider style={{ backgroundColor: 'black' }} />
-          <Text
+          <Group
             style={{
-              marginLeft: 20,
-
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center',
+              flex:1,
             }}
-            onPress={() => this.handleSignOut()}
           >
+
+            <FontAwesome5
+              name="sign-out-alt"
+              size={15}
+              onPress={() => this.handleSignOut()}
+              solid
+              style={{
+                marginRight: 2,
+                color: 'black',
+
+              }}
+            />
+            <Text
+              style={{
+                alignSelf:'center',
+                fontSize:15,
+                fontWeight:'900',
+
+              }}
+              onPress={() => this.handleSignOut()}
+            >
 Sign out
 
-          </Text>
+            </Text>
+          </Group>
         </SafeAreaView>
       </ScrollView>
     ) }

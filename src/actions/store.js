@@ -87,6 +87,9 @@ export const selectOfferId = (selectedMyOfferId) => async (dispatch) => {
 export const selectOrderId = (orderId) => async (dispatch) => {
   dispatch(getDataSuccess({ orderId }))
 }
+export const noConfirmationButton = () => async (dispatch) => {
+  dispatch(getDataSuccess({ noButton:true }))
+}
 export const fireError = (error) => async (dispatch) => {
   dispatch(errorHappened({
     type: 'error',
@@ -435,6 +438,7 @@ export const createOrder =  (newOrder) =>  async (dispatch,getState) => {
     })) }
     const { id } = order
     dispatch(getDataSuccess({ orderId:id }))
+    return  true
   }
   catch (error) {
     dispatch(errorHappened({
@@ -805,11 +809,13 @@ export const placeOrder =  (newOrder) =>  async (dispatch,getState) => {
     })
     const { data:result } = await response
     const { status,order } = result
-    if (!status) { return dispatch(errorHappened({
-      type: 'error',
-      title: 'Error',
-      message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
-    })) }
+
+    if (!status) {
+      return dispatch(errorHappened({
+        type: 'error',
+        title: 'Error',
+        message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
+      })) }
     const { id } = order
     dispatch(getDataSuccess({ orderId:id }))
   }

@@ -51,11 +51,13 @@ componentDidMount =async () => {
   await getSupportTickets()
 }
 
-handleSelectSupportTicket =async (id,name,image) => {
+handleSelectSupportTicket =async (id) => {
   const { actions:{ setSelectedSupportTicket } ,navigation:{ navigate } } = this.props
-  await setSelectedSupportTicket(id,name,image)
-  navigate('Chat')
+  await setSelectedSupportTicket(id)
+
+  navigate('SupportTicketChat')
 }
+
 
 render() {
   const { userData:{ customerServices,isFetching } } = this.props
@@ -89,7 +91,7 @@ render() {
             title={title}
             message={message}
             updated_at={updated_at}
-            handleSelectSupportTicket={this.handleSelectSupportTicket}
+            handleSelectSupportTicket={() => this.handleSelectSupportTicket(id)}
           />
         ))
       }

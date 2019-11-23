@@ -12,6 +12,9 @@ const initialState = {
   },
   conversation:[],
   customerServices:[],
+  selectedSupportTicket:null,
+  supportTicketConversation:[],
+
 
 }
 const userReducer = (state = initialState, action) => {

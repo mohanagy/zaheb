@@ -5,10 +5,7 @@ const initialState = {
     value:'',
     ar_value:'',
   },
-  terms:{
-    value:'',
-    ar_value:'',
-  },
+  terms:[],
   contactUs:{
     'address': {
       'key': 'address',

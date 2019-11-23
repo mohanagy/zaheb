@@ -3,8 +3,9 @@ import PropTypes from 'prop-types'
 import { Group, Title, Details } from 'components'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import { Image } from 'react-native-elements'
-import { TouchableOpacity } from 'react-native'
+import { TouchableOpacity,Dimensions } from 'react-native'
 
+const screen = Dimensions.get('screen')
 export const RequestCard = ({
   name, date, time, badge = 'New',source,handleSelectRequest,
 }) => (
@@ -27,7 +28,7 @@ export const RequestCard = ({
   >
     <Group
       style={{
-        width: 120,
+        width: '30%',
         borderRightWidth: 1,
         borderColor: '#000',
       }}
@@ -63,7 +64,7 @@ export const RequestCard = ({
           onPress={handleSelectRequest}
         >
 
-          <Title style={{ color: '#000', fontSize: 16, marginHorizontal: 0 }} text={name} />
+          <Title style={{ color: '#000', fontSize: screen.width > 600 ? 16 : 10, marginHorizontal: 0 }} text={name} />
         </TouchableOpacity>
         <Details
           style={{
@@ -71,6 +72,7 @@ export const RequestCard = ({
             paddingHorizontal: 10,
             paddingVertical: 2,
             backgroundColor: '#B0ABAB',
+            fontSize:screen.width > 600 ? 16 : 10,
           }}
           text={badge}
         />
@@ -90,7 +92,7 @@ export const RequestCard = ({
           }}
         >
           <FontAwesome5 size={20} name="calendar" />
-          <Details text={date} style={{ color: '#000', marginHorizontal: 5 }} />
+          <Details text={date} style={{ color: '#000', marginHorizontal: 5 ,fontSize:screen.width > 600 ? 16 : 10 }} />
         </Group>
         <Group
           style={{
@@ -102,7 +104,7 @@ export const RequestCard = ({
           <FontAwesome5 size={20} name="clock" />
           <Details
             text={time}
-            style={{ color: '#000', marginHorizontal: 5 }}
+            style={{ color: '#000', marginHorizontal: 5,fontSize:screen.width > 600 ? 16 : 10 }}
           />
         </Group>
       </Group>

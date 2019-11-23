@@ -11,7 +11,13 @@ import { storeActions } from 'actions'
 
 
 const screen = Dimensions.get('screen')
-
+const status = {
+  '1':'New',
+  '2':'In Shipping',
+  '3':'Complete',
+  '4':'Reject',
+  '5':'In Progress',
+}
 class PurchaseDetails extends Component {
   static navigationOptions = ({ navigation }) => ({
     headerTitle: 'Purchase Details',
@@ -53,8 +59,6 @@ class PurchaseDetails extends Component {
     requestDetailsFields : [
       { title: 'requestName', fieldName: 'Request name', icon: 'clipboard-list' },
       { title: 'requestDate', fieldName: 'Request date', icon: 'calendar' },
-      { title: 'startingDate', fieldName: 'Starting date', icon: 'calendar' },
-      { title: 'ofToHour', fieldName: 'Of to hour', icon: 'clock' },
       { title: 'location', fieldName: 'Location', icon: 'map-marker-alt' },
       { title: 'orderStatus', fieldName: 'Order status', icon: 'exclamation-circle' },
       { title: 'driverName', fieldName: 'Driver name', icon: 'car' },
@@ -98,7 +102,7 @@ class PurchaseDetails extends Component {
     return (
       <ScrollContainer>
         <Group style={{ backgroundColor: '#F6F6F6', minHeight: screen.height }}>
-          <CurvedHeader type="image" source={{ uri:product.product.image }} />
+          <CurvedHeader type="image" source={{ uri:product.product.image }} fillSource />
           <RequestDetailsCard
             style={{ marginBottom: 50 }}
             requestName={product.product.name}
@@ -106,37 +110,31 @@ class PurchaseDetails extends Component {
             startingDate={product.created_at}
             ofToHour={product.created_at}
             location={`${product.shipping_city} ${product.shipping_street}`}
-            orderStatus=""
+            orderStatus={product.supplier_status ? status[product.supplier_status] : ''}
             driverName={product.driver || ''}
-            supplierName={product.shipping_name}
+            supplierName={product.supplier ? product.supplier.name : ''}
             requestDetailsFields={requestDetailsFields}
           />
-          <Group style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' }}>
-            <SplashButton
-              onPress={() => this.handleChangeStatus(2)}
-              title="Cancel Request"
-              style={{
-                buttonStyle: {
-                  backgroundColor: '#1E1E1E',
-                  paddingHorizontal: 15,
-                  borderRadius: 99 ** 9,
-                  width: 180,
-                },
-              }}
-            />
-            <SplashButton
-              title="Request Done"
-              onPress={() => this.handleChangeStatus(3)}
+          <Group
+            style={{
+              flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center',marginBottom:20,
+            }}
+          >
+            {product.supplier_status === '1' ?   (
+              <SplashButton
+                onPress={() => this.handleChangeStatus(2)}
+                title="Cancel Request"
+                style={{
+                  buttonStyle: {
+                    backgroundColor: '#1E1E1E',
+                    paddingHorizontal: 15,
+                    borderRadius: 99 ** 9,
+                    fontSize:screen.width > 600 ? 14 : 10,
 
-              style={{
-                buttonStyle: {
-                  backgroundColor: '#707070',
-                  paddingHorizontal: 15,
-                  borderRadius: 99 ** 9,
-                  width: 180,
-                },
-              }}
-            />
+                  },
+                }}
+              />
+            ) : null}
           </Group>
         </Group>
       </ScrollContainer>

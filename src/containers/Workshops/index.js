@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { ActivityIndicator } from 'react-native'
-import { ScrollContainer, WorkshopCard,Group } from 'components'
+import {
+  ScrollContainer, WorkshopCard,Group ,SplashButton,
+} from 'components'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import { connect } from 'react-redux'
 import { bindActionCreators  } from 'redux'
@@ -64,6 +66,12 @@ class Purchases extends Component {
     navigate('ProfileWorkshop')
   }
 
+  skipWorkShop=async () => {
+    const { navigation:{ navigate } } = this.props
+
+    navigate('NearestServiceCenter')
+  }
+
   render() {
     const { storeData:{ workshops ,isFetching } } = this.props
     if (isFetching) { return (
@@ -82,27 +90,78 @@ class Purchases extends Component {
       </Group>
     ) }
     return (
-      <ScrollContainer
-        contentContainerStyle={{
-          marginTop: 20,
+      <Group
+        style={{
+          flex:1,
         }}
       >
-        {
-          workshops.map(({
-            name,id,image,bio,user_cars,
-          }) => (
-            <WorkshopCard
-              source={{ uri:image }}
-              bio={bio}
-              key={id}
-              name={name}
-              user_cars={user_cars}
-              onPressWorkShopName={() => this.handleSelectWorkShop(id)}
-              onPress={() => this.handleBooking(id)}
-            />
-          ))
-        }
-      </ScrollContainer>
+        <Group
+          style={{
+            position: 'absolute',
+            top:'90%',
+            left:'1%',
+            zIndex:999999,
+            width:'90%',
+          }}
+        >
+
+          <SplashButton
+            title="SKIP"
+            loading={isFetching}
+            onPress={() => this.skipWorkShop()}
+            style={{
+              buttonStyle: {
+                justifyContent: 'center',
+                backgroundColor:'#1E1E1E',
+                zIndex:999,
+                width:'50%',
+                heigh:250,
+                alignSelf:'center',
+                borderRadius: 40,
+              },
+              buttonContainerStyle:{
+                heigh:200,
+              },
+            }}
+          />
+        </Group>
+
+        <ScrollContainer
+          contentContainerStyle={{
+            marginTop: 20,
+            justifyContent: 'flex-end',
+
+          }}
+        >
+
+          <Group
+            style={{
+              flex:1,
+              zIndex:-1,
+            }}
+          >
+            {
+              workshops.map(({
+                name,id,image,bio,user_cars,
+              }) => (
+                <WorkshopCard
+                  source={{ uri:image }}
+                  bio={bio}
+                  key={id}
+                  name={name}
+                  user_cars={user_cars}
+                  onPressWorkShopName={() => this.handleSelectWorkShop(id)}
+                  onPress={() => this.handleBooking(id)}
+                />
+              ))
+            }
+
+          </Group>
+
+
+        </ScrollContainer>
+      </Group>
+
     )
   }
 }

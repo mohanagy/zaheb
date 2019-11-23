@@ -4,8 +4,8 @@ import {
 } from 'components'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import { Image } from 'react-native-elements'
-
-
+import { Dimensions } from 'react-native'
+const screen = Dimensions.get('screen')
 export const OfferCard = ({
   description,service:{ car_service_classification },handleCancel,isFetching,
   handleMap,handlePlus,
@@ -14,7 +14,7 @@ export const OfferCard = ({
     style={{
       flexDirection: 'row',
       justifyContent: 'flex-start',
-      height: 130,
+      height: '30%',
       marginHorizontal: 15,
       backgroundColor: '#FFF',
       marginBottom: 12,
@@ -29,7 +29,7 @@ export const OfferCard = ({
   >
     <Group
       style={{
-        width: 120,
+        width: '30%',
         borderRightWidth: 1,
         borderColor: '#000',
       }}
@@ -55,11 +55,12 @@ export const OfferCard = ({
             alignItems: 'flex-start', justifyContent: 'space-around',flex:1,
           }}
         >
-          <Details text={car_service_classification.en_name} style={{ ...textsStyle, fontSize: 20, fontWeight: '900' }} />
+          <Details text={car_service_classification.en_name} style={{ ...textsStyle, fontSize: screen.width > 600 ? 14 : 10, fontWeight: '900' }} />
           <Details
             text={description}
             style={{
-              ...textsStyle, fontSize: 16,flexWrap: 'wrap',
+              ...textsStyle, fontSize: screen.width > 600 ? 14 : 10,flexWrap: 'wrap',
+
             }}
           />
         </Group>
@@ -68,9 +69,9 @@ export const OfferCard = ({
             justifyContent: 'space-between', alignItems: 'flex-end', marginVertical: 5,marginRight: 10,
           }}
         >
-          <SplashButton title={<FontAwesome5 name="plus" />} style={buttonStyle} loading={isFetching} onPress={handlePlus} />
-          <SplashButton style={buttonStyle} title={<FontAwesome5 name="map-marker" />} loading={isFetching} onPress={handleMap} />
-          <SplashButton title="cancel" style={buttonStyle} titleStyle={{ fontSize:10 }} onPress={handleCancel} loading={isFetching} />
+          <SplashButton title={<FontAwesome5 name="plus" size={screen.width > 600 ? 14 : 10} />} style={buttonStyle} loading={isFetching} onPress={handlePlus} />
+          <SplashButton style={buttonStyle} title={<FontAwesome5 name="map-marker" size={screen.width > 600 ? 14 : 10} />} loading={isFetching} onPress={handleMap} />
+          <SplashButton title="cancel" style={buttonStyle} onPress={handleCancel} loading={isFetching} />
         </Group>
       </Group>
     </Group>
@@ -88,7 +89,12 @@ const buttonStyle = {
     borderRadius: 200,
     paddingHorizontal: 10,
     paddingVertical: 3,
+    marginBottom:10,
+
   },
+  containerStyle:{
+  },
+  titleStyle:{ fontSize:10 },
 }
 
 OfferCard.propTypes = {

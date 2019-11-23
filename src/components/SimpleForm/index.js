@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
-import { Dimensions } from 'react-native'
+import { Dimensions ,KeyboardAvoidingView } from 'react-native'
 import PropTypes from 'prop-types'
 import {
-  Logo, Group, ScrollContainer, BackgroundImageWrapper,
+  Group, ScrollContainer, BackgroundImageWrapper,
 } from 'components'
-import logo from 'assets/logo.png'
 
 const screen = Dimensions.get('screen')
 
@@ -16,12 +15,17 @@ export class SimpleForm extends Component {
   render() {
     const {
       children,
-      after,
       backgroundSource,
       backgroundOverlay,
     } = this.props
     return (
-      <BackgroundImageWrapper source={backgroundSource} style={{ height: '100%' }}>
+      <BackgroundImageWrapper
+        source={backgroundSource}
+        style={{
+          height:screen.height ,
+          width:screen.width,
+        }}
+      >
         <Group
           style={{
             backgroundColor: backgroundOverlay,
@@ -30,45 +34,28 @@ export class SimpleForm extends Component {
             bottom: 0,
             right: 0,
             left: 0,
+            height:screen.height,
+            width:screen.width,
           }}
         />
-        <ScrollContainer
-          contentContainerStyle={{
-            marginTop: 15,
-            marginBottom: 0,
-            paddingBottom: 0,
-            justifyContent: 'center',
-            minHeight: screen.height - 100
-          }}
+        <KeyboardAvoidingView
+
+          behavior="padding"
+          keyboardVerticalOffset={1}
+
         >
-          <Group>
-            <Group
-              style={{
-                alignItems: 'center',
-                alignSelf: 'center',
-                borderTopLeftRadius: 99999,
-                borderTopRightRadius: 99999,
-                backgroundColor: '#FFFFFF',
-                width: screen.width * 0.5,
-                marginBottom: -70,
-                marginTop: screen.height * 0.20,
-              }}
-            >
-              <Logo
-                source={logo}
-                style={{
-                  width: screen.width * 0.5,
-                  resizeMode: 'contain',
-                }}
-                containerStyle={{
-                  marginTop: -40,
-                }}
-              />
-            </Group>
+
+          <ScrollContainer
+            contentContainerStyle={{
+              height:screen.height ,
+              justifyContent: 'center',
+              marginTop:10,
+
+            }}
+          >
             {children}
-          </Group>
-          {after}
-        </ScrollContainer>
+          </ScrollContainer>
+        </KeyboardAvoidingView>
       </BackgroundImageWrapper>
     )
   }

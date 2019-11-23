@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { ScrollContainer, ConversationCard,Group } from 'components'
-import { ActivityIndicator } from 'react-native'
+import { ActivityIndicator,Dimensions } from 'react-native'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'

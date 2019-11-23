@@ -3,7 +3,7 @@ import { Button } from 'react-native-elements'
 import PropTypes from 'prop-types'
 
 const SplashButton = ({
-  title, style, loading, icon, type, onPress, titleStyle,
+  title, style, loading, icon, type, onPress,
 }) => (
   <Button
     title={title}
@@ -12,7 +12,6 @@ const SplashButton = ({
     icon={icon}
     type={type}
     onPress={onPress}
-    titleStyle={titleStyle}
   />
 
 

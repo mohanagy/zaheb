@@ -9,7 +9,7 @@ import { bindActionCreators } from 'redux'
 import * as userActions from 'actions/users'
 import { Dimensions, TouchableOpacity, Image } from 'react-native'
 
-import logo from 'assets/logo.png'
+import logo from 'assets/marinLogo.png'
 
 const screen = Dimensions.get('screen')
 
@@ -55,25 +55,21 @@ class ForgotPassword extends Component {
             backgroundColor: '#FFFFFF',
           }}
         >
-        <Group style={{
-            position: 'absolute',
-            top: -80,
-            left: (screen.width * .5) - 28 - 70,
-            backgroundColor: '#FFF',
-            borderTopLeftRadius: 9 ** 9,
-            borderTopRightRadius: 9 ** 9,
-            paddingHorizontal: 10,
-            width: 140,
-            height: 140,
-          }}>
-          <Image source={logo} style={{ width: 120, height: 120 }}/>
-        </Group>
-          <Title
-            text={[
-              (<Title text="Z" style={{ color: '#BE1522' }} />),
-              (<Title text="AHEB" style={{ color: '#1E1E1E' }} />),
-            ]}
-          />
+          <Group
+            style={{
+              position: 'absolute',
+              top: -80,
+              left: (screen.width * 0.5) - 28 - 70,
+              backgroundColor: '#FFF',
+              borderTopLeftRadius: 9 ** 9,
+              borderTopRightRadius: 9 ** 9,
+              paddingHorizontal: 10,
+              width: 140,
+              height: 140,
+            }}
+          >
+            <Image source={logo} style={{ width: 120, height: 120,resizeMode:'contain' }} />
+          </Group>
           <LabeledInput
             label="Enter your email"
             inputStyle={inputStyle}
@@ -92,7 +88,10 @@ class ForgotPassword extends Component {
             }}
           >
             <Dot />
-            <Title text="OR" style={{ color: '#be1522', marginBottom: 5 }} />
+            <Title
+              text="OR"
+              style={{ color: '#be1522', marginBottom: 5,    fontSize: screen.width > 600 ? 18 : 10 }}
+            />
             <Dot />
           </Group>
           <LabeledInput
@@ -124,13 +123,14 @@ const inputStyle = {
 const inputLabelStyle = {
   color: '#b0abab',
   marginLeft: 10,
+  fontSize: screen.width > 600 ? 14 : 10,
 }
 
 const inputContainerStyle = {
   marginHorizontal: 18,
   marginTop: 20,
   borderBottomColor: '#B0ABAB',
-  borderBottomWidth: .5,
+  borderBottomWidth: 0.5,
 }
 ForgotPassword.propTypes = {
   navigation: PropTypes.object.isRequired,
@@ -152,7 +152,7 @@ const buttonStyle = {
   titleStyle: {
     color: '#FFFFFF',
     fontWeight: '9',
-    fontSize: 18,
+    fontSize: screen.width > 600 ? 18 : 10,
     fontFamily: 'HelveticaNeueW23forSKY-Reg',
   },
 }

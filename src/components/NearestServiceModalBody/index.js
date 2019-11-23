@@ -1,11 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
-
+import { Dimensions } from 'react-native'
 import {
   Group, Details, Select, SplashButton, LabelWithIcon, TextArea,
 } from 'components'
 
+const  screen = Dimensions.get('screen')
 export const NearestServiceModalBody = ({
   style, titleStyle, title, showPicker,
   selectVideoTapped,selectPhotoTapped,driver,setDriver,
@@ -28,15 +29,15 @@ export const NearestServiceModalBody = ({
       style={{
         justifyContent: 'space-around',
         alignContent: 'space-around',
-        margin: 47.5,
-        marginHorizontal: 20,
+        margin: '5%',
+        marginHorizontal: '8%',
         flex:1,
       }}
     >
       <Details
         text={title}
         style={{
-          ...titleStyle, fontSize: 20, fontWeight: '900', color: 'black',
+          ...titleStyle, fontSize: screen.width > 600 ? 20 : 15, fontWeight: '900', color: 'black',
         }}
       />
       <Group
@@ -54,16 +55,16 @@ export const NearestServiceModalBody = ({
         />
 
       </Group>
-      <Group>
+      <>
         <Select
           options={[{ label: 'I don\'t need a driver', value: 0 }, { label: 'I need a driver', value: 1 }]}
           onValueChange={(value) => setDriver(value)}
           selectedValue={driver}
         />
-      </Group>
+      </>
       <Group>
         <TextArea
-          placeholder="Service description (optional)"
+          placeholder="Service description"
           style={{
             inputStyle: {
               fontSize: 10,
@@ -120,6 +121,9 @@ export const NearestServiceModalBody = ({
               borderRadius: 99 ** 9,
               width: 180,
               alignSelf: 'center',
+            },
+            titleStyle:{
+              fontSize:screen.width > 600 ? 15 : 10,
             },
           }}
         />

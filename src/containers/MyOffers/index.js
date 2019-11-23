@@ -2,11 +2,13 @@ import React, { Component } from 'react'
 import { ScrollContainer, MyOfferCard,Group } from 'components'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import { connect } from 'react-redux'
-import { ActivityIndicator } from 'react-native'
+import { ActivityIndicator,Dimensions } from 'react-native'
 import { bindActionCreators } from 'redux'
 import * as storeActions from 'actions/store'
 import * as usersActions from 'actions/users'
 import PropTypes from 'prop-types'
+const screen = Dimensions.get('screen')
+
 
 class MyOffers extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -52,9 +54,10 @@ componentDidMount = async () => {
 }
 
 handleMap =async (workshopId,serviceId) => {
-  const { actions:{ selectWorkShop,selectService },navigation:{ navigate } } = this.props
+  const { actions:{ selectWorkShop,selectService,noConfirmationButton },navigation:{ navigate } } = this.props
   await selectWorkShop(workshopId)
   await selectService(serviceId)
+  await noConfirmationButton()
   navigate('NearestServiceCenter')
 }
 
@@ -81,17 +84,27 @@ render() {
       <ActivityIndicator size="large" />
     </Group>
   ) }
+  console.log({
+    workshopOffers,
+  })
   return (
-    <ScrollContainer contentContainerStyle={{ marginTop: 20 }}>
-      {
-        workshopOffers.map((offer) => (
-          <MyOfferCard
-            handleSelectProfile={() => this.handleSelectProfile(offer.workshop_id)}
-            {...offer}
-            handleMap={() => this.handleMap(offer.workshop_id,offer.offer.service_id)}
-          />
-        ))
-      }
+    <ScrollContainer contentContainerStyle={{  }}>
+      <Group
+        style={{
+          minHeight: screen.height,
+          marginTop: 20,
+        }}
+      >
+        {
+          workshopOffers.map((offer) => (
+            <MyOfferCard
+              handleSelectProfile={() => this.handleSelectProfile(offer.workshop_id)}
+              {...offer}
+              handleMap={() => this.handleMap(offer.workshop_id,offer.offer.service_id)}
+            />
+          ))
+        }
+      </Group>
     </ScrollContainer>
   )
 }

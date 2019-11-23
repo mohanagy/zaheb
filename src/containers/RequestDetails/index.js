@@ -11,6 +11,13 @@ import { storeActions } from 'actions'
 
 
 const screen = Dimensions.get('screen')
+const status = {
+  '1':'New',
+  '2':'In Shipping',
+  '3':'Complete',
+  '4':'Reject',
+  '5':'In Progress',
+}
 
 class RequestDetails extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -77,9 +84,10 @@ class RequestDetails extends Component {
   }
 
   handleCords=async (workshopId,serviceId) => {
-    const { actions:{ selectWorkShop,selectService },navigation:{ navigate } } = this.props
+    const { actions:{ selectWorkShop,selectService ,noConfirmationButton },navigation:{ navigate } } = this.props
     await selectWorkShop(workshopId)
     await selectService(serviceId)
+    await noConfirmationButton()
     navigate('NearestServiceCenter')
   }
 
@@ -104,7 +112,7 @@ class RequestDetails extends Component {
     return (
       <ScrollContainer>
         <Group style={{ backgroundColor: '#F6F6F6', minHeight: screen.height }}>
-          <CurvedHeader type="image" source={{ uri:order.service.image }} />
+          <CurvedHeader type="image" source={{ uri:order.service.image }} fillSource />
           <RequestDetailsCard
             style={{ marginBottom: 50 }}
             requestName={order.service.en_name}
@@ -112,14 +120,18 @@ class RequestDetails extends Component {
             startingDate={order.service_date}
             ofToHour={order.service_time}
             location=""
-            orderStatus=""
+            orderStatus={order.workshop_status ? status[order.workshop_status] : ''}
             driverName={order.driver || ''}
             supplierName={order.workshop ? order.workshop.name : ''}
             requestDetailsFields={requestDetailsFields}
             cords={order.lat ? { lat:order.lat ,lng:order.lng } : null}
             handleCords={() => this.handleCords(order.workshop_id,order.service_id)}
           />
-          <Group style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' }}>
+          <Group
+            style={{
+              flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' ,marginBottom:20,
+            }}
+          >
             <SplashButton
               onPress={() => this.handleChangeStatus(2)}
               title="Cancel Request"
@@ -128,7 +140,9 @@ class RequestDetails extends Component {
                   backgroundColor: '#1E1E1E',
                   paddingHorizontal: 15,
                   borderRadius: 99 ** 9,
-                  width: 180,
+                },
+                titleStyle:{
+                  fontSize:screen.width > 600 ? 14 : 10,
                 },
               }}
             />
@@ -141,7 +155,9 @@ class RequestDetails extends Component {
                   backgroundColor: '#707070',
                   paddingHorizontal: 15,
                   borderRadius: 99 ** 9,
-                  width: 180,
+                },
+                titleStyle:{
+                  fontSize:screen.width > 600 ? 14 : 10,
                 },
               }}
             />

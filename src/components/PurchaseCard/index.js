@@ -1,10 +1,11 @@
 import React from 'react'
-import { TouchableOpacity } from 'react-native'
+import { TouchableOpacity,Dimensions } from 'react-native'
 import { Group, Title, Details } from 'components'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import { Image } from 'react-native-elements'
 
 
+const screen = Dimensions.get('screen')
 export const PurchaseCard = ({
   name, date, cost,source,handleSelectProduct,
 }) => (
@@ -57,7 +58,15 @@ export const PurchaseCard = ({
         }}
       >
         <TouchableOpacity onPress={handleSelectProduct}>
-          <Title style={{ color: '#000', fontSize: 18, marginHorizontal: 0 }} text={name} />
+          <Title
+            style={{
+              color: '#000',
+              fontSize: 18,
+              marginHorizontal: 0,
+              fontSize:screen.width > 600 ? 14 : 10,
+            }}
+            text={name}
+          />
         </TouchableOpacity>
       </Group>
       <Group
@@ -74,8 +83,11 @@ export const PurchaseCard = ({
             alignItems: 'center',
           }}
         >
-          <FontAwesome5 size={20} name="calendar" />
-          <Details text={date} style={{ color: '#000', marginHorizontal: 5 }} />
+          <FontAwesome5 size={screen.width > 600 ? 20 : 10} name="calendar" />
+          <Details
+            text={date}
+            style={{ color: '#000', marginHorizontal: 5,              fontSize:screen.width > 600 ? 14 : 10 }}
+          />
         </Group>
         <Group
           style={{
@@ -88,8 +100,10 @@ export const PurchaseCard = ({
             style={{
               backgroundColor: '#B0ABAB',
               borderRadius: 50,
-              height: 25,
-              width: 50,
+              height: '40%',
+              width: '40%',
+              fontSize:screen.width > 600 ? 14 : 10,
+
             }}
           />
         </Group>

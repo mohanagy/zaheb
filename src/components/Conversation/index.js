@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { Group, Details } from 'components'
-import { Image } from 'react-native'
+import { Image ,Dimensions } from 'react-native'
 import moment from 'moment'
 import { connect } from 'react-redux'
-
+const screen = Dimensions.get('screen')
 
 class Conversation extends Component {
   render() {
@@ -12,7 +12,7 @@ class Conversation extends Component {
       <Group>
         {
           conversation.reverse().map(({
-            message, updated_at, sender:{ id:senderId,image },id,
+            message, updated_at, sender:{ id:senderId,image } = {},id,
           }) => (
             <Group style={{  marginVertical: 5 }} key={id}>
               <Group style={{ flexDirection: senderId === userId ? 'row-reverse' : 'row' }}>
@@ -35,7 +35,15 @@ class Conversation extends Component {
                       borderRadius: 15,
                     }}
                   />
-                  <Details text={`SENT ${moment(updated_at).format('HH:mm A')}`} style={{ color: '#B0ABAB', textAlign: senderId === userId ? 'right' : 'left' }} />
+                  <Details
+                    text={`SENT ${moment(updated_at).format('HH:mm A')}`}
+                    style={{
+                      color: '#B0ABAB',
+                      textAlign: senderId === userId ? 'right' : 'left',
+                      fontSize:screen.width > 600 ? 14 : 10,
+
+                    }}
+                  />
                 </Group>
               </Group>
             </Group>

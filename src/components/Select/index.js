@@ -6,17 +6,21 @@ export const Select = ({ options, onValueChange, selectedValue }) => (
   <Picker
     selectedValue={selectedValue}
     style={{
-      height: 50,
+      height: '8%',
       flexDirection: 'row-reverse',
       shadowColor: '#000',
       borderWidth: 2,
     }}
     itemStyle={{
       fontFamily: 'HelveticaNeueW23forSKY-Reg',
-      fontWeight: 300,
+      fontWeight: 10,
       textAlign: 'left',
 
     }}
+    itemTextStyle={{ fontSize: 4 }}
+    activeItemTextStyle={{ fontSize: 4, fontWeight: 'bold' }}
+
+
     onValueChange={onValueChange}
 
   >

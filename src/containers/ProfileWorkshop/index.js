@@ -190,11 +190,16 @@ class WorkshopSupplier extends Component {
               workShopProfile={workShopProfile}
               defaultActiveTab="user"
               options={[
-                { icon: 'user', key: 'user', activeContent: WorkshopProfileTab },
-                { icon: 'clock', key: 'clock', activeContent: WorkshopTimesTab },
-                { icon: 'cog', key: 'settings', activeContent: WorkshopSettingsTab },
+                {
+                  icon: 'user', key: 'user', activeContent: WorkshopProfileTab,handleChatIcon:() => {},
+                },
+                {
+                  icon: 'clock', key: 'clock', activeContent: WorkshopTimesTab,handleChatIcon:() => {},
+                },
+                {
+                  icon: 'cog', key: 'settings', activeContent: WorkshopSettingsTab,handleChatIcon:() => {},
+                },
                 { icon: 'comment', key: 'comment',handleChatIcon:(id,name,image) => this.handleChatIcon(id,name,image) },
-                { icon: 'calendar-check', key: 'calendar-check' },
               ]}
             />
           </Group>

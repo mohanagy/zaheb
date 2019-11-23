@@ -42,10 +42,10 @@ class RequestDetailsCard extends Component {
                 {fields.cords && title === 'location'
                   ? (
                     <TouchableOpacity onPress={handleCords}>
-                      <Details text="Click here" style={{ color: '#1E1E1E' }} />
+                      <Details text="Click here" style={{ color: '#1E1E1E',fontSize:screen.width > 600 ? 14 : 10 }} />
                     </TouchableOpacity>
                   )
-                  : <Details text={`${fieldName}: ${fields[title]}`} style={{ color: '#1E1E1E' }} />}
+                  : <Details text={`${fieldName}: ${fields[title]}`} style={{ color: '#1E1E1E',fontSize:screen.width > 600 ? 14 : 10 }} />}
 
               </Group>
             </Group>

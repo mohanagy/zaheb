@@ -2,18 +2,23 @@ import React, { Component } from 'react'
 
 import PropTypes from 'prop-types'
 import {
-  Title, Group, SplashButton, LabeledInput, Details, SimpleForm,
+  Group, SplashButton, LabeledInput, Details, SimpleForm,
 } from 'components'
 import { Dimensions, TouchableOpacity, Image } from 'react-native'
 import blurredBackground from 'assets/blurred-background.png'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as userActions from 'actions/users'
-import logo from 'assets/logo.png'
+import logo from 'assets/marinLogo.png'
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 
 const screen = Dimensions.get('screen')
 
 class Login extends Component {
+  static navigationOptions = {
+    drawerLockMode: 'locked-closed',
+  }
+
   state={
     email:'mahmoudskek-user@gmail.com',
     password:'123456789',
@@ -45,103 +50,163 @@ class Login extends Component {
           <SimpleForm
             backgroundOverlay="#00000095"
             backgroundSource={blurredBackground}
-            after={(
-              <Group
-                style={{
-                  marginVertical: 30,
-                  fontWeight: '9',
-                  justifyContent: 'center',
-                }}
-              >
-                <TouchableOpacity
-                  onPress={() => navigate('ForgotPassword')}
-                >
-                  <Details text="Forgot password?" />
-                </TouchableOpacity>
-                <Group
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent:'center',
-                  }}
-                >
-
-                  <Details
-                    text="Don't have an account?"
-                    style={{
-                      marginHorizontal:10,
-                    }}
-                  />
-                  <TouchableOpacity
-                    onPress={() => navigate('Register')}
-                  >
-
-                    <Details
-                      text="Create now"
-                      style={{
-                        color: '#BE1522',
-                        marginHorizontal:0,
-                        textDecorationLine: 'underline',
-                      }}
-                    />
-                  </TouchableOpacity>
-                </Group>
-
-              </Group>
-            )}
           >
             <Group
               style={{
-                position: 'relative',
-                marginHorizontal: 28,
-                borderRadius: 6.7,
-                backgroundColor: '#FFFFFF',
+                justifyContent: 'center',
+                height:'35%',
+                width:'100%',
+                alignItems:'center',
+                alignSelf:'center',
               }}
             >
-            <Group style={{
-                position: 'absolute',
-                top: -80,
-                left: (screen.width * .5) - 28 - 70,
-                backgroundColor: '#FFF',
-                borderTopLeftRadius: 9 ** 9,
-                borderTopRightRadius: 9 ** 9,
-                paddingHorizontal: 10,
-                width: 140,
-                height: 140,
-              }}>
-              <Image source={logo} style={{ width: 120, height: 120 }}/>
+
+              <Group
+                style={{
+                  justifyContent:'center',
+                  backgroundColor: '#FFF',
+                  borderTopLeftRadius: 9 ** 10,
+                  borderTopRightRadius: 9 ** 10,
+                  paddingTop: 10,
+                  zIndex: 99999,
+                  marginBottom:'-10%',
+                }}
+              >
+                <Image
+                  source={logo}
+                  style={{
+                    maxWidth:100,
+                    maxHeight:50,
+                    paddingHorizontal:'20%',
+                    resizeMode:'contain',
+                  }}
+                />
+              </Group>
+              <Group
+                style={{
+                  borderRadius: 6.7,
+                  backgroundColor: '#fff',
+                  justifyContent: 'flex-end',
+                  width:'80%',
+                  marginTop:'4%',
+                  // flex:1,
+                }}
+              >
+                <Group
+                  style={{
+                    marginBottom:20,
+                  }}
+                >
+
+                  <LabeledInput
+                    label="Name or email"
+                    inputStyle={inputStyle}
+                    labelStyle={inputLabelStyle}
+                    inputContainerStyle={{ ...inputContainerStyle }}
+                    containerStyle={containerStyle}
+                    value={email}
+                    onChangeText={(value) => this.handleChange('email',value)}
+                    rightIcon={(
+                      <FontAwesome5
+                        size={10}
+                        solid
+                        name="user"
+                        style={{
+                          margin:0,
+                          padding:0,
+                        }}
+                      />
+                    )}
+                  />
+                  <LabeledInput
+                    label="Password"
+                    secureTextEntry
+                    inputStyle={inputStyle}
+                    containerStyle={{ ...containerStyle }}
+                    labelStyle={{ ...inputLabelStyle }}
+                    style={{
+                    }}
+                    inputContainerStyle={{ ...inputContainerStyle }}
+                    value={password}
+                    onChangeText={(value) => this.handleChange('password',value)}
+                    rightIcon={(
+                      <FontAwesome5
+                        size={10}
+                        name="lock"
+                        style={{
+                          margin:0,
+                          padding:0,
+                        }}
+                      />
+                    )}
+                  />
+                </Group>
+                <Group
+                  style={{
+                    maxHeight:'30%',
+                    width:'70%',
+                    alignItems:'center',
+                    alignSelf:'center',
+                    justifyContent:'center',
+
+                  }}
+                >
+
+                  <SplashButton
+                    title="Sign in"
+                    onPress={() => this.handleSubmitLogin()}
+                    style={buttonStyle}
+                    loading={isFetching}
+                  />
+                </Group>
+              </Group>
             </Group>
-              <Title
-                text={[
-                  (<Title text="Z" style={{ color: '#BE1522' }} />),
-                  (<Title text="AHEB" style={{ color: '#1E1E1E' }} />),
-                ]}
-              />
-              <LabeledInput
-                label="Name or email"
-                inputStyle={inputStyle}
-                labelStyle={inputLabelStyle}
-                containerStyle={{ ...inputContainerStyle, marginBottom: 20 }}
-                value={email}
-                onChangeText={(value) => this.handleChange('email',value)}
+            <Group
+              style={{
+                marginTop:10,
+              }}
+            >
+              <TouchableOpacity
+                onPress={() => navigate('ForgotPassword')}
+              >
+                <Details
+                  text="Forgot password?"
+                  style={{
+                    fontSize:12,
+                  }}
+                />
+              </TouchableOpacity>
+              <Group
+                style={{
+                  flexDirection: 'row',
+                  justifyContent:'center',
+                }}
+              >
 
+                <Details
+                  text="Don't have an account?"
+                  style={{
+                    marginHorizontal:'2%',
+                    fontSize:12,
 
-              />
-              <LabeledInput
-                label="Password"
-                secureTextEntry
-                inputStyle={inputStyle}
-                labelStyle={inputLabelStyle}
-                containerStyle={{ ...inputContainerStyle, marginBottom: 60 }}
-                value={password}
-                onChangeText={(value) => this.handleChange('password',value)}
+                  }}
+                />
+                <TouchableOpacity
+                  onPress={() => navigate('Register')}
+                >
 
-              />
-              <SplashButton
-                title="Sign in"
-                onPress={() => this.handleSubmitLogin()}
-                style={buttonStyle}
-                loading={isFetching}
-              />
+                  <Details
+                    text="Create now"
+                    style={{
+                      color: '#BE1522',
+                      marginHorizontal:0,
+                      fontSize:12,
+                      textDecorationLine: 'underline',
+                    }}
+                  />
+                </TouchableOpacity>
+              </Group>
+
             </Group>
           </SimpleForm>
         )
@@ -151,37 +216,57 @@ class Login extends Component {
 const inputStyle = {
   fontFamily: 'HelveticaNeueW23forSKY-Reg',
   padding: 0,
-  margin: 0,
+  fontSize:10,
+  borderBottomWidth: 0,
+
+
 }
 
 const inputLabelStyle = {
   color: '#b0abab',
-  marginLeft: 10,
+  fontSize:10,
+  fontWeight:'100',
+
 }
 
 const inputContainerStyle = {
-  marginHorizontal: 18,
-  borderBottomColor: '#B0ABAB',
-  borderBottomWidth: .5,
-}
+  height:20,
 
+
+}
+const containerStyle = {
+  marginHorizontal: 18,
+
+}
 const buttonStyle = {
   buttonStyle: {
+    height:'90%',
     backgroundColor: '#FF2334',
-    borderRadius: 20,
-    marginHorizontal: 50,
+    borderRadius: 50,
+    alignSelf:'center',
+    justifyContent: 'center',
+    alignItems:'center',
+    width:'100%',
+
   },
   containerStyle: {
-    position: 'absolute',
-    bottom: -55,
-    width: '100%',
-    paddingHorizontal: 10,
-    padding:35,
+    alignItems: 'center',
+    alignSelf:'center',
+    justifyContent: 'center',
+    alignContent:'center',
+    width:'100%',
+
+
   },
   titleStyle: {
+    alignItems: 'center',
+    alignContent: 'center',
+    alignSelf:'center',
     color: '#FFFFFF',
-    fontWeight: '9',
-    fontSize: 18,
+    fontWeight: '10',
+    fontSize:12,
+    justifyContent: 'center',
+
     fontFamily: 'HelveticaNeueW23forSKY-Reg',
   },
 }

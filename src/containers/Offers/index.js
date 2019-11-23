@@ -61,9 +61,10 @@ handleSelectWorkShop= async (id) => {
 
 
 handleMap =async (workshopId,serviceId) => {
-  const { actions:{ selectWorkShop,selectService },navigation:{ navigate } } = this.props
+  const { actions:{ selectWorkShop,selectService,noConfirmationButton },navigation:{ navigate } } = this.props
   await selectWorkShop(workshopId)
   await selectService(serviceId)
+  await noConfirmationButton()
   navigate('NearestServiceCenter')
 }
 
@@ -94,7 +95,7 @@ render() {
             service={service}
             key={id}
             handleCancel={() => this.handleCancel(id)}
-            handlePlus={() => this.handlePlus()}
+            handlePlus={() => this.handleSelectWorkShop()}
             handleMap={() => this.handleMap(id,service.id)}
           />
         ))

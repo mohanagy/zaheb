@@ -64,11 +64,13 @@ class Profile extends Component {
   }
 
   componentDidMount =async () => {
-    const { actions:{ getUserProfile } } = this.props
+    const { actions:{ getUserProfile },navigation:{ navigate } } = this.props
     const user =  await getUserProfile()
     this.setState({
       user,
     })
+    const { type } = user
+    if (type !== '4')navigate('ProfileDriver')
   }
 
   handleUpdateProfile =async (field,value) => {
@@ -87,9 +89,10 @@ class Profile extends Component {
   }
 
   render() {
-    const {   user  } = this.state
+    const {   user } = this.state
     const { userData:{ isFetching } } = this.props
-    if (isFetching) { return (
+
+    if (isFetching || !user) { return (
       <Group
         style={{
           position: 'absolute',
@@ -104,94 +107,114 @@ class Profile extends Component {
         <ActivityIndicator size="large" />
       </Group>
     ) }
-    return (
-      <ScrollContainer>
-        <Group style={{ backgroundColor: '#F6F6F6', minHeight: screen.height, paddingBottom: 50 }}>
-          <Group>
-            <CurvedHeader type="image" source={{ uri:user.image }} fillSource />
-          </Group>
-          <Details text={user.username} style={{ color: 'black' }} />
-          <Details text={`No.${user.id}`} style={{ color: 'black' }} />
-          <Details text={`${user.address || ''}`} style={{ color: 'black', fontSize: 10 }} />
-          <Group>
-            <Details text="Private Details" style={{ alignSelf: 'flex-start', color: '#1E1E1E' }} />
-            <LabeledInputWithIcon
-              label="Name"
-              labelStyle={styles.inputLabelStyle}
-              icon="edit"
-              inputProps={{
-                style: styles.inputStyle,
-                value: user.name,
-                onChangeText:(value) => this.handleChange('name',value),
-              }}
-              onPressOnIcon={() => this.handleUpdateProfile('name',user.name)}
-            />
-            <LabeledInputWithIcon
-              label="Email"
-              labelStyle={styles.inputLabelStyle}
-              icon="edit"
-              inputProps={{
-                style: styles.inputStyle,
-                value: user.email,
-                onChangeText:(value) => this.handleChange('email',value),
+    // const { user:{ type } } = this.state
+    const { userData:{ user:{ type } } } = this.props
+    if (type === '4') {
+      return (
+        <ScrollContainer>
+          <Group style={{ backgroundColor: '#F6F6F6', minHeight: screen.height, paddingBottom: 50 }}>
+            <Group>
+              <CurvedHeader type="image" source={{ uri:user.image }} fillSource />
+            </Group>
+            <Details text={user.username} style={{ color: 'black' }} />
+            <Details text={`No.${user.id}`} style={{ color: 'black' }} />
+            <Details text={`${user.address || ''}`} style={{ color: 'black', fontSize: 10 }} />
+            <Group>
+              <Details text="Private Details" style={{ alignSelf: 'flex-start', color: '#1E1E1E' }} />
+              <LabeledInputWithIcon
+                label="Name"
+                labelStyle={styles.inputLabelStyle}
+                icon="edit"
+                inputProps={{
+                  style: styles.inputStyle,
+                  value: user.name,
+                  onChangeText:(value) => this.handleChange('name',value),
+                }}
+                onPressOnIcon={() => this.handleUpdateProfile('name',user.name)}
+              />
+              <LabeledInputWithIcon
+                label="Email"
+                labelStyle={styles.inputLabelStyle}
+                icon="edit"
+                inputProps={{
+                  style: styles.inputStyle,
+                  value: user.email,
+                  onChangeText:(value) => this.handleChange('email',value),
 
-              }}
-              onPressOnIcon={() => this.handleUpdateProfile('email',user.email)}
+                }}
+                onPressOnIcon={() => this.handleUpdateProfile('email',user.email)}
 
-            />
-            <LabeledInputWithIcon
-              label="Password"
-              labelStyle={styles.inputLabelStyle}
-              icon="edit"
-              inputProps={{
-                secureTextEntry: true,
-                style: styles.inputStyle,
-                value: '**********',
+              />
+              <LabeledInputWithIcon
+                label="Password"
+                labelStyle={styles.inputLabelStyle}
+                icon="edit"
+                inputProps={{
+                  secureTextEntry: true,
+                  style: styles.inputStyle,
+                  value: '**********',
                 // onChangeText:(value) => this.handleChange('name',value),
-              }}
-              onPressOnIcon={() => {}}
+                }}
+                onPressOnIcon={() => {}}
 
-            />
-            <LabeledInputWithIcon
-              label="Mobile Number"
-              labelStyle={styles.inputLabelStyle}
-              icon="edit"
-              inputProps={{
-                style: styles.inputStyle,
-                value: user.phone,
-                onChangeText:(value) => this.handleChange('phone',value),
-              }}
-              onPressOnIcon={() => this.handleUpdateProfile('phone',user.phone)}
+              />
+              <LabeledInputWithIcon
+                label="Mobile Number"
+                labelStyle={styles.inputLabelStyle}
+                icon="edit"
+                inputProps={{
+                  style: styles.inputStyle,
+                  value: user.phone,
+                  onChangeText:(value) => this.handleChange('phone',value),
+                }}
+                onPressOnIcon={() => this.handleUpdateProfile('phone',user.phone)}
 
-            />
-            <LabeledInputWithIcon
-              label="Location"
-              labelStyle={styles.inputLabelStyle}
-              icon="plus"
-              inputProps={{
-                style: styles.inputStyle,
-                value: user.address || '',
-                onChangeText:(value) => this.handleChange('address',value),
-              }}
-              onPressOnIcon={() => this.handleUpdateProfile('address',user.address)}
+              />
+              <LabeledInputWithIcon
+                label="Location"
+                labelStyle={styles.inputLabelStyle}
+                icon="plus"
+                inputProps={{
+                  style: styles.inputStyle,
+                  value: user.address || '',
+                  onChangeText:(value) => this.handleChange('address',value),
+                }}
+                onPressOnIcon={() => this.handleUpdateProfile('address',user.address)}
 
-            />
-            <LabeledInputWithIcon
-              label="Language"
-              labelStyle={styles.inputLabelStyle}
-              icon="edit"
-              inputProps={{
-                style: styles.inputStyle,
-                value: user.language,
-                onChangeText:(value) => this.handleChange('language',value),
-              }}
-              onPressOnIcon={() => this.handleUpdateProfile('language',user.language)}
+              />
+              <LabeledInputWithIcon
+                label="Language"
+                labelStyle={styles.inputLabelStyle}
+                icon="edit"
+                inputProps={{
+                  style: styles.inputStyle,
+                  value: user.language,
+                  onChangeText:(value) => this.handleChange('language',value),
+                }}
+                onPressOnIcon={() => this.handleUpdateProfile('language',user.language)}
 
-            />
+              />
+            </Group>
           </Group>
+        </ScrollContainer>
+      ) }
+    else {
+      return (
+        <Group
+          style={{
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            top: 0,
+            bottom: 0,
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <ActivityIndicator size="large" />
         </Group>
-      </ScrollContainer>
-    )
+      )
+    }
   }
 }
 

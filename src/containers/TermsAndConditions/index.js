@@ -2,8 +2,10 @@ import React, { Component } from 'react'
 import { Dimensions,ActivityIndicator } from 'react-native'
 
 import {
-  Group, CurvedHeader, Details,
+  Group, CurvedHeader, Details,Title,
 } from 'components'
+import { Divider } from 'react-native-elements'
+
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -58,7 +60,8 @@ class TermsAndConditions extends Component {
   }
 
   render() {
-    const { generalData:{ terms:{ value } ,isFetching } } = this.props
+    const { generalData:{ terms ,isFetching } } = this.props
+
     if (isFetching) { return (
       <Group
         style={{
@@ -77,9 +80,23 @@ class TermsAndConditions extends Component {
     return (
       <Group style={{ backgroundColor: '#F6F6F6' }}>
         <CurvedHeader type="text" content="Terms and Conditions" />
-        <Group style={{ marginTop: 40, marginHorizontal: 20, minHeight: screen.height }}>
-          <Details text={value} style={{ color: '#1A2960', fontSize: 16 }} />
-        </Group>
+        {terms.map(({ en_description,en_title }) => (
+          <Group style={{ marginTop: 40, marginHorizontal: 20, minHeight: screen.height }}>
+            <Title
+              text={en_title}
+              style={{
+                color: '#000',
+                textAlignVertical: 'center',
+                marginBottom: 8,
+                fontSize: 22,
+              }}
+            />
+            <Divider style={{ backgroundColor: 'black' }} />
+
+            <Details text={en_description} style={{ color: '#1A2960', fontSize: 16 }} />
+            <Divider style={{ backgroundColor: 'black' }} />
+          </Group>
+        ))}
       </Group>
     )
   }

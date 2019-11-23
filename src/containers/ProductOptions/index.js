@@ -2,12 +2,13 @@ import React, { Component } from 'react'
 import {
   Group, ScrollContainer,Title ,Details,SplashButton,
 } from 'components'
-import { Image,ActivityIndicator } from 'react-native'
+import { Image,ActivityIndicator,Dimensions } from 'react-native'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import { connect  } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as storeActions from 'actions/store'
 import * as usersActions from 'actions/users'
+const screen = Dimensions.get('screen')
 class ProductOptions extends Component {
   static navigationOptions = ({ navigation }) => ({
     headerTitle: 'Product Options',
@@ -116,9 +117,18 @@ render() {
               alignItems:'flex-start',
             }}
           >
-            <Title style={{ color:'black',marginLeft:0  }} text={product.name} />
-            <Details style={{ color:'black',marginLeft:0 }} text={product.number} />
-            <Details style={{ color:'black' ,marginLeft:0 }} text={`By ${product.user.name}`} />
+            <Title
+              style={{ color:'black',marginLeft:0 ,                  fontSize:screen.width > 600 ? 14 : 10 }}
+              text={product.name}
+            />
+            <Details
+              style={{ color:'black',marginLeft:0,                  fontSize:screen.width > 600 ? 14 : 10 }}
+              text={product.number}
+            />
+            <Details
+              style={{ color:'black' ,marginLeft:0 ,                  fontSize:screen.width > 600 ? 14 : 10              }}
+              text={`By ${product.user.name}`}
+            />
             <Group
               style={{
                 flexDirection:'row',
@@ -137,7 +147,7 @@ render() {
                   paddingTop:  1,
                   paddingBottom: 2,
                   borderRadius: 50,
-                  fontSize:15,
+                  fontSize:screen.width > 600 ? 14 : 10,
                 }}
                 text={`$${product.cost}`}
               />
@@ -151,8 +161,14 @@ render() {
             justifyContent:'flex-start' ,alignItems:'flex-start',marginLeft:10 ,marginTop:20,
           }}
         >
-          <Title style={{ color:'black',fontSize: 19 }} text="Description" />
-          <Details style={{ color:'black' ,textAlign:'justify' }} text={product.description} />
+          <Title
+            style={{ color:'black',                  fontSize:screen.width > 600 ? 14 : 10 }}
+            text="Description"
+          />
+          <Details
+            style={{ color:'black' ,textAlign:'justify',                  fontSize:screen.width > 600 ? 14 : 10 }}
+            text={product.description}
+          />
         </Group>
         <Group>
 
@@ -170,6 +186,10 @@ render() {
                 width: 150,
                 backgroundColor: '#1E1E1E',
                 borderRadius: 99 * 9,
+              },
+              titleStyle:{
+                fontSize:screen.width > 600 ? 14 : 10,
+
               },
               containerStyle: {
                 marginTop: 30,

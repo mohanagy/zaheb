@@ -3,7 +3,7 @@ import { Dimensions ,Linking ,ActivityIndicator } from 'react-native'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 
 import {
-  Group, CurvedHeader, LabeledInput,
+  Group, CurvedHeader, LabeledInput,ScrollContainer,
 } from 'components'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -88,50 +88,57 @@ class ContactUs extends Component {
       </Group>
     ) }
     return (
-      <Group style={{ backgroundColor: '#F6F6F6' }}>
-        <CurvedHeader type="text" content="Contact us" />
-        <Group style={{ marginTop: 40, marginHorizontal: 20, minHeight: screen.height }}>
-          <LabeledInput
-            label="Location"
-            placeholder={address.value}
-            disabled
-            inputStyle={inputStyle}
-            underlineColorAndroid="transparent"
-            containerStyle={{ ...inputContainerStyle, marginTop: 40 }}
-            labelStyle={inputLabelStyle}
-          />
-          <LabeledInput
-            label="Mobile"
-            disabled
-            placeholder={phone.value}
-            inputStyle={inputStyle}
-            containerStyle={inputContainerStyle}
-            labelStyle={inputLabelStyle}
-          />
-          <LabeledInput
-            label="Email"
-            disabled
-            placeholder={email.value}
-            inputStyle={inputStyle}
-            containerStyle={inputContainerStyle}
-            labelStyle={inputLabelStyle}
-          />
-          <Group
-            style={{
-              marginTop: 30,
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              width: 200,
-              alignSelf: 'center',
-            }}
-          >
-            <FontAwesome5 size={30} name="google-plus" onPress={() => this.handleOpenLink(website.value)} />
-            <FontAwesome5 size={30} name="twitter" onPress={() => this.handleOpenLink(twitter.value)} />
-            <FontAwesome5 size={30} name="facebook" onPress={() => this.handleOpenLink(facebook.value)} />
-            <FontAwesome5 size={30} name="linkedin" onPress={() => this.handleOpenLink(linkedin.value)} />
+      <ScrollContainer
+        contentContainerStyle={{
+        }}
+      >
+        <Group style={{ backgroundColor: '#F6F6F6' }}>
+
+          <CurvedHeader type="text" content="Contact us" />
+          <Group style={{ marginTop: 40, marginHorizontal: 20, minHeight: screen.height }}>
+            <LabeledInput
+              label="Location"
+              placeholder={address.value}
+              disabled
+              inputStyle={inputStyle}
+              underlineColorAndroid="transparent"
+              containerStyle={{ ...inputContainerStyle, marginTop: 40 }}
+              labelStyle={inputLabelStyle}
+            />
+            <LabeledInput
+              label="Mobile"
+              disabled
+              placeholder={phone.value}
+              inputStyle={inputStyle}
+              containerStyle={inputContainerStyle}
+              labelStyle={inputLabelStyle}
+            />
+            <LabeledInput
+              label="Email"
+              disabled
+              placeholder={email.value}
+              inputStyle={inputStyle}
+              containerStyle={inputContainerStyle}
+              labelStyle={inputLabelStyle}
+            />
+            <Group
+              style={{
+                marginTop: 30,
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                width: 200,
+                alignSelf: 'center',
+              }}
+            >
+              <FontAwesome5 size={30} name="google-plus" onPress={() => this.handleOpenLink(website.value)} />
+              <FontAwesome5 size={30} name="twitter" onPress={() => this.handleOpenLink(twitter.value)} />
+              <FontAwesome5 size={30} name="facebook" onPress={() => this.handleOpenLink(facebook.value)} />
+              <FontAwesome5 size={30} name="linkedin" onPress={() => this.handleOpenLink(linkedin.value)} />
+            </Group>
           </Group>
         </Group>
-      </Group>
+      </ScrollContainer>
+
     )
   }
 }

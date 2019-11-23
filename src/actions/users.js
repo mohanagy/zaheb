@@ -274,6 +274,34 @@ export const getConversationByReceiverId =  (id) =>  async (dispatch,getState) =
     dispatch(finishUserFetching())
   }
 }
+export const getCustomerServiceById =  (id) =>  async (dispatch,getState) => {
+  dispatch(startUserFetching())
+  try {
+    const { userData: { accessToken } } = getState()
+    const response = await fetch(`${api.getCustomerServiceById}${id}`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+    const json = await response.json()
+    const {  customerService } = json
+    dispatch(getDataSuccess({ supportTicketConversation:customerService }))
+  }
+  catch (error) {
+    dispatch(errorHappened({
+      type: 'error',
+      title: 'Error',
+      message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
+      error,
+    }))
+    return false
+  }
+  finally {
+    dispatch(finishUserFetching())
+  }
+}
 export const sendConversationMessage =  (receiverId,message) =>  async (dispatch,getState) => {
   dispatch(startUserFetching())
   try {
@@ -305,8 +333,42 @@ export const sendConversationMessage =  (receiverId,message) =>  async (dispatch
     dispatch(finishUserFetching())
   }
 }
+export const sendSupportTicketReply =  (id,message) =>  async (dispatch,getState) => {
+  dispatch(startUserFetching())
+  try {
+    const data = new FormData()
+    data.append('message', message)
+    const { userData: { accessToken } } = getState()
+    await fetch(`${api.sendSupportTicketReply}${id}`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+        'Content-Type': 'multipart/form-data',
+
+      },
+      body:data,
+    })
+    dispatch(getCustomerServiceById(id))
+  }
+  catch (error) {
+    dispatch(errorHappened({
+      type: 'error',
+      title: 'Error',
+      message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
+      error,
+    }))
+    return false
+  }
+  finally {
+    dispatch(finishUserFetching())
+  }
+}
 export const setSelectedConversation = (id,name,image) => async (dispatch) => {
   dispatch(getDataSuccess({ selectedReceiver: { id,name ,image } }))
+}
+export const setSelectedSupportTicket = (id) => async (dispatch) => {
+  dispatch(getDataSuccess({ selectedSupportTicket: id }))
 }
 export const forgetPassword =  ({ email = 'salkdmklsamdkl',phone }) =>  async (dispatch,getState) => {
   dispatch(startUserFetching())
