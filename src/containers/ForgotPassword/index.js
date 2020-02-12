@@ -10,6 +10,7 @@ import * as userActions from 'actions/users'
 import { Dimensions, TouchableOpacity, Image } from 'react-native'
 
 import logo from 'assets/marinLogo.png'
+import I18n from '../../utilites/i18n'
 
 const screen = Dimensions.get('screen')
 
@@ -30,7 +31,7 @@ class ForgotPassword extends Component {
     const { actions:{ forgetPassword },navigation:{ navigate } } = this.props
     const { phone,email } = this.state
     const check = await forgetPassword({ email ,phone })
-    if (check)navigate('Login')
+    navigate('UpdatePassword')
   }
 
   static navigationOptions = {
@@ -71,7 +72,7 @@ class ForgotPassword extends Component {
             <Image source={logo} style={{ width: 120, height: 120,resizeMode:'contain' }} />
           </Group>
           <LabeledInput
-            label="Enter your email"
+            label={I18n.t('enter_your_email')}
             inputStyle={inputStyle}
             labelStyle={inputLabelStyle}
             containerStyle={inputContainerStyle}
@@ -89,13 +90,13 @@ class ForgotPassword extends Component {
           >
             <Dot />
             <Title
-              text="OR"
+              text={I18n.t('or')}
               style={{ color: '#be1522', marginBottom: 5,    fontSize: screen.width > 600 ? 18 : 10 }}
             />
             <Dot />
           </Group>
           <LabeledInput
-            label="Phone number"
+            label={I18n.t('mobile')}
             inputStyle={inputStyle}
             labelStyle={inputLabelStyle}
             containerStyle={{ ...inputContainerStyle, marginBottom: 60 }}
@@ -104,7 +105,7 @@ class ForgotPassword extends Component {
           />
           <SplashButton
             loading={isFetching}
-            title="Send"
+            title={I18n.t('send')}
             onPress={() => this.handleSubmit()}
             style={buttonStyle}
           />

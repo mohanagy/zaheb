@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import _ from 'lodash'
 import moment from 'moment'
 import { PermissionsAndroid, Platform,ActivityIndicator } from 'react-native'
 import Geolocation from '@react-native-community/geolocation'
+import { NavigationEvents } from 'react-navigation'
 
 import {
   Maps, Group, SplashButton, HalfBottomModal, NearestServiceModalBody,
@@ -102,11 +102,14 @@ class NearestServiceCenter extends Component {
 
     handleCreateOrder = async () => {
       const {
-        actions:{ createOrder,errorHappened },storeData:{ selectedWorkShopId,selectedServiceId },navigation:{ navigate },dispatch,
+        actions:{ createOrder,errorHappened,createOffer },storeData:{ selectedWorkShopId,selectedServiceId,skippedWorkShop },navigation:{ navigate },dispatch,
       } = this.props
       const {
         date,time,driver,description,image,video,lat,lng,
       } = this.state
+      console.log({
+        skippedWorkShop,
+      })
       if (!date || !time  || !description) {
         return       dispatch(errorHappened({
           type: 'error',
@@ -125,14 +128,29 @@ class NearestServiceCenter extends Component {
         image,
         video,
       }
-      const success = await createOrder(order)
+      if (!skippedWorkShop) {
+        const success = await createOrder(order)
+        if (success) {
+          this.toggleModal()
+          navigate('RequestDetails') } }
+      const success = await createOffer(order)
       if (success) {
         this.toggleModal()
         navigate('RequestDetails') }
     }
 
+    clearButton =async () => {
+      const { actions:{ noConfirmationButton } } = this.props
+      await noConfirmationButton(false)
+    }
+
     componentDidMount =async () => {
-      const {  storeData: { selectedWorkShopId,workshops,selectedServiceId  },actions:{ getWorkShopsByServiceId }, navigation: { navigate } } = this.props
+      const {
+        storeData: {
+          selectedWorkShopId,workshops,selectedServiceId,
+        },actions:{ getWorkShopsByServiceId }, navigation: { navigate },
+      } = this.props
+
       if (!selectedWorkShopId) { return navigate('WorksShops') }
       if (!workshops.length) await getWorkShopsByServiceId(selectedServiceId)
       Geolocation.getCurrentPosition((result) => {
@@ -233,6 +251,8 @@ class NearestServiceCenter extends Component {
             flex: 1,
           }}
         >
+          <NavigationEvents onWillBlur={() => this.clearButton()} />
+
           <Group
             style={{
               flex: 1,
@@ -272,7 +292,7 @@ class NearestServiceCenter extends Component {
 
             </Maps>
 
-            {!noButton && (
+            {noButton ? null : (
               <Group
                 style={{
                   position: 'absolute', // use absolute position to show button on top of the map

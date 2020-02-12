@@ -192,6 +192,7 @@ class WorkshopSupplier extends Component {
               options={[
                 {
                   icon: 'user', key: 'user', activeContent: WorkshopProfileTab,handleChatIcon:() => {},
+
                 },
                 {
                   icon: 'clock', key: 'clock', activeContent: WorkshopTimesTab,handleChatIcon:() => {},

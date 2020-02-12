@@ -36,7 +36,7 @@ export const Slider = ({ navigate }) => (
 
       />
       <Details
-        text="Screen 1"
+        text="Hayakom"
         style={{
           color: 'black',
           margin: 0,
@@ -65,7 +65,7 @@ export const Slider = ({ navigate }) => (
 
       />
       <Details
-        text="Screen 2"
+        text="An Experience that you will love"
         style={{
           color: 'black',
           margin: 0,
@@ -94,7 +94,7 @@ export const Slider = ({ navigate }) => (
 
       />
       <Details
-        text="Screen 3"
+        text="Reday to serve you"
         style={{
           color: 'black',
           margin: 0,
@@ -123,7 +123,7 @@ export const Slider = ({ navigate }) => (
 
       />
       <Details
-        text="Screen 4"
+        text="A new world of services just for you"
         style={{
           color: 'black',
           margin: 0,

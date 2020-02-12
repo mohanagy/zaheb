@@ -8,10 +8,11 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as usersActions from 'actions/users'
 import PropTypes from 'prop-types'
+import I18n from '../../utilites/i18n'
 
 class CustomerService extends Component {
   static navigationOptions = ({ navigation }) => ({
-    headerTitle: 'Customer Service',
+    headerTitle: I18n.t('customers_service'),
     headerTitleStyle: {
       textAlign: 'center',
       flexGrow: 1,
@@ -72,11 +73,11 @@ class CustomerService extends Component {
     const { userData:{ isFetching } } = this.props
     return (
       <ScrollContainer>
-        <CurvedHeader type="text" content="Customer Service" style={{ marginBottom: 30 }} />
+        <CurvedHeader type="text" content={I18n.t('customers_service')} style={{ marginBottom: 30 }} />
         <Group style={{ marginHorizontal: 15,marginVertical: 30 }}>
           <Input
             inputStyle={styles.inputStyle.inputStyle}
-            label="Title"
+            label={I18n.t('title')}
             inputContainerStyle={{ borderBottomWidth:0 }}
             labelStyle={{
               marginVertical:10,
@@ -88,7 +89,7 @@ class CustomerService extends Component {
             multiline
             inputStyle={{ ...styles.inputStyle.inputStyle  }}
             numberOfLines={5}
-            label="Your letter"
+            label={I18n.t('your_letter')}
             inputContainerStyle={{ borderBottomWidth:0 }}
             labelStyle={{
               marginVertical:10,
@@ -97,7 +98,7 @@ class CustomerService extends Component {
             onChangeText={(value) => this.handleChange('message',value)}
           />
           <SplashButton
-            title="Contact Us"
+            title={I18n.t('contact_us')}
             loading={isFetching}
             onPress={() => this.handleSubmit()}
             style={{
@@ -123,7 +124,7 @@ const styles = {
       backgroundColor: '#FFF',
       borderColor: '#1E1E1E',
       borderRadius: 5,
-      borderWidth: .5,
+      borderWidth: 0.5,
       marginBottom: 15,
     },
 

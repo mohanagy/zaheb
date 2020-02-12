@@ -60,7 +60,11 @@ class Notifications extends Component {
   }
 
   handleNotification=async (url) => {
-    const { navigation:{ navigate } ,actions:{ setSelectedConversation,getConversations,selectProduct } } = this.props
+    const {
+      navigation:{ navigate } ,actions:{
+        setSelectedConversation,getConversations,selectProduct,selectOrderId,
+      },
+    } = this.props
     if (url.includes('myOffers')) return navigate('MyOffers')
 
     const [,id] = url.split('=')
@@ -82,6 +86,10 @@ class Notifications extends Component {
     if (url.includes('getProductOrderByOrderId?product_order_id')) {
       await selectProduct(id)
       return  navigate('PurchaseDetails')
+    }
+    if (url.includes('getDriverActiveProductOrderByProductOrderId?product_order_id')) {
+      await selectOrderId(id)
+      return navigate('OrderAvailableDetails')
     }
   }
 

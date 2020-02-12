@@ -12,15 +12,16 @@ import * as usersActions from 'actions/users'
 import PropTypes from 'prop-types'
 import { StackActions } from 'react-navigation'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
+import I18n from '../../utilites/i18n'
 
 
-const userItems = ['Home','My requests','Customers service',
-  'My purchases','Profile','Who are we',
-  'Conversations','Support Tickets','Offers',
-  'My offers','Favorites','Terms and conditions','Contact us']
-const driverItems = ['Home','Profile','Customers service',
-  'My Order','My Order Available','Who are we','Chat',
-  'Terms and conditions','Contact us']
+// const userItems = ['Home','My requests','Customers service',
+//   'My purchases','Profile','Who are we',
+//   'Conversations','Support Tickets','Offers',
+//   'My offers','Favorites','Terms and conditions','Contact us']
+// const driverItems = ['Home','Profile','Customers service',
+//   'My Order','My Order Available','Who are we','Chat',
+//   'Terms and conditions','Contact us']
 
 export class Drawer extends Component {
   handleSignOut=async () => {
@@ -42,12 +43,12 @@ export class Drawer extends Component {
 
 
   render() {
-    const { userData:{ user:{ image,name,type } },items } = this.props
+    const { userData:{ user:{ image,name } } } = this.props
 
-    const newItems = items.filter((item) => {
-      if (Number(type) === 3) return  driverItems.includes(item.key)
-      else return userItems.includes(item.key)
-    })
+    // const newItems = items.filter((item) => {
+    //   if (Number(type) === 3) return  driverItems.includes(item.key)
+    //   else return userItems.includes(item.key)
+    // })
 
     return (
       <ScrollView style={{ filter: 'blur(5)' }}>
@@ -88,7 +89,7 @@ export class Drawer extends Component {
               activeItemKey === 'Home' ? this.handleHomePressed() : null
               return onItemPress(router)
             }}
-            items={newItems}
+
           />
           <Divider style={{ backgroundColor: 'black' }} />
           <Group
@@ -120,8 +121,7 @@ export class Drawer extends Component {
               }}
               onPress={() => this.handleSignOut()}
             >
-Sign out
-
+              {I18n.t('sign_out')}
             </Text>
           </Group>
         </SafeAreaView>

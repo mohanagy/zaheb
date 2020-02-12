@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {
-  Group, ScrollContainer,PaymentCredit,PaymentButton,PaymentBank ,
+  Group, ScrollContainer,PaymentCredit,PaymentButton,
 } from 'components'
 import { Dimensions } from 'react-native'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
@@ -65,7 +65,7 @@ class Payment extends Component {
   }
 
 componentDidMount= () => {
-  PayPal.initialize(PayPal.SANDBOX,'AVlUoWineWrnrXuiTCGYzepYq_hlESVomdWgW2kDo-o9Pn_Ohbn4t63x1vU-ve-wlQ7kfc1IhmRqqcyC')
+  PayPal.initialize(PayPal.SANDBOX,'AW6JspNUrdZgH925eKygGOqVU1M4sx8-0sJLxd5KlQfSdQug4iIgVB3p2sn6fMBXbc03mhx9T7lFUUXR')
 }
 
   onPress = async (method) => {
@@ -86,7 +86,7 @@ componentDidMount= () => {
         })
           .catch((e) => console.log(e))
       }
-      const order = {
+      const newOrder = {
         supplier_id:product.user_id,
         product_id:product.id,
         need_driver:shippingDetails.need_driver || 0,
@@ -95,8 +95,10 @@ componentDidMount= () => {
         shipping_city:shippingDetails.city,
         shipping_street:shippingDetails.street,
         shipping_phone:shippingDetails.phoneNumber,
+        lat:shippingDetails.lat,
+        lng:shippingDetails.lng,
       }
-      await placeOrder(order)
+      await placeOrder(newOrder)
       navigate('MyPurchases')
     }
     catch (error) {

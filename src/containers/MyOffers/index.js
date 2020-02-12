@@ -57,7 +57,7 @@ handleMap =async (workshopId,serviceId) => {
   const { actions:{ selectWorkShop,selectService,noConfirmationButton },navigation:{ navigate } } = this.props
   await selectWorkShop(workshopId)
   await selectService(serviceId)
-  await noConfirmationButton()
+  await noConfirmationButton(true)
   navigate('NearestServiceCenter')
 }
 
@@ -65,6 +65,12 @@ handleSelectProfile =async (id) => {
   const { actions:{ selectWorkShop },navigation:{ navigate } } = this.props
   await selectWorkShop(id)
   navigate('ProfileWorkshop')
+}
+
+handlePlus =async (id) => {
+  const { actions:{ selectOrderId },navigation:{ navigate } } = this.props
+  await selectOrderId(id)
+  navigate('OfferDetails')
 }
 
 render() {
@@ -84,9 +90,7 @@ render() {
       <ActivityIndicator size="large" />
     </Group>
   ) }
-  console.log({
-    workshopOffers,
-  })
+
   return (
     <ScrollContainer contentContainerStyle={{  }}>
       <Group
@@ -101,6 +105,7 @@ render() {
               handleSelectProfile={() => this.handleSelectProfile(offer.workshop_id)}
               {...offer}
               handleMap={() => this.handleMap(offer.workshop_id,offer.offer.service_id)}
+              handlePlus={() => this.handlePlus(offer.id)}
             />
           ))
         }

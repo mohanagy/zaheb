@@ -11,6 +11,7 @@ import { bindActionCreators } from 'redux'
 import * as userActions from 'actions/users'
 import logo from 'assets/marinLogo.png'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
+import I18n from '../../utilites/i18n'
 
 const screen = Dimensions.get('screen')
 
@@ -30,7 +31,10 @@ class Login extends Component {
     const { email,password }  = this.state
     const user = await login({ email,password })
 
-    if (user)navigate('HomePage')
+    if (user) {
+      if (user.type === '3') return navigate('HomeDriverPage')
+      else    navigate('HomePageDrawer')
+    }
   }
 
   handleChange =(field,value) => {
@@ -99,7 +103,7 @@ class Login extends Component {
                 >
 
                   <LabeledInput
-                    label="Name or email"
+                    label={I18n.t('name_or_email')}
                     inputStyle={inputStyle}
                     labelStyle={inputLabelStyle}
                     inputContainerStyle={{ ...inputContainerStyle }}
@@ -119,7 +123,7 @@ class Login extends Component {
                     )}
                   />
                   <LabeledInput
-                    label="Password"
+                    label={I18n.t('password')}
                     secureTextEntry
                     inputStyle={inputStyle}
                     containerStyle={{ ...containerStyle }}
@@ -153,7 +157,7 @@ class Login extends Component {
                 >
 
                   <SplashButton
-                    title="Sign in"
+                    title={I18n.t('sign_in')}
                     onPress={() => this.handleSubmitLogin()}
                     style={buttonStyle}
                     loading={isFetching}
@@ -170,7 +174,7 @@ class Login extends Component {
                 onPress={() => navigate('ForgotPassword')}
               >
                 <Details
-                  text="Forgot password?"
+                  text={`${I18n.t('forgot_password')}`}
                   style={{
                     fontSize:12,
                   }}
@@ -184,7 +188,7 @@ class Login extends Component {
               >
 
                 <Details
-                  text="Don't have an account?"
+                  text={`${I18n.t('dont_have_an_account')}`}
                   style={{
                     marginHorizontal:'2%',
                     fontSize:12,
@@ -196,12 +200,35 @@ class Login extends Component {
                 >
 
                   <Details
-                    text="Create now"
+                    text={I18n.t('create_now')}
                     style={{
                       color: '#BE1522',
                       marginHorizontal:0,
                       fontSize:12,
                       textDecorationLine: 'underline',
+                    }}
+                  />
+                </TouchableOpacity>
+              </Group>
+              <Group
+                style={{
+                  justifyContent: 'center',
+                  alignContent:'center',
+                  alignItems:'center',
+                  marginTop:10,
+                }}
+              >
+                <TouchableOpacity
+                  onPress={() => navigate('ContactUsOut')}
+                >
+                  <FontAwesome5
+                    size={30}
+                    solid
+                    name="envelope-open"
+                    style={{
+                      margin:0,
+                      padding:0,
+                      color:'white',
                     }}
                   />
                 </TouchableOpacity>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {
-  Group, ScrollContainer, CurvedHeader, RequestDetailsCard, SplashButton,
+  Group, ScrollContainer, CurvedHeader, OfferDetailsCard, SplashButton,
 } from 'components'
 import { Dimensions,ActivityIndicator } from 'react-native'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
@@ -56,9 +56,6 @@ class RequestDetails extends Component {
       { title: 'startingDate', fieldName: 'Starting date', icon: 'calendar' },
       { title: 'ofToHour', fieldName: 'Of to hour', icon: 'clock' },
       { title: 'location', fieldName: 'Location', icon: 'map-marker-alt' },
-      { title: 'orderStatus', fieldName: 'Order status', icon: 'exclamation-circle' },
-      { title: 'driverName', fieldName: 'Driver name', icon: 'car' },
-      { title: 'supplierName', fieldName: 'Supplier name', icon: 'hand-holding-usd' },
     ],
   }
 
@@ -76,7 +73,7 @@ class RequestDetails extends Component {
   }
 
   render() {
-    const { storeData:{ order ,isFetching } } = this.props
+    const { storeData:{ offer ,isFetching } } = this.props
     const { requestDetailsFields } = this.state
     if (isFetching) { return (
       <Group
@@ -96,17 +93,14 @@ class RequestDetails extends Component {
     return (
       <ScrollContainer>
         <Group style={{ backgroundColor: '#F6F6F6', minHeight: screen.height }}>
-          <CurvedHeader type="image" source={{ uri:order.service.image }} />
-          <RequestDetailsCard
+          <CurvedHeader type="image" source={{ uri:offer.service.image }} fillSource />
+          <OfferDetailsCard
             style={{ marginBottom: 50 }}
-            requestName={order.service.en_name}
-            requestDate={`${order.service_date}${order.service_time}`}
-            startingDate={order.service_date}
-            ofToHour={order.service_time}
-            location=""
-            orderStatus=""
-            driverName={order.driver || ''}
-            supplierName=""
+            requestName={offer.service && offer.service.car_service_classification.en_name}
+            requestDate={`${offer.service_date}${offer.service_time}`}
+            startingDate={offer.service_date}
+            ofToHour={offer.service_time}
+            location={`lat: ${offer.lat}  lng: ${offer.lng}`}
             requestDetailsFields={requestDetailsFields}
           />
           <Group style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' }}>
@@ -119,19 +113,7 @@ class RequestDetails extends Component {
                   paddingHorizontal: 15,
                   borderRadius: 99 ** 9,
                   width: 180,
-                },
-              }}
-            />
-            <SplashButton
-              title="Request Done"
-              onPress={() => this.handleChangeStatus(3)}
-
-              style={{
-                buttonStyle: {
-                  backgroundColor: '#707070',
-                  paddingHorizontal: 15,
-                  borderRadius: 99 ** 9,
-                  width: 180,
+                  marginBottom:10,
                 },
               }}
             />

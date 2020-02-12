@@ -1,7 +1,6 @@
 import AsyncStorage from '@react-native-community/async-storage'
 
 import API from 'api'
-import {} from './store'
 import * as actionsTypes from './actionTypes'
 const { api } = API
 
@@ -36,6 +35,13 @@ export function updateUserData(data) {
   return {
     type:actionsTypes.UPDATE_USER_DATA,
     payload:data,
+  }
+}
+
+export function updateCode(code) {
+  return {
+    type:actionsTypes.UPDATE_CONFIRM_CODE,
+    payload:code,
   }
 }
 export function sendNewMessage(data) {
@@ -438,6 +444,9 @@ export const register =  ({
     return true
   }
   catch (error) {
+    console.log({
+      error,
+    })
     dispatch(errorHappened({
       type: 'error',
       title: 'Error',
@@ -473,6 +482,133 @@ export const sendCustomerService =  ({  title,message }) =>  async (dispatch,get
     const { status,msg } = json
     if (!status) throw new Error(msg)
     // dispatch(getDataSuccess({  }))
+  }
+  catch (error) {
+    dispatch(errorHappened({
+      type: 'error',
+      title: 'Error',
+      message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
+      error,
+    }))
+    return false
+  }
+  finally {
+    dispatch(finishUserFetching())
+  }
+}
+export const sendDriverLocation =  ({  latitude,longitude }) =>  async (dispatch,getState) => {
+  dispatch(startUserFetching())
+  try {
+    const data = new FormData()
+    data.append('lat', latitude)
+    data.append('lng', longitude)
+    const { userData: { accessToken } } = getState()
+
+
+    await fetch(`${api.updateDriverLocation}`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${accessToken}`,
+
+      },
+      body:data,
+    })
+  }
+  catch (error) {
+    dispatch(errorHappened({
+      type: 'error',
+      title: 'Error',
+      message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
+      error,
+    }))
+    return false
+  }
+  finally {
+    dispatch(finishUserFetching())
+  }
+}
+export const updateUserFcm =  (token) =>  async (dispatch,getState) => {
+  dispatch(startUserFetching())
+  try {
+    const data = new FormData()
+    data.append('fcm_token', token)
+    const { userData: { accessToken } } = getState()
+
+
+    await fetch(`${api.updateFcm}`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${accessToken}`,
+
+      },
+      body:data,
+    })
+  }
+  catch (error) {
+    dispatch(errorHappened({
+      type: 'error',
+      title: 'Error',
+      message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
+      error,
+    }))
+    return false
+  }
+  finally {
+    dispatch(finishUserFetching())
+  }
+}
+export const updatePassword =  ({ confirmPassword ,password }) =>  async (dispatch,getState) => {
+  dispatch(startUserFetching())
+  try {
+    const data = new FormData()
+    data.append('password', password)
+    data.append('password_confirmation', confirmPassword)
+    const { userData: { code } } = getState()
+    data.append('code', code)
+
+
+    await fetch(`${api.resetPassword}`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'multipart/form-data',
+
+      },
+      body:data,
+    })
+  }
+  catch (error) {
+    dispatch(errorHappened({
+      type: 'error',
+      title: 'Error',
+      message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
+      error,
+    }))
+    return false
+  }
+  finally {
+    dispatch(finishUserFetching())
+  }
+}
+export const sendConfirmCode =  ({ confirmCode }) =>  async (dispatch,getState) => {
+  dispatch(startUserFetching())
+  try {
+    const data = new FormData()
+    data.append('code', confirmCode)
+
+    await fetch(`${api.checkPassCode}`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'multipart/form-data',
+      },
+      body:data,
+    })
+    dispatch(updateCode({ confirmCode }))
   }
   catch (error) {
     dispatch(errorHappened({

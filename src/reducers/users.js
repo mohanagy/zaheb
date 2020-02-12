@@ -14,6 +14,7 @@ const initialState = {
   customerServices:[],
   selectedSupportTicket:null,
   supportTicketConversation:[],
+  code:null,
 
 
 }
@@ -29,6 +30,8 @@ const userReducer = (state = initialState, action) => {
     case actionTypes.START_USER_FETCHING:
       return { ...state, ...payload }
     case actionTypes.FINISH_USER_FETCHING:
+      return { ...state, ...payload }
+    case actionTypes.UPDATE_CONFIRM_CODE:
       return { ...state, ...payload }
 
     default:

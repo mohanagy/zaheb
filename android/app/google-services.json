@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "932925684697",
+    "firebase_url": "https://alam-maren.firebaseio.com",
+    "project_id": "alam-maren",
+    "storage_bucket": "alam-maren.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:932925684697:android:c013894a104d75952c37c8",
+        "android_client_info": {
+          "package_name": "com.zaheb"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "932925684697-43c6ame8pheqrkb57u65nqj7v66i79gv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCInWxGpojqusn6sKbIdmiv6y8oRfmOOJY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "932925684697-43c6ame8pheqrkb57u65nqj7v66i79gv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

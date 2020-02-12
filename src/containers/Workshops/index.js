@@ -55,8 +55,10 @@ class Purchases extends Component {
   }
 
   handleBooking= async (id) => {
-    const { actions:{ selectWorkShop },navigation:{ navigate } } = this.props
+    const { actions:{ selectWorkShop ,skippedWorkShop,noConfirmationButton },navigation:{ navigate } } = this.props
     await selectWorkShop(id)
+    await skippedWorkShop(false)
+    await noConfirmationButton(false)
     navigate('NearestServiceCenter')
   }
 
@@ -67,8 +69,8 @@ class Purchases extends Component {
   }
 
   skipWorkShop=async () => {
-    const { navigation:{ navigate } } = this.props
-
+    const { navigation:{ navigate },actions:{ skippedWorkShop } } = this.props
+    await skippedWorkShop(true)
     navigate('NearestServiceCenter')
   }
 

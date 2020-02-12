@@ -14,7 +14,7 @@ export const OfferCard = ({
     style={{
       flexDirection: 'row',
       justifyContent: 'flex-start',
-      height: '30%',
+      height: 98,
       marginHorizontal: 15,
       backgroundColor: '#FFF',
       marginBottom: 12,

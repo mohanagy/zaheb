@@ -87,7 +87,7 @@ class RequestDetails extends Component {
     const { actions:{ selectWorkShop,selectService ,noConfirmationButton },navigation:{ navigate } } = this.props
     await selectWorkShop(workshopId)
     await selectService(serviceId)
-    await noConfirmationButton()
+    await noConfirmationButton(true)
     navigate('NearestServiceCenter')
   }
 
@@ -132,7 +132,7 @@ class RequestDetails extends Component {
               flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' ,marginBottom:20,
             }}
           >
-            <SplashButton
+            { order.workshop_status !== '3' ? (<SplashButton
               onPress={() => this.handleChangeStatus(2)}
               title="Cancel Request"
               style={{
@@ -145,8 +145,7 @@ class RequestDetails extends Component {
                   fontSize:screen.width > 600 ? 14 : 10,
                 },
               }}
-            />
-            <SplashButton
+            />)(<SplashButton
               title="Request Done"
               onPress={() => this.handleChangeStatus(3)}
 
@@ -160,7 +159,7 @@ class RequestDetails extends Component {
                   fontSize:screen.width > 600 ? 14 : 10,
                 },
               }}
-            />
+            />) : null}
           </Group>
         </Group>
       </ScrollContainer>

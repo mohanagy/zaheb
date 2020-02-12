@@ -41,6 +41,13 @@ import SupportTickets from './SupportTickets'
 import MyOrders from './MyOrders'
 import MyOrderAvailable from './MyOrdersAvailable'
 import SupportTicketChat from './SupportTicketChat'
+import PaymentInformationMap from './PaymentInformationMap'
+import DriverMap from './DriverMap'
+import OrderAvailableDetails from './OrderAvailableDetails'
+import MyOrderDetails from './MyOrderDetails'
+import ContactUsOut from './ContactUsOut'
+import UpdatePassword from './UpdatePassword'
+import ConfirmCode from './ConfirmCode'
 
 export {
   Login,
@@ -86,4 +93,11 @@ export {
   MyOrders,
   MyOrderAvailable,
   SupportTicketChat,
+  PaymentInformationMap,
+  DriverMap,
+  OrderAvailableDetails,
+  MyOrderDetails,
+  ContactUsOut,
+  UpdatePassword,
+  ConfirmCode,
 }

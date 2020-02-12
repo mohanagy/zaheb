@@ -12,6 +12,7 @@ import { bindActionCreators } from 'redux'
 import * as userActions from 'actions/users'
 
 import logo from 'assets/marinLogo.png'
+import I18n from '../../utilites/i18n'
 
 const screen = Dimensions.get('screen')
 
@@ -73,7 +74,7 @@ class Register extends Component {
             >
 
               <Details
-                text="Already got an account?"
+                text={I18n.t('already_have_an_account')}
                 style={{
                   marginHorizontal:5,
                 }}
@@ -82,7 +83,7 @@ class Register extends Component {
                 onPress={() => navigate('Login')}
               >
                 <Details
-                  text="Sign in"
+                  text={I18n.t('sign_in')}
                   style={{
                     color: '#BE1522',
                     textDecorationLine: 'underline',
@@ -122,7 +123,7 @@ class Register extends Component {
           </Group>
           <LabeledInput
             isRequired
-            label="Full name"
+            label={I18n.t('full_name')}
             inputStyle={inputStyle}
             labelStyle={inputLabelStyle}
             containerStyle={inputContainerStyle}
@@ -131,7 +132,7 @@ class Register extends Component {
           />
           <LabeledInput
             isRequired
-            label="User name"
+            label={I18n.t('user_name')}
             inputStyle={inputStyle}
             labelStyle={inputLabelStyle}
             containerStyle={inputContainerStyle}
@@ -139,7 +140,7 @@ class Register extends Component {
             onChangeText={(value) => this.handleChange('username',value)}
           />
           <LabeledInput
-            label="E-Mail"
+            label={I18n.t('email')}
             inputStyle={inputStyle}
             labelStyle={inputLabelStyle}
             containerStyle={inputContainerStyle}
@@ -147,7 +148,7 @@ class Register extends Component {
             onChangeText={(value) => this.handleChange('email',value)}
           />
           <LabeledInput
-            label="Mobile number"
+            label={I18n.t('mobile')}
             inputStyle={inputStyle}
             labelStyle={inputLabelStyle}
             containerStyle={inputContainerStyle}
@@ -155,7 +156,7 @@ class Register extends Component {
             onChangeText={(value) => this.handleChange('phone',value)}
           />
           <LabeledInput
-            label="Password"
+            label={I18n.t('password')}
             inputStyle={inputStyle}
             labelStyle={inputLabelStyle}
             containerStyle={inputContainerStyle}
@@ -164,7 +165,7 @@ class Register extends Component {
             onChangeText={(value) => this.handleChange('password',value)}
           />
           <LabeledInput
-            label="Your location"
+            label={I18n.t('your_location')}
             inputStyle={inputStyle}
             labelStyle={inputLabelStyle}
             containerStyle={{ ...inputContainerStyle, marginBottom: 60 }}
@@ -172,7 +173,7 @@ class Register extends Component {
             onChangeText={(value) => this.handleChange('location',value)}
           />
           <SplashButton
-            title="Sign Up"
+            title={I18n.t('sign_up')}
             onPress={() => this.handleSubmit()}
             style={buttonStyle}
             loading={isFetching}

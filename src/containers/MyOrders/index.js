@@ -1,12 +1,14 @@
 import React, { Component } from 'react'
-import { ScrollContainer, RequestCard ,Group } from 'components'
-import { ActivityIndicator } from 'react-native'
+import { ScrollContainer, OrderCard ,Group } from 'components'
+import { ActivityIndicator ,Dimensions } from 'react-native'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as storeActions from 'actions/store'
 import * as usersActions from 'actions/users'
 import PropTypes from 'prop-types'
+
+const screen = Dimensions.get('window')
 
 
 class MyOrders extends Component {
@@ -49,18 +51,30 @@ class MyOrders extends Component {
   });
 
 componentDidMount =async () => {
-  const { actions:{ getMyOrders } } = this.props
-  await getMyOrders()
+  const { actions:{ getMyDriverOrders } } = this.props
+  await getMyDriverOrders()
 }
 
-handleSelectRequest =async (id) => {
-  const { actions:{ selectOrderId },navigation:{ navigate } } = this.props
+handleAccept =async (id) => {
+  const { actions :{ handleAcceptOrder ,getMyDriverOrders } } = this.props
+  await handleAcceptOrder(id)
+  await getMyDriverOrders()
+}
+
+handleCancel =async (id) => {
+  const { actions :{ handleCancelOrder,getMyDriverOrders } } = this.props
+  await handleCancelOrder(id)
+  await getMyDriverOrders()
+}
+
+handleSelectProfile =async (id) => {
+  const { actions :{ selectOrderId },navigation:{ navigate } } = this.props
   await selectOrderId(id)
-  navigate('RequestDetails')
+  navigate('MyOrderDetails')
 }
 
 render() {
-  const { storeData:{ myRequests,isFetching } } = this.props
+  const { storeData:{ myOrders,isFetching } } = this.props
   if (isFetching) { return (
     <Group
       style={{
@@ -77,22 +91,26 @@ render() {
     </Group>
   ) }
   return (
+
     <ScrollContainer
       contentContainerStyle={{
         marginTop: 20,
+        marginBottom: 20,
       }}
     >
+
       {
-        myRequests.map(({
-          image,id ,service_time,service_date,service,
+
+        myOrders.map(({
+          product,id ,service,
         }) => (
-          <RequestCard
+          <OrderCard
             key={id}
-            name={service.en_name}
-            handleSelectRequest={() => this.handleSelectRequest(id)}
-            date={service_date}
-            time={service_time}
-            source={{ uri:image }}
+            name={product ? product.name : service.name}
+            handleAccept={() => this.handleAccept(id)}
+            handleCancel={() => this.handleCancel(id)}
+            source={{ uri:product ? product.image : service.image }}
+            handleSelectProfile={() => this.handleSelectProfile(id)}
           />
         ))
       }

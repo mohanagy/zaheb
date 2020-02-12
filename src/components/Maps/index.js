@@ -1,22 +1,39 @@
 import React from 'react'
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
+import { View,Image } from 'react-native'
 import PropTypes from 'prop-types'
 import workShopIcon from 'assets/workShop.png'
 import selectedWorkShopIcon from 'assets/selectedWorkShop.png'
+import marker from 'assets/icons8-marker.png'
+
 export const Maps = ({
-  region, style, options, coordinate, workshops,selectedWorkShopId,
+  region, style, options, coordinate, workshops,selectedWorkShopId,onRegionChangeComplete,
 }) => (
   <MapView
     provider={PROVIDER_GOOGLE} // remove if not using Google Maps
     style={style.map}
     region={region}
+    onRegionChangeComplete={onRegionChangeComplete}
     {...options}
   >
     {coordinate && (
-      <MapView.Marker
-        coordinate={{ latitude: Number(coordinate.latitude), longitude: Number(coordinate.longitude) }}
-        title="Your Location"
-      />
+      <View
+        style={{
+          left: '50%',
+          marginLeft: -24,
+          marginTop: -48,
+          position: 'absolute',
+          top: '50%',
+        }}
+      >
+        <Image
+          style={{
+            height: 48,
+            width: 48,
+          }}
+          source={marker}
+        />
+      </View>
     )}
     {
       workshops.map((workshop) => (

@@ -87,8 +87,11 @@ export const selectOfferId = (selectedMyOfferId) => async (dispatch) => {
 export const selectOrderId = (orderId) => async (dispatch) => {
   dispatch(getDataSuccess({ orderId }))
 }
-export const noConfirmationButton = () => async (dispatch) => {
-  dispatch(getDataSuccess({ noButton:true }))
+export const noConfirmationButton = (value) => async (dispatch) => {
+  dispatch(getDataSuccess({ noButton:value }))
+}
+export const skippedWorkShop = (value) => async (dispatch) => {
+  dispatch(getDataSuccess({ skippedWorkShop:value }))
 }
 export const fireError = (error) => async (dispatch) => {
   dispatch(errorHappened({
@@ -268,6 +271,79 @@ export const getMyRequests = () => async (dispatch, getState) => {
     dispatch(finishStoreFetching())
   }
 }
+export const getMyAvailableOrders = () => async (dispatch, getState) => {
+  dispatch(startStoreFetching())
+  const { userData: { accessToken,user:{ driver_type } } } = getState()
+  try {
+    const url = driver_type === 'supplier' ? api.getDriverActiveProductOrders : api.getDriverActiveServiceOrders
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+    const json = await response.json()
+    const { error, orders:myAvailableOrders } = json
+
+    if (error) {
+      dispatch(errorHappened({
+        type: 'error',
+        title: 'Error',
+        message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
+      }))
+      return false
+    }
+    return dispatch(getDataSuccess({ myAvailableOrders }))
+  } catch (e) {
+    console.log({
+      e,
+    })
+    dispatch(errorHappened({
+      type: 'error',
+      title: 'Error',
+      message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
+    }))
+    return false
+  } finally {
+    dispatch(finishStoreFetching())
+  }
+}
+export const getMyDriverOrders = () => async (dispatch, getState) => {
+  dispatch(startStoreFetching())
+  const { userData: { accessToken,user:{ driver_type } } } = getState()
+  try {
+    const url = driver_type === 'supplier' ? api.getDriverAcceptedProductOrder : api.getDriverAcceptedServiceOrder
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+    const json = await response.json()
+    const { error, orders } = json
+
+    if (error) {
+      dispatch(errorHappened({
+        type: 'error',
+        title: 'Error',
+        message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
+      }))
+      return false
+    }
+    return dispatch(getDataSuccess({ myOrders:orders }))
+  } catch (e) {
+    dispatch(errorHappened({
+      type: 'error',
+      title: 'Error',
+      message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
+    }))
+    return false
+  } finally {
+    dispatch(finishStoreFetching())
+  }
+}
 
 
 export const getMyRequestedOffers =  () =>  async (dispatch,getState) => {
@@ -284,6 +360,25 @@ export const getMyRequestedOffers =  () =>  async (dispatch,getState) => {
     const json = await response.json()
     const {  offers } = json
     dispatch(getDataSuccess({ offers }))
+  }
+  catch (error) {
+    dispatch(errorHappened({
+      type: 'error',
+      title: 'Error',
+      message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
+    }))
+    return false
+  }
+  finally {
+    dispatch(finishStoreFetching())
+  }
+}
+export const setOfferDetails =  (id) =>  async (dispatch,getState) => {
+  dispatch(startStoreFetching())
+  try {
+    const { storeData: { offers } } = getState()
+    const [offer] = offers.filter((row) => row.id === id)
+    dispatch(getDataSuccess({ offer }))
   }
   catch (error) {
     dispatch(errorHappened({
@@ -325,6 +420,33 @@ export const getWorkshopOffers =  () =>  async (dispatch,getState) => {
   }
 }
 export const getMyOffers =  () =>  async (dispatch,getState) => {
+  dispatch(startStoreFetching())
+  try {
+    const { userData: { accessToken } } = getState()
+    const response = await fetch(`${api.getMyOffers}`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+    const json = await response.json()
+    const {  workshopOffers:myOffers } = json
+    dispatch(getDataSuccess({ myOffers }))
+  }
+  catch (error) {
+    dispatch(errorHappened({
+      type: 'error',
+      title: 'Error',
+      message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
+    }))
+    return false
+  }
+  finally {
+    dispatch(finishStoreFetching())
+  }
+}
+export const getMyOrders =  () =>  async (dispatch,getState) => {
   dispatch(startStoreFetching())
   try {
     const { userData: { accessToken } } = getState()
@@ -403,6 +525,57 @@ export const cancelMyRequestedOffers =  (id) =>  async (dispatch,getState) => {
     dispatch(finishStoreFetching())
   }
 }
+export const handleAcceptOrder =  (id) =>  async (dispatch,getState) => {
+  dispatch(startStoreFetching())
+  try {
+    const { userData: { accessToken,user:{ driver_type } } } = getState()
+    const url = driver_type === 'supplier' ? api.acceptProductOrder : api.acceptServiceOrder
+    const response = await fetch(`${url}${id}`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+  }
+  catch (error) {
+    dispatch(errorHappened({
+      type: 'error',
+      title: 'Error',
+      message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
+    }))
+    return false
+  }
+  finally {
+    dispatch(finishStoreFetching())
+  }
+}
+export const handleCancelOrder =  (id) =>  async (dispatch,getState) => {
+  dispatch(startStoreFetching())
+  try {
+    const { userData: { accessToken,user:{ driver_type } } } = getState()
+    const url = driver_type === 'supplier' ? api.cancelProductOrder : api.cancelServiceOrder
+    await fetch(`${url}${id}`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+  }
+  catch (error) {
+    dispatch(errorHappened({
+      type: 'error',
+      title: 'Error',
+      message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
+    }))
+    return false
+  }
+  finally {
+    dispatch(finishStoreFetching())
+  }
+}
+
 export const createOrder =  (newOrder) =>  async (dispatch,getState) => {
   dispatch(startStoreFetching())
   try {
@@ -452,12 +625,117 @@ export const createOrder =  (newOrder) =>  async (dispatch,getState) => {
     dispatch(finishStoreFetching())
   }
 }
+export const createOffer =  (newOrder) =>  async (dispatch,getState) => {
+  dispatch(startStoreFetching())
+  try {
+    const data = new FormData()
+    data.append('service_id', newOrder.service_id)
+    data.append('need_driver', newOrder.need_driver)
+    data.append('service_time', newOrder.service_time)
+    data.append('service_date', newOrder.service_date)
+    data.append('description', newOrder.description)
+    data.append('lat', newOrder.lat)
+    data.append('lng', newOrder.lng)
+    if (newOrder.video)data.append('video', { uri: newOrder.video, name: 'video.mp4', type: 'video/mp4' })
+    if (newOrder.image)data.append('image',{ uri: newOrder.image, name: 'image.jpg', type: ' image/jpeg' })
+
+    const { userData: { accessToken } } = getState()
+    const response = await axios({
+      url:api.createOffer,
+      method: 'post',
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+        'Content-Type': '',
+      },
+      data,
+    })
+    const { data:result } = await response
+    const { status,offer } = result
+    if (!status) { return dispatch(errorHappened({
+      type: 'error',
+      title: 'Error',
+      message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
+    })) }
+    const { id } = offer
+    dispatch(getDataSuccess({ orderId:id }))
+    return  true
+  }
+  catch (error) {
+    dispatch(errorHappened({
+      type: 'error',
+      title: 'Error',
+      message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
+    }))
+    return false
+  }
+  finally {
+    dispatch(finishStoreFetching())
+  }
+}
 
 export const getOrderById =  (id) =>  async (dispatch,getState) => {
   dispatch(startStoreFetching())
   try {
     const { userData: { accessToken } } = getState()
     const response = await fetch(`${api.getOrderById}${id}`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+    const json = await response.json()
+    const {  order } = json
+    dispatch(getDataSuccess({ order }))
+  }
+  catch (error) {
+    dispatch(errorHappened({
+      type: 'error',
+      title: 'Error',
+      message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
+    }))
+    return false
+  }
+  finally {
+    dispatch(finishStoreFetching())
+  }
+}
+export const getAvailableOrderById =  (id) =>  async (dispatch,getState) => {
+  dispatch(startStoreFetching())
+  try {
+    const { userData: { accessToken } } = getState()
+    const response = await fetch(`${api.getDriverActiveProductOrderByProductOrderId}${id}`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+    const json = await response.json()
+    const {  product_order:order } = json
+    console.log({
+      json,
+    })
+    dispatch(getDataSuccess({ order }))
+  }
+  catch (error) {
+    dispatch(errorHappened({
+      type: 'error',
+      title: 'Error',
+      message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
+    }))
+    return false
+  }
+  finally {
+    dispatch(finishStoreFetching())
+  }
+}
+export const getMyOrderByOrderId =  (id) =>  async (dispatch,getState) => {
+  dispatch(startStoreFetching())
+  try {
+    const { userData: { accessToken } } = getState()
+    const response = await fetch(`${api.getDriverActiveServiceOrderByServiceOrderId}${id}`, {
       method: 'GET',
       headers: {
         Accept: 'application/json',
@@ -786,6 +1064,8 @@ export const placeOrder =  (newOrder) =>  async (dispatch,getState) => {
     data.append('shipping_city', newOrder.shipping_city)
     data.append('shipping_street', newOrder.shipping_street)
     data.append('shipping_phone', newOrder.shipping_phone)
+    if (newOrder.lat)data.append('lat', newOrder.lat)
+    if (newOrder.lng)data.append('lng', newOrder.lng)
     if (newOrder.payment_type === 3) {
       data.append('bank_name', newOrder.bank_name)
       data.append('account_number', newOrder.account_number)

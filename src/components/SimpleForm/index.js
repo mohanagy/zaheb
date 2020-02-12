@@ -17,6 +17,7 @@ export class SimpleForm extends Component {
       children,
       backgroundSource,
       backgroundOverlay,
+      after,
     } = this.props
     return (
       <BackgroundImageWrapper
@@ -54,6 +55,7 @@ export class SimpleForm extends Component {
             }}
           >
             {children}
+            {after}
           </ScrollContainer>
         </KeyboardAvoidingView>
       </BackgroundImageWrapper>

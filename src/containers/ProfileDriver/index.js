@@ -59,7 +59,7 @@ const UserTab = ({ values, onStatusChange }) => (
 )
 
 const MapTab = ({ lat,lng }) => (
-  <Group style={{ alignItems: 'flex-start' }}>
+  <Group style={{ alignItems: 'flex-start' ,backgroundColor:'red' }}>
     <Maps
       options={{
         onMapReady: () => (
@@ -170,16 +170,10 @@ class ProfileDriver extends Component {
       >
         <Group style={{ backgroundColor: '#F6F6F6' }}>
           <CurvedHeader type="image" source={logo} />
-          <Group style={{ marginTop: 40, marginHorizontal: 20, minHeight: screen.height }}>
+          <Group style={{ marginTop: 10, marginHorizontal: 20, minHeight: screen.height }}>
             <Details text={user.name} style={{ color: '#1A2960', fontSize: 18 }} />
             <Details text={user.number} style={{ color: '#1A2960', fontSize: 16 }} />
             <Details text={user.address} style={{ color: '#1A2960', fontSize: 12 }} />
-            <AirbnbRating
-              showRating={false}
-              count={5}
-              defaultRating={Math.random() * 4 + 1}
-              size={10}
-            />
             <Tabs
               defaultActiveTab="user"
               workShopProfile={user}
@@ -188,14 +182,22 @@ class ProfileDriver extends Component {
                   icon: 'user',
                   key: 'user',
                   handleChatIcon:() => {},
-
+                  handleMapIcon:() => {  },
                   activeContent: () => <UserTab values={user} onStatusChange={this.onStatusChange} />,
                 },
                 {
-                  icon: 'map-marker', key: 'map', activeContent: () => <MapTab lat={lat} lng={lng} />,handleChatIcon:() => {},
+                  icon: 'map-marker',
+                  key: 'map',
+                  activeContent: () => <MapTab lat={lat} lng={lng} />,
+                  handleMapIcon:() => { navigate('DriverMap') },
+                  handleChatIcon:() => {  },
                 },
                 {
-                  icon: 'comment', key: 'comments', activeContent: CommentsTab,handleChatIcon:() => { navigate('Conversations') },
+                  icon: 'comment',
+                  key: 'comments',
+                  activeContent: CommentsTab,
+                  handleMapIcon:() => { },
+                  handleChatIcon:() => { navigate('Conversations') },
                 },
               ]}
               tabsWrapperStyle={{ marginHorizontal: (screen.width / 2) - 120 }}

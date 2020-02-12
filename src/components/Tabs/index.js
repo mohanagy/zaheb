@@ -11,8 +11,9 @@ const EmptyContent = () => <Group />
 class Tabs extends Component {
   state = { activeTab: this.props.defaultActiveTab }
 
-  onTabChange = (nextTab,handleChatIcon,workShopProfile) => {
+  onTabChange = (nextTab,handleChatIcon,handleMapIcon,workShopProfile) => {
     this.setState((state) => ({ ...state, activeTab: nextTab }))
+    if (nextTab === 'map') return handleMapIcon()
     handleChatIcon(workShopProfile.id,workShopProfile.name,workShopProfile.image)
   }
 
@@ -25,8 +26,10 @@ class Tabs extends Component {
       <Group>
         <Group style={{ ...styles.tabsWrapperStyle, ...tabsWrapperStyle }}>
           {
-            options && options.map(({ icon, key,handleChatIcon }) => (
-              <TouchableOpacity onPress={() => this.onTabChange(key,handleChatIcon,workShopProfile)}>
+            options && options.map(({
+              icon, key,handleChatIcon,handleMapIcon,
+            }) => (
+              <TouchableOpacity onPress={() => this.onTabChange(key,handleChatIcon,handleMapIcon,workShopProfile)}>
                 <Group
                   style={{ ...styles.tabIconStyle, ...(activeTab === key ? styles.activeTabIconStyle : {}) }}
                 >

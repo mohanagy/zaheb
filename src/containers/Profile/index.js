@@ -8,12 +8,13 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as usersActions from 'actions/users'
 import PropTypes from 'prop-types'
+import I18n from '../../utilites/i18n'
 
 const screen = Dimensions.get('screen')
 
 class Profile extends Component {
   static navigationOptions = ({ navigation }) => ({
-    headerTitle: 'My Profile',
+    headerTitle: I18n.t('my_profile'),
     headerTitleStyle: {
       textAlign: 'center',
       flexGrow: 1,
@@ -120,9 +121,9 @@ class Profile extends Component {
             <Details text={`No.${user.id}`} style={{ color: 'black' }} />
             <Details text={`${user.address || ''}`} style={{ color: 'black', fontSize: 10 }} />
             <Group>
-              <Details text="Private Details" style={{ alignSelf: 'flex-start', color: '#1E1E1E' }} />
+              <Details text={I18n.t('private_details')} style={{ alignSelf: 'flex-start', color: '#1E1E1E' }} />
               <LabeledInputWithIcon
-                label="Name"
+                label={I18n.t('name')}
                 labelStyle={styles.inputLabelStyle}
                 icon="edit"
                 inputProps={{
@@ -133,20 +134,21 @@ class Profile extends Component {
                 onPressOnIcon={() => this.handleUpdateProfile('name',user.name)}
               />
               <LabeledInputWithIcon
-                label="Email"
+                label={I18n.t('email')}
                 labelStyle={styles.inputLabelStyle}
                 icon="edit"
                 inputProps={{
                   style: styles.inputStyle,
                   value: user.email,
                   onChangeText:(value) => this.handleChange('email',value),
+                  keyboardType:'email-address',
 
                 }}
                 onPressOnIcon={() => this.handleUpdateProfile('email',user.email)}
 
               />
               <LabeledInputWithIcon
-                label="Password"
+                label={I18n.t('password')}
                 labelStyle={styles.inputLabelStyle}
                 icon="edit"
                 inputProps={{
@@ -159,19 +161,21 @@ class Profile extends Component {
 
               />
               <LabeledInputWithIcon
-                label="Mobile Number"
+                label={I18n.t('mobile')}
                 labelStyle={styles.inputLabelStyle}
                 icon="edit"
                 inputProps={{
                   style: styles.inputStyle,
                   value: user.phone,
                   onChangeText:(value) => this.handleChange('phone',value),
+                  keyboardType:'phone-pad',
+
                 }}
                 onPressOnIcon={() => this.handleUpdateProfile('phone',user.phone)}
 
               />
               <LabeledInputWithIcon
-                label="Location"
+                label={I18n.t('location')}
                 labelStyle={styles.inputLabelStyle}
                 icon="plus"
                 inputProps={{
@@ -183,7 +187,7 @@ class Profile extends Component {
 
               />
               <LabeledInputWithIcon
-                label="Language"
+                label={I18n.t('language')}
                 labelStyle={styles.inputLabelStyle}
                 icon="edit"
                 inputProps={{

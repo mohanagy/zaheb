@@ -11,13 +11,17 @@ const initialState = {
   selectedMyOfferId: null,
   myRequests: [],
   myPurchases:[],
+  myOrders:[],
   myOffers:[],
+  offer:{},
   offers:[],
   favorites:[],
   orderId:null,
   order:{
     service:{},
+    product:{},
   },
+  myAvailableOrders:[],
   workshopOffers:[],
   products:[],
   selectedProductId:null,
@@ -36,6 +40,8 @@ const initialState = {
     product:{},
   },
   noButton:false,
+  skippedWorkShop:false,
+  shippingDetails:null,
 }
 const carsReducer = (state = initialState, action) => {
   const { payload } = action

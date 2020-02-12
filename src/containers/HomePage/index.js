@@ -10,12 +10,13 @@ import { bindActionCreators } from 'redux'
 import * as usersActions from 'actions/users'
 import PropTypes from 'prop-types'
 import background from '../../assets/blurred-background.png'
+import I18n from '../../utilites/i18n'
 
 const screen = Dimensions.get('screen')
 
 class HomePage extends Component {
  static navigationOptions = ({ navigation }) => ({
-   headerTitle: 'Home',
+   headerTitle: I18n.t('home'),
    headerTitleStyle: {
      textAlign: 'center',
      flexGrow: 1,
@@ -101,7 +102,7 @@ render() {
                 <FontAwesome5 name="tools" size={40} style={{ color: '#FFF' }} onPress={() => navigate('MaintenancePage')} />
               </Group>
             </Group>
-            <Details text="Maintenance Services" style={{ color: '#1E1E1E', fontSize: 22 }} />
+            <Details text={I18n.t('maintenance_services')} style={{ color: '#1E1E1E', fontSize: 22 }} />
             <Group
               onPress={() => navigate('HomeStore')}
               style={{
@@ -122,7 +123,7 @@ render() {
                 <FontAwesome5 name="store" size={40} style={{ color: '#FFF' }} />
               </Group>
             </Group>
-            <Details text="Store" style={{ marginBottom: 20, color: '#1E1E1E', fontSize: 22 }} />
+            <Details text={I18n.t('store')} style={{ marginBottom: 20, color: '#1E1E1E', fontSize: 22 }} />
           </Group>
         </Group>
       </BackgroundImageWrapper>

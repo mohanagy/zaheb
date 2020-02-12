@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollContainer, RequestCard ,Group } from 'components'
+import { ScrollContainer, AvailableOrderCard ,Group } from 'components'
 import { ActivityIndicator } from 'react-native'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import { connect } from 'react-redux'
@@ -49,18 +49,30 @@ class MyOrderAvailable extends Component {
   });
 
 componentDidMount =async () => {
-  const { actions:{ getMyRequests } } = this.props
-  await getMyRequests()
+  const { actions:{ getMyAvailableOrders } } = this.props
+  await getMyAvailableOrders()
 }
 
-handleSelectRequest =async (id) => {
-  const { actions:{ selectOrderId },navigation:{ navigate } } = this.props
+handleAccept =async (id) => {
+  const { actions :{ handleAcceptOrder ,getMyAvailableOrders } } = this.props
+  await handleAcceptOrder(id)
+  await getMyAvailableOrders()
+}
+
+handleSelectProfile =async (id) => {
+  const { actions :{ selectOrderId },navigation:{ navigate } } = this.props
   await selectOrderId(id)
-  navigate('RequestDetails')
+  navigate('OrderAvailableDetails')
+}
+
+handleCancel =async (id) => {
+  const { actions :{ handleCancelOrder,getMyAvailableOrders } } = this.props
+  await handleCancelOrder(id)
+  await getMyAvailableOrders()
 }
 
 render() {
-  const { storeData:{ myRequests,isFetching } } = this.props
+  const { storeData:{ myAvailableOrders,isFetching } } = this.props
   if (isFetching) { return (
     <Group
       style={{
@@ -80,19 +92,20 @@ render() {
     <ScrollContainer
       contentContainerStyle={{
         marginTop: 20,
+        height:'100%',
       }}
     >
       {
-        myRequests.map(({
-          image,id ,service_time,service_date,service,
+        myAvailableOrders.map(({
+          product,id ,service,
         }) => (
-          <RequestCard
+          <AvailableOrderCard
             key={id}
-            name={service.en_name}
-            handleSelectRequest={() => this.handleSelectRequest(id)}
-            date={service_date}
-            time={service_time}
-            source={{ uri:image }}
+            name={product ? product.name : service.name}
+            handleAccept={() => this.handleAccept(id)}
+            handleCancel={() => this.handleCancel(id)}
+            source={{ uri:product ? product.image : service.image }}
+            handleSelectProfile={() => this.handleSelectProfile(id)}
           />
         ))
       }

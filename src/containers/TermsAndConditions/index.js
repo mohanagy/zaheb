@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Dimensions,ActivityIndicator } from 'react-native'
+import { Dimensions,ActivityIndicator,ScrollView } from 'react-native'
 
 import {
   Group, CurvedHeader, Details,Title,
@@ -80,23 +80,30 @@ class TermsAndConditions extends Component {
     return (
       <Group style={{ backgroundColor: '#F6F6F6' }}>
         <CurvedHeader type="text" content="Terms and Conditions" />
-        {terms.map(({ en_description,en_title }) => (
-          <Group style={{ marginTop: 40, marginHorizontal: 20, minHeight: screen.height }}>
-            <Title
-              text={en_title}
-              style={{
-                color: '#000',
-                textAlignVertical: 'center',
-                marginBottom: 8,
-                fontSize: 22,
-              }}
-            />
-            <Divider style={{ backgroundColor: 'black' }} />
+        <ScrollView
+          style={{
+            height:'100%',
+          }}
+        >
 
-            <Details text={en_description} style={{ color: '#1A2960', fontSize: 16 }} />
-            <Divider style={{ backgroundColor: 'black' }} />
-          </Group>
-        ))}
+          {terms.map(({ en_description,en_title }) => (
+            <Group style={{ marginTop: 40, marginHorizontal: 20 }}>
+              <Title
+                text={en_title}
+                style={{
+                  color: '#000',
+                  textAlignVertical: 'center',
+                  marginBottom: 8,
+                  fontSize: 22,
+                }}
+              />
+              <Divider style={{ backgroundColor: 'black' }} />
+
+              <Details text={en_description} style={{ color: '#1A2960', fontSize: 16 }} />
+              <Divider style={{ backgroundColor: 'black' }} />
+            </Group>
+          ))}
+        </ScrollView>
       </Group>
     )
   }

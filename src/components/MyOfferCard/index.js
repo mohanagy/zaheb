@@ -4,20 +4,21 @@ import {
   Group, Details, SplashButton,
 } from 'components'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
-import { Image, AirbnbRating } from 'react-native-elements'
+import { Image } from 'react-native-elements'
 
 
 const screen = Dimensions.get('screen')
 
 export const MyOfferCard = ({
   workshop:{ commercial_register_image,name },offer:{ description },cost,handleMap,handleSelectProfile,
+  handlePlus,
 }) => (
   <Group
     style={{
       flexDirection: 'row',
       justifyContent: 'flex-start',
-      height: '40%',
-      flex:1,
+      height: '20%',
+
       marginHorizontal: 15,
       backgroundColor: '#FFF',
       marginBottom: 12,
@@ -76,7 +77,7 @@ export const MyOfferCard = ({
           <Details text={`Price: ${cost}$`} style={textsStyle} />
         </Group>
         <Group style={{ justifyContent: 'space-between', alignItems: 'flex-end', marginVertical: 10 }}>
-          <SplashButton title={<FontAwesome5 name="plus" />} style={buttonStyle} />
+          <SplashButton title={<FontAwesome5 name="plus" />} style={buttonStyle} onPress={handlePlus} />
           <SplashButton onPress={handleMap} style={buttonStyle} title={<FontAwesome5 name="map-marker" />} />
           <SplashButton title="accept" style={buttonStyle}  />
         </Group>

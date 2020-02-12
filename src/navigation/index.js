@@ -1,9 +1,12 @@
 import React from 'react'
-import { Image,View,Dimensions } from 'react-native'
+import {
+  Image,View,Dimensions,I18nManager,
+} from 'react-native'
 import { createStackNavigator } from 'react-navigation-stack'
 import { createAppContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from 'react-navigation-tabs'
 import { createDrawerNavigator } from 'react-navigation-drawer'
+
 import logo from 'assets/marinLogo.png'
 import {
   Splash,
@@ -47,9 +50,17 @@ import {
   MyOrders,
   MyOrderAvailable,
   SupportTicketChat,
+  PaymentInformationMap,
+  OrderAvailableDetails,
+  DriverMap,
+  MyOrderDetails,
+  ContactUsOut,
+  UpdatePassword,
+  ConfirmCode,
 } from 'containers'
 
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
+import I18n from '../utilites/i18n'
 import Drawer from '../components/Drawer'
 const screen = Dimensions.get('screen')
 const SplashStack = createStackNavigator(
@@ -214,20 +225,60 @@ const SupportTicketChatStack = createStackNavigator({
   navigationOptions: () => ({ header: null, headerMode: 'none' }),
 
 })
+const ProfileDriverStack = createStackNavigator({
+  ProfileDriver,
+  navigationOptions: () => ({ header: null, headerMode: 'none' }),
+
+})
+const PaymentInformationMapStack = createStackNavigator({
+  PaymentInformationMap,
+  navigationOptions: () => ({ header: null, headerMode: 'none' }),
+
+})
+const OrderAvailableDetailsStack = createStackNavigator({
+  OrderAvailableDetails,
+  navigationOptions: () => ({ header: null, headerMode: 'none' }),
+
+})
+const DriverMapStack = createStackNavigator({
+  DriverMap,
+  navigationOptions: () => ({ header: null, headerMode: 'none' }),
+
+})
+const MyOrderDetailsStack = createStackNavigator({
+  MyOrderDetails,
+  navigationOptions: () => ({ header: null, headerMode: 'none' }),
+
+})
+const ContactUsOutStack = createStackNavigator({
+  ContactUsOut,
+  navigationOptions: () => ({ header: null, headerMode: 'none' }),
+
+})
+const UpdatePasswordStack = createStackNavigator({
+  UpdatePassword,
+  navigationOptions: () => ({ header: null, headerMode: 'none' }),
+
+})
+const ConfirmCodeStack = createStackNavigator({
+  ConfirmCode,
+  navigationOptions: () => ({ header: null, headerMode: 'none' }),
+
+})
 
 const TabNavigator = createBottomTabNavigator(
   {
     Purchases: {
       screen: MyPurchasesStack,
       navigationOptions: {
-        tabBarLabel: 'Purchases',
+        tabBarLabel: I18n.t('purchases'),
         header: null,
       },
     },
     MyRequests: {
       screen: MyRequestsStack,
       navigationOptions: () => ({
-        tabBarLabel: 'My request',
+        tabBarLabel: I18n.t('my_requests'),
         header:null,
       }),
     },
@@ -242,13 +293,13 @@ const TabNavigator = createBottomTabNavigator(
     CustomersService: {
       screen: CustomerServiceStack,
       navigationOptions: {
-        tabBarLabel: 'Customers service',
+        tabBarLabel: I18n.t('customers_service'),
       },
     },
     Profile: {
       screen: ProfileStack,
       navigationOptions: {
-        tabBarLabel: 'Profile',
+        tabBarLabel: I18n.t('profile'),
       },
     },
 
@@ -353,6 +404,91 @@ const TabNavigator = createBottomTabNavigator(
     },
   }
 )
+const TabDriverNavigator = createBottomTabNavigator(
+  {
+    MyRequests: {
+      screen: MyRequestsStack,
+      navigationOptions: () => ({
+        tabBarLabel:I18n.t('my_requests') ,
+        header:null,
+      }),
+    },
+    CustomersService: {
+      screen: CustomerServiceStack,
+      navigationOptions: {
+        tabBarLabel: I18n.t('customers_service'),
+      },
+    },
+    Profile: {
+      screen: ProfileDriverStack,
+      navigationOptions: {
+        tabBarLabel: I18n.t('profile'),
+      },
+    },
+
+  },
+  {
+    order: [
+      'MyRequests',
+      'CustomersService',
+      'Profile',
+    ],
+    initialRouteName: 'Profile',
+    defaultNavigationOptions: ({ navigation }) => ({
+
+
+      tabBarIcon: ({ tintColor }) => {
+        const { routeName } = navigation.state
+
+        let iconName
+        switch (routeName) {
+          case 'MyRequests':
+            iconName = 'list'
+            break
+          case 'CustomersService':
+            iconName = 'headset'
+            break
+          case 'Profile':
+            iconName = 'user-alt'
+            break
+          default:
+            iconName = 'cubes'
+            break
+        }
+        return (
+          <FontAwesome5
+            type="font-awesome"
+            name={iconName}
+            size={20}
+            color="#ffff"
+
+          />
+
+        )
+      },
+      tabBarOptions: {
+        labelStyle: {
+          fontFamily: 'HelveticaNeueW23forSKY-Reg',
+          zIndex:-10,
+          inactiveTintColor: 'cyan',
+          activeBackgroundColor:'lightgreen',
+
+
+        },
+        style:{
+          backgroundColor:'#1E1E1E',
+
+        },
+      },
+    }),
+    lazy: true,
+    lazyLoading: true,
+    navigationOptions: {
+      headerMode: 'none',
+      header: null,
+    },
+  }
+)
 
 const Navigator = createStackNavigator(
   {
@@ -390,6 +526,7 @@ const Navigator = createStackNavigator(
     OfferDetails:OfferDetailsStack,
     PurchaseDetails:PurchaseDetailsStack,
     SupportTicketChat:SupportTicketChatStack,
+    PaymentInformationMap:PaymentInformationMapStack,
   },
   {
     initialRouteName: 'HomePage',
@@ -399,9 +536,55 @@ const Navigator = createStackNavigator(
 
   }
 )
+const DriverNavigator = createStackNavigator(
+  {
+    ContactUs:ContactUsStack,
+    MyRequests:MyRequestsStack,
+    Conversations:ConversationsStack,
+    SupportTickets:SupportTicketsStack,
+    HomeStore:HomeStoreStack,
+    MaintenancePage:MaintenancePageStack,
+    HomeType:HomeTypeStack,
+    Products:ProductsStack,
+    Workshops:WorkshopsStack,
+    MyOffers:MyOffersStack,
+    Offers:OffersStack,
+    TermsAndConditions:TermsAndConditionsStack,
+    WhoWeAre:WhoWeAreStack,
+    ProfileSupplier,
+    ProfileDriver:TabDriverNavigator,
+    ProfileWorkshop:ProfileWorkshopStack,
+    Favorites:FavoritesStack,
+    HomeStarterPage,
+    CustomerService:CustomerServiceStack,
+    SubServices:SubServicesStack,
+    RequestDetails:RequestDetailsStack,
+    DetailsOfYourCar:DetailsOfYourCarStack,
+    Notifications:NotificationsStack,
+    Payment:PaymentCreditStack,
+    PaymentInformation:PaymentInformationStack,
+    ProductOptions:ProductOptionsStack,
+    Chat,
+    NearestServiceCenter:NearestServiceCenterStack,
+    OfferDetails:OfferDetailsStack,
+    PurchaseDetails:PurchaseDetailsStack,
+    SupportTicketChat:SupportTicketChatStack,
+    OrderAvailableDetails:OrderAvailableDetailsStack,
+    DriverMap:DriverMapStack,
+    MyOrderDetails:MyOrderDetailsStack,
+
+  },
+  {
+    initialRouteName: 'ProfileDriver',
+    header:null,
+    headerMode:'none',
+
+
+  }
+)
 const MyDrawerNavigator = createDrawerNavigator(
   {
-    Home: {
+    [I18n.t('home')]: {
       screen: Navigator,
       navigationOptions:({ navigation }) => ({
 
@@ -414,7 +597,7 @@ const MyDrawerNavigator = createDrawerNavigator(
         ),
       }),
     },
-    'My requests': {
+    [I18n.t('my_requests')]: {
       screen: MyRequestsStack,
       navigationOptions: {
         drawerIcon: ({ tintColor }) => (
@@ -422,7 +605,7 @@ const MyDrawerNavigator = createDrawerNavigator(
         ),
       },
     },
-    'Customers service': {
+    [I18n.t('customers_service')]: {
       screen: CustomerServiceStack,
       navigationOptions: {
         drawerIcon: ({ tintColor }) => (
@@ -430,7 +613,7 @@ const MyDrawerNavigator = createDrawerNavigator(
         ),
       },
     },
-    'My purchases': {
+    [I18n.t('my_purchases')]: {
       screen: MyPurchasesStack,
       navigationOptions: {
         drawerIcon: ({ tintColor }) => (
@@ -439,6 +622,124 @@ const MyDrawerNavigator = createDrawerNavigator(
             size={24}
             style={{ color: tintColor }}
           />
+        ),
+      },
+    },
+    [I18n.t('profile')]: {
+      screen: ProfileStack,
+      navigationOptions: {
+        drawerIcon: ({ tintColor }) => (
+          <FontAwesome5
+            name="user-alt"
+            size={24}
+            style={{ color: tintColor }}
+          />
+        ),
+      },
+    },
+    [I18n.t('who_are_we')]: {
+      screen: WhoWeAreStack,
+      navigationOptions: {
+        drawerIcon: ({ tintColor }) => (
+          <FontAwesome5 name="users" size={24} style={{ color: tintColor }} />
+        ),
+      },
+    },
+    [I18n.t('conversations')]: {
+      screen: ConversationsStack,
+      navigationOptions: {
+        drawerIcon: ({ tintColor }) => (
+          <FontAwesome5
+            name="comment-dots"
+            size={24}
+            style={{ color: tintColor }}
+          />
+        ),
+      },
+    },
+    [I18n.t('support_tickets')]: {
+      screen: SupportTicketsStack,
+      navigationOptions: {
+        drawerIcon: ({ tintColor }) => (
+          <FontAwesome5
+            name="comment-dots"
+            size={24}
+            style={{ color: tintColor }}
+          />
+        ),
+      },
+    },
+    [I18n.t('offers')]: {
+      screen:OffersStack,
+      navigationOptions: {
+        drawerIcon: ({ tintColor }) => (
+          <FontAwesome5 name="tags" size={24} style={{ color: tintColor }} />
+        ),
+      },
+    },
+    [I18n.t('my_offers')]: {
+      screen:MyOffersStack,
+      navigationOptions: {
+        drawerIcon: ({ tintColor }) => (
+          <FontAwesome5 name="tags" size={24} style={{ color: tintColor }} />
+        ),
+      },
+    },
+    [I18n.t('favorites')]: {
+      screen: FavoritesStack,
+      navigationOptions: {
+        drawerIcon: ({ tintColor }) => (
+          <FontAwesome5 name="heart" size={24} style={{ color: tintColor }} />
+        ),
+      },
+    },
+    [I18n.t('terms_and_conditions')]: {
+      screen: TermsAndConditionsStack,
+      navigationOptions: {
+        drawerIcon: ({ tintColor }) => (
+          <FontAwesome5
+            name="file-signature"
+            size={24}
+            style={{ color: tintColor }}
+          />
+        ),
+      },
+    },
+    [I18n.t('contact_us')]: {
+      screen: ContactUsStack,
+      navigationOptions: {
+        drawerIcon: ({ tintColor }) => (
+          <FontAwesome5
+            name="address-book"
+            size={24}
+            style={{ color: tintColor }}
+          />
+        ),
+      },
+    },
+  },
+  {
+    initialRouteName: I18n.t('home'),
+    drawerPosition: I18nManager.isRTL ? 'right' : 'left',
+    drawerOpenRoute: 'DrawerOpen',
+    drawerCloseRoute: 'DrawerClose',
+    // drawerToggleRoute: 'DrawerToggle',
+    // drawerBackgroundColor: 'rgba(255,255,255,1)',
+    contentOptions: {
+      activeBackgroundColor: 'black',
+      activeTintColor: 'red',
+    },
+    contentComponent: (props) => <Drawer {...props} />,
+
+  }
+)
+const MyDrawerDriverNavigator = createDrawerNavigator(
+  {
+    'Customers service': {
+      screen: CustomerServiceStack,
+      navigationOptions: {
+        drawerIcon: ({ tintColor }) => (
+          <FontAwesome5 name="headset" size={24} style={{ color: tintColor }} />
         ),
       },
     },
@@ -454,7 +755,7 @@ const MyDrawerNavigator = createDrawerNavigator(
         ),
       },
     },
-    'My Order Available': {
+    'My Orders Available': {
       screen: MyOrderAvailableStack,
       navigationOptions: {
         drawerIcon: ({ tintColor }) => (
@@ -467,7 +768,7 @@ const MyDrawerNavigator = createDrawerNavigator(
       },
     },
     Profile: {
-      screen: ProfileStack,
+      screen: DriverNavigator,
       navigationOptions: {
         drawerIcon: ({ tintColor }) => (
           <FontAwesome5
@@ -510,30 +811,6 @@ const MyDrawerNavigator = createDrawerNavigator(
         ),
       },
     },
-    'Offers': {
-      screen:OffersStack,
-      navigationOptions: {
-        drawerIcon: ({ tintColor }) => (
-          <FontAwesome5 name="tags" size={24} style={{ color: tintColor }} />
-        ),
-      },
-    },
-    'My offers': {
-      screen:MyOffersStack,
-      navigationOptions: {
-        drawerIcon: ({ tintColor }) => (
-          <FontAwesome5 name="tags" size={24} style={{ color: tintColor }} />
-        ),
-      },
-    },
-    Favorites: {
-      screen: FavoritesStack,
-      navigationOptions: {
-        drawerIcon: ({ tintColor }) => (
-          <FontAwesome5 name="heart" size={24} style={{ color: tintColor }} />
-        ),
-      },
-    },
     'Terms and conditions': {
       screen: TermsAndConditionsStack,
       navigationOptions: {
@@ -560,7 +837,7 @@ const MyDrawerNavigator = createDrawerNavigator(
     },
   },
   {
-    initialRouteName: 'Home',
+    initialRouteName: 'Profile',
     drawerPosition: 'left',
     drawerOpenRoute: 'DrawerOpen',
     drawerCloseRoute: 'DrawerClose',
@@ -575,7 +852,8 @@ const MyDrawerNavigator = createDrawerNavigator(
   }
 )
 const rootStack = createStackNavigator({
-  MyDrawerNavigator,
+  HomePageDrawer:MyDrawerNavigator,
+  HomeDriverPage:MyDrawerDriverNavigator,
   SplashLoading,
   Splash: SplashStack,
   Login:{
@@ -587,6 +865,9 @@ const rootStack = createStackNavigator({
   },
   Register,
   ForgotPassword,
+  ConfirmCode:ConfirmCodeStack,
+  ContactUsOut:ContactUsOutStack,
+  UpdatePassword:UpdatePasswordStack,
 },  {
   initialRouteName: 'SplashLoading',
   header:null,
