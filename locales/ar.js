@@ -42,5 +42,10 @@ export default {
   enter_your_password:'أدخل كلمة المرور',
   enter_your_confirm_password:'أدخل تاكيد كلمة المرور',
   enter_your_confirm_code:'ادخل رمز التاكيد',
+  details_of_your_car:'تفاصيل سيارتك',
+  manufacturing_year:'سنة التصنيع',
+  home_store:'صفحة المتجر',
+  home_type:'صفحة الانواع',
+  maintenance_page:'صفحة التصليح',
 
 }

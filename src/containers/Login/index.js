@@ -290,7 +290,7 @@ const buttonStyle = {
     alignContent: 'center',
     alignSelf:'center',
     color: '#FFFFFF',
-    fontWeight: '10',
+    fontWeight: '100',
     fontSize:12,
     justifyContent: 'center',
 

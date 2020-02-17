@@ -6,17 +6,18 @@ import { bindActionCreators } from 'redux'
 import * as storeActions from 'actions/store'
 import * as usersActions from 'actions/users'
 import PropTypes from 'prop-types'
-
 import {
   Group, CurvedHeader, FavoriteCard, ScrollContainer,
 } from 'components'
+import I18n from '../../utilites/i18n'
+
 import redHeart from '../../assets/red_heart.png'
 
 const screen = Dimensions.get('screen')
 
 class Favorites extends Component {
   static navigationOptions = ({ navigation }) => ({
-    headerTitle: 'Favorites',
+    headerTitle: I18n.t('favorites'),
     headerTitleStyle: {
       textAlign: 'center',
       flexGrow: 1,

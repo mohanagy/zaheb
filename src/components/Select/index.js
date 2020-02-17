@@ -13,7 +13,7 @@ export const Select = ({ options, onValueChange, selectedValue }) => (
     }}
     itemStyle={{
       fontFamily: 'HelveticaNeueW23forSKY-Reg',
-      fontWeight: 10,
+      fontWeight: 100,
       textAlign: 'left',
 
     }}

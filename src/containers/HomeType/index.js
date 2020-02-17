@@ -10,13 +10,14 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as storeActions from 'actions/store'
 import PropTypes from 'prop-types'
+import I18n from '../../utilites/i18n'
 
 
 const screen = Dimensions.get('screen')
 
 class HomeType extends Component {
   static navigationOptions = ({ navigation }) => ({
-    headerTitle: 'Home Types',
+    headerTitle: I18n.t('home_type'),
     headerTitleStyle: {
       textAlign: 'center',
       flexGrow: 1,

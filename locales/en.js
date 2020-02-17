@@ -42,4 +42,9 @@ export default {
   enter_your_password:'Enter your password',
   enter_your_confirm_password:'Enter your confirm Password',
   enter_your_confirm_code:'Enter your confirm code',
+  details_of_your_car:'Details of your car',
+  manufacturing_year:'Manufacturing Year',
+  home_store:'Home Store',
+  home_type:'Home Types',
+  maintenance_page:'Maintenance Page',
 }

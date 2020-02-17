@@ -6,11 +6,12 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as usersActions from 'actions/users'
 import PropTypes from 'prop-types'
+import I18n from '../../utilites/i18n'
 
 
 class Conversations extends Component {
   static navigationOptions = ({ navigation }) => ({
-    headerTitle: 'Conversations',
+    headerTitle: I18n.t('conversations'),
     headerTitleStyle: {
       textAlign: 'center',
       flexGrow: 1,

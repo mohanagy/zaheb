@@ -9,13 +9,14 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as generalActions from 'actions/general'
 import PropTypes from 'prop-types'
+import I18n from '../../utilites/i18n'
 
 
 const screen = Dimensions.get('screen')
 
 class ContactUs extends Component {
   static navigationOptions = ({ navigation }) => ({
-    headerTitle: 'Contact Us',
+    headerTitle: I18n.t('contact_us'),
     headerTitleStyle: {
       textAlign: 'center',
       flexGrow: 1,
@@ -70,10 +71,10 @@ class ContactUs extends Component {
       >
         <Group style={{ backgroundColor: '#F6F6F6' }}>
 
-          <CurvedHeader type="text" content="Contact us" />
+          <CurvedHeader type="text" content={I18n.t('contact_us')} />
           <Group style={{ marginTop: 40, marginHorizontal: 20, minHeight: screen.height }}>
             <LabeledInput
-              label="Location"
+              label={I18n.t('location')}
               placeholder={address.value}
               disabled
               inputStyle={inputStyle}
@@ -82,7 +83,7 @@ class ContactUs extends Component {
               labelStyle={inputLabelStyle}
             />
             <LabeledInput
-              label="Mobile"
+              label={I18n.t('location')}
               disabled
               placeholder={phone.value}
               inputStyle={inputStyle}
@@ -90,7 +91,7 @@ class ContactUs extends Component {
               labelStyle={inputLabelStyle}
             />
             <LabeledInput
-              label="Email"
+              label={I18n.t('mobile')}
               disabled
               placeholder={email.value}
               inputStyle={inputStyle}

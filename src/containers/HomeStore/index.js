@@ -11,12 +11,13 @@ import { bindActionCreators } from 'redux'
 import * as storeActions from 'actions/store'
 import * as usersActions from 'actions/users'
 import PropTypes from 'prop-types'
+import I18n from '../../utilites/i18n'
 
 const screen = Dimensions.get('screen')
 
 class HomeStore extends Component {
   static navigationOptions = ({ navigation }) => ({
-    headerTitle: 'Home Store',
+    headerTitle: I18n.t('home_store'),
     headerTitleStyle: {
       textAlign: 'center',
       flexGrow: 1,

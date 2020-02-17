@@ -7,6 +7,7 @@ import { bindActionCreators } from 'redux'
 import * as storeActions from 'actions/store'
 import * as usersActions from 'actions/users'
 import PropTypes from 'prop-types'
+import I18n from '../../utilites/i18n'
 
 const screen = Dimensions.get('screen')
 
@@ -21,7 +22,7 @@ const bodyNumbers = [
 
 class DetailsOfYourCar extends Component {
   static navigationOptions = ({ navigation }) => ({
-    headerTitle: 'Details of your car',
+    headerTitle: I18n.t('details_of_your_car'),
     headerTitleStyle: {
       textAlign: 'center',
       flexGrow: 1,
@@ -105,7 +106,7 @@ class DetailsOfYourCar extends Component {
     return (
       <Group style={{ backgroundColor: '#F6F6F6', minHeight: screen.height }}>
         <Group style={{ alignItems: 'flex-start', marginHorizontal: 20, marginTop: 40 }}>
-          <Details text="Manufacturing Year" style={{ marginHorizontal: 0, marginBottom: 5, color: '#1E1E1E' }} />
+          <Details text={I18n.t('manufacturing_year')} style={{ marginHorizontal: 0, marginBottom: 5, color: '#1E1E1E' }} />
           <Picker
             selectedValue={manufacturingYear}
             style={{

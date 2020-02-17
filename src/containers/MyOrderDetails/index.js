@@ -88,9 +88,6 @@ class MyOrderDetails extends Component {
         <ActivityIndicator size="large" />
       </Group>
     ) }
-    console.log({
-      order,
-    })
     return (
       <ScrollContainer>
         <Group style={{ backgroundColor: '#F6F6F6', minHeight: screen.height }}>

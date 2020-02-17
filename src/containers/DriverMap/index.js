@@ -8,11 +8,12 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { storeActions } from 'actions'
+import I18n from '../../utilites/i18n'
 
 
 class DriverMap extends Component {
   static navigationOptions = ({ navigation }) => ({
-    headerTitle: 'Your Location',
+    headerTitle: I18n.t('your_location'),
     headerTitleStyle: {
       textAlign: 'center',
       flexGrow: 1,

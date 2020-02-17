@@ -872,7 +872,5 @@ const rootStack = createStackNavigator({
   initialRouteName: 'SplashLoading',
   header:null,
   headerMode:'none',
-
-
 })
 export default createAppContainer(rootStack)

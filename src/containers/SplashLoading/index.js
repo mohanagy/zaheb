@@ -25,7 +25,9 @@ export class SplashLoading extends Component {
         checkAuth,updateUserStore ,sendDriverLocation,updateUserFcm,
       },
     } = this.props
+    console.log('aslkdnmklsamdlkm')
     const checkAuthValue = await checkAuth(userToken)
+    console.log('Whaat',userToken)
     if (userToken && checkAuthValue ) {
       const user = await AsyncStorage.getItem('@user')
       const userParsed = JSON.parse(user).user
@@ -33,7 +35,9 @@ export class SplashLoading extends Component {
         await   AsyncStorage.removeItem('@access_token','@user')
       }
       await updateUserStore({ user:JSON.parse(user).user,accessToken:userToken })
+      console.log('Hello there')
       const fcmToken = await firebase.messaging().getToken()
+      console.log('WTF',fcmToken)
       if (fcmToken) {
         await updateUserFcm(fcmToken)
         const enabled = await firebase.messaging().hasPermission()

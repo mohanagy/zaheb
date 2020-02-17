@@ -34,6 +34,6 @@ export const firebaseApp = firebase
     // use platform-specific firebase config
     Platform.OS === 'ios' ? iosConfig : androidConfig,
     // name of this app
-    'zaheb',
+    'maren',
   )
   .then((app) => console.log('initialized apps ->', firebase.apps))

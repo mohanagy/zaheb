@@ -1,7 +1,7 @@
 
 // const API_URL = 'http://192.168.1.251:3000'
 // const API_URL = 'http://192.168.1.252:3000'
-const API_URL = 'http://Marenksa.com'
+const API_URL = 'https://www.google.com'
 const APIV1 = `${API_URL}/api`
 
 module.exports = {

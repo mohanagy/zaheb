@@ -129,7 +129,7 @@ const buttonStyle = {
   },
   titleStyle: {
     color: '#FFFFFF',
-    fontWeight: '9',
+    fontWeight: '100',
     fontSize: screen.width > 600 ? 18 : 10,
     fontFamily: 'HelveticaNeueW23forSKY-Reg',
   },
