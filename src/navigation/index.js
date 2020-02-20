@@ -3,7 +3,7 @@ import {
   Image,View,Dimensions,I18nManager,
 } from 'react-native'
 import { createStackNavigator } from 'react-navigation-stack'
-import { createAppContainer } from '@react-navigation/native'
+import { createAppContainer } from 'react-navigation'
 import { createBottomTabNavigator } from 'react-navigation-tabs'
 import { createDrawerNavigator } from 'react-navigation-drawer'
 
@@ -12,7 +12,7 @@ import {
   Splash,
   SplashLoading,
   Login,
-  Register,
+  Register,     
   ForgotPassword,
   ContactUs,
   MyPurchases,

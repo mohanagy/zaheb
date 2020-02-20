@@ -1,5 +1,4 @@
 import AsyncStorage from '@react-native-community/async-storage'
-
 import API from 'api'
 import * as actionsTypes from './actionTypes'
 const { api } = API
@@ -100,6 +99,7 @@ export const updateUserStore = (user) => async (dispatch) => dispatch(getDataSuc
 
 export const checkAuth = (accessToken) => async (dispatch, getState) => {
   try {
+
     const response = await fetch(api.getCars, {
       method: 'GET',
       headers: {
@@ -109,13 +109,20 @@ export const checkAuth = (accessToken) => async (dispatch, getState) => {
     })
     const json = await response.json()
     const { error } = json
-
+    console.log({
+      json,
+      'b':'Hello what',
+    })
     if (error) {
       return false
     }
     return true
   }
   catch (error) {
+    console.log({
+      error,
+      x:'Heelo Im here ',
+    })
     return false
   }
 }

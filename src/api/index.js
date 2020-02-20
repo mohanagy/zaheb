@@ -1,8 +1,8 @@
 
 // const API_URL = 'http://192.168.1.251:3000'
 // const API_URL = 'http://192.168.1.252:3000'
-const API_URL = 'https://www.google.com'
-const APIV1 = `${API_URL}/api`
+const API_URL = 'https://www.marenksa.com'
+const APIV1 = 'https://car-cleaner-api.herokuapp.com/api/v1'
 
 module.exports = {
   API_URL,

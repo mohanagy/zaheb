@@ -10,6 +10,8 @@
 #import <React/RCTBundleURLProvider.h>
 #import <RNCPushNotificationIOS.h>
 #import <React/RCTRootView.h>
+#import "Reachability.h"
+
 @import Firebase;
 
 @implementation AppDelegate
@@ -32,15 +34,20 @@
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
+  [self checknet];
+  
   return YES;
 }
 - (NSURL *)sourceURLForBridge:(RCTBridge *)bridge
 {
 #if DEBUG
+  NSURL *jsUrl = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
+  [[RCTBundleURLProvider sharedSettings] setJsLocation:jsUrl.host];
   return [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
 #else
   return [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
 #endif
+  
 }
 // Required to register for notifications
 - (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings
@@ -68,5 +75,32 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
   [RNCPushNotificationIOS didReceiveLocalNotification:notification];
 }
+-(void)checknet{
+  // Allocate a reachability object
+  Reachability* reach = [Reachability reachabilityWithHostname:@"www.marenksa.com/api/getCars"];
+
+  // Set the blocks
+  reach.reachableBlock = ^(Reachability*reach)
+  {
+      // keep in mind this is called on a background thread
+      // and if you are updating the UI it needs to happen
+      // on the main thread, like this:
+
+      dispatch_async(dispatch_get_main_queue(), ^{
+          NSLog(@"REACHABLE!");
+      });
+  };
+
+  reach.unreachableBlock = ^(Reachability*reach)
+  {
+      NSLog(@"UNREACHABLE!");
+  };
+
+  // Start the notifier, which will cause the reachability object to retain itself!
+  [reach startNotifier];
+  
+}
 @end
+
+
 
