@@ -5,13 +5,14 @@ import { Dimensions } from 'react-native'
 import {
   Group, Details, Select, SplashButton, LabelWithIcon, TextArea,
 } from 'components'
+import I18n from '../../utilites/i18n'
 
 const  screen = Dimensions.get('screen')
 export const NearestServiceModalBody = ({
   style, titleStyle, title, showPicker,
   selectVideoTapped,selectPhotoTapped,driver,setDriver,
   image,video,handleCreateOrder,description,handleChangeText,date,time,
-  isFetching,
+  isFetching,skippedWorkShop,
 }) => (
   <Group
     style={{
@@ -34,12 +35,13 @@ export const NearestServiceModalBody = ({
         flex:1,
       }}
     >
-      <Details
+      { !skippedWorkShop && <Details
         text={title}
         style={{
           ...titleStyle, fontSize: screen.width > 600 ? 20 : 15, fontWeight: '900', color: 'black',
         }}
       />
+      }
       <Group
         style={{
           flexDirection: 'row',
@@ -47,9 +49,9 @@ export const NearestServiceModalBody = ({
 
         }}
       >
-        <LabelWithIcon label={date ? moment(date).format('YYYY-MM-DD') : 'Select Date'} style={{ maxWidth: '50%', marginHorizontal: 10 }} onPress={() => showPicker('Date')} />
+        <LabelWithIcon label={date ? moment(date).format('YYYY-MM-DD') : I18n.t('select_date')} style={{ maxWidth: '50%', marginHorizontal: 10 }} onPress={() => showPicker('Date')} />
         <LabelWithIcon
-          label={time ? moment(time).format('HH:mm:ss') : 'Select Time'}
+          label={time ? moment(time).format('HH:mm:ss') : I18n.t('select_time')}
           style={{ maxWidth: '50%', marginHorizontal: 10 }}
           onPress={() => showPicker('Time')}
         />
@@ -57,14 +59,14 @@ export const NearestServiceModalBody = ({
       </Group>
       <>
         <Select
-          options={[{ label: 'I don\'t need a driver', value: 0 }, { label: 'I need a driver', value: 1 }]}
+          options={[{ label: I18n.t('i_don\'t_need_a_driver'), value: 0 }, { label:I18n.t('i_need_a_driver') , value: 1 }]}
           onValueChange={(value) => setDriver(value)}
           selectedValue={driver}
         />
       </>
       <Group>
         <TextArea
-          placeholder="Service description"
+          placeholder={I18n.t('service_description')}
           style={{
             inputStyle: {
               fontSize: 10,
@@ -96,7 +98,7 @@ export const NearestServiceModalBody = ({
           label={image ? '1 photo ' : 'Attach a photo'}
           style={{ maxWidth: '50%', marginHorizontal: 10 }}
           textStyle={{
-            fontWeight: '100',
+            fontWeight: '600',
           }}
           onPress={selectPhotoTapped}
         />
@@ -111,7 +113,7 @@ export const NearestServiceModalBody = ({
         }}
       >
         <SplashButton
-          title="Confirm location"
+          title={I18n.t('confirm_location')}
           loading={isFetching}
           onPress={handleCreateOrder}
           style={{
@@ -137,7 +139,6 @@ NearestServiceModalBody.propTypes = {
   style: PropTypes.object.isRequired,
   titleStyle: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  onPress: PropTypes.func.isRequired,
   showPicker: PropTypes.func.isRequired,
 }
 

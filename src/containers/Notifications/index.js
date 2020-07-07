@@ -12,13 +12,14 @@ import * as usersActions from 'actions/users'
 import * as storeActions from 'actions/store'
 import PropTypes from 'prop-types'
 import bg from '../../assets/blurred-background.png'
+import I18n from '../../utilites/i18n'
 
 
 const screen = Dimensions.get('screen')
 
 class Notifications extends Component {
   static navigationOptions = ({ navigation }) => ({
-    headerTitle: 'Notifications',
+    headerTitle: I18n.t('notifications'),
     headerTitleStyle: {
       textAlign: 'center',
       flexGrow: 1,
@@ -87,6 +88,7 @@ class Notifications extends Component {
       await selectProduct(id)
       return  navigate('PurchaseDetails')
     }
+
     if (url.includes('getDriverActiveProductOrderByProductOrderId?product_order_id')) {
       await selectOrderId(id)
       return navigate('OrderAvailableDetails')
@@ -114,7 +116,7 @@ class Notifications extends Component {
       <BackgroundImageWrapper source={bg}>
         <ScrollContainer>
           <Group style={{ minHeight: screen.height, backgroundColor: '#FFF8' }}>
-            {notifications.map((datum) => <NotificationRow {...datum} handleNotification={() => this.handleNotification(datum.url)} />)}
+            {notifications && notifications.map((datum) => <NotificationRow {...datum} handleNotification={() => this.handleNotification(datum.url)} />)}
           </Group>
         </ScrollContainer>
       </BackgroundImageWrapper>

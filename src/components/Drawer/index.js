@@ -26,8 +26,9 @@ import I18n from '../../utilites/i18n'
 export class Drawer extends Component {
   handleSignOut=async () => {
     const { navigation:{ navigate } } = this.props
-    await AsyncStorage.removeItem('@user')
-    await AsyncStorage.removeItem('@access_token')
+    await AsyncStorage.clear()
+    clearInterval(global.driverLocation)
+    global.driverLocation = undefined
     navigate('Login')
   }
 
@@ -86,7 +87,8 @@ export class Drawer extends Component {
             {...this.props}
             onItemPress={(router) => {
               const { onItemPress,activeItemKey } = this.props
-              activeItemKey === 'Home' ? this.handleHomePressed() : null
+
+              activeItemKey === I18n.t('home') ? this.handleHomePressed() : null
               return onItemPress(router)
             }}
 

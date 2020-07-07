@@ -4,16 +4,18 @@ import {
   Group, Details, SplashButton,
 } from 'components'
 import { Image, AirbnbRating } from 'react-native-elements'
+import I18n from '../../utilites/i18n'
 
 const screen = Dimensions.get('screen')
 export const ProductCard = ({
   name, user_cars, source, rating,onPress,onPressWorkShopName,
+  onPressSkip,
+  skipTitle,
 }) => (
   <Group
     style={{
       flexDirection: 'row',
       justifyContent: 'flex-start',
-      height: '100%',
       marginHorizontal: 15,
       backgroundColor: '#FFF',
       marginBottom: 12,
@@ -51,10 +53,11 @@ export const ProductCard = ({
     <Group style={{ flex: 1, marginHorizontal: 6 }}>
       <Group
         style={{
-          flexDirection: 'row', justifyContent: 'space-between', height: '90%',
+          flexDirection: 'column', justifyContent: 'space-around',
+          flex:1,
         }}
       >
-        <Group style={{ alignItems: 'flex-start', justifyContent: 'space-between' }}>
+        <Group style={{ alignItems: 'flex-start', justifyContent: 'space-around' ,flex:1}}>
           <TouchableOpacity onPress={onPressWorkShopName}>
             <Details text={name} style={{ ...textsStyle, fontSize: screen.width > 600 ? 20 : 10, fontWeight: '900' }} />
           </TouchableOpacity>
@@ -63,19 +66,29 @@ export const ProductCard = ({
               flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', marginBottom: 10,
             }}
           >
-            <Details text={(`${user_cars[0].types_of_cars.en_name}/${user_cars[1].types_of_cars.en_name}...`)} style={{ ...textsStyle, fontSize: screen.width > 600 ? 18 : 10, fontWeight: '600' }} />
+            <Details text={(`${user_cars[0].types_of_cars.en_name}/${user_cars[1] && user_cars[1].types_of_cars.en_name}...`)} style={{ ...textsStyle, fontSize: screen.width > 600 ? 18 : 10, fontWeight: '600' }} />
           </Group>
-          <AirbnbRating
-            showRating={false}
-            count={5}
-            defaultRating={rating}
-            size={screen.width > 600 ? 19 : 10}
-          />
         </Group>
-        <Group style={{ justifyContent: 'flex-end', alignItems: 'flex-end', marginVertical: 10 }}>
+        <Group style={{ justifyContent: 'center',flex:1,alignItems: 'center',flexDirection:'row' }}>
           <SplashButton
             onPress={onPress}
-            title="Booking"
+            title={I18n.t('booking')}
+            style={{
+              buttonStyle: {
+                backgroundColor: '#1e1e1e',
+                borderRadius: 200,
+                paddingVertical: 3,
+                marginBottom: -15,
+                marginHorizontal:5,
+              },
+              titleStyle:{
+                fontSize:screen.width > 600 ? 14 : 10,
+              },
+            }}
+          />
+          <SplashButton
+            onPress={onPressSkip}
+            title={skipTitle}
             style={{
               buttonStyle: {
                 backgroundColor: '#1e1e1e',
@@ -83,6 +96,7 @@ export const ProductCard = ({
                 paddingHorizontal: 10,
                 paddingVertical: 3,
                 marginBottom: -15,
+                marginHorizontal:5,
               },
               titleStyle:{
                 fontSize:screen.width > 600 ? 14 : 10,

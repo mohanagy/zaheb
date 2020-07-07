@@ -42,6 +42,9 @@ const initialState = {
   noButton:false,
   skippedWorkShop:false,
   shippingDetails:null,
+  coordinates:{},
+  serviceByIdWorkshops:[],
+  newServiceId:null,
 }
 const carsReducer = (state = initialState, action) => {
   const { payload } = action
@@ -52,6 +55,7 @@ const carsReducer = (state = initialState, action) => {
       return { ...state, ...payload }
     case actionTypes.FINISH_STORE_FETCHING:
       return { ...state, ...payload }
+
     default:
       return state
   }

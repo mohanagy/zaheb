@@ -71,9 +71,6 @@ export const MyOfferCard = ({
               ...textsStyle, fontSize: screen.width > 600 ? 14 : 10,flexWrap: 'wrap',flex:1,
             }}
           />
-          <Group style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Details text="(300 Reviews)" style={{ ...textsStyle, fontSize: screen.width > 600 ? 12 : 6, color: '#898989' }} />
-          </Group>
           <Details text={`Price: ${cost}$`} style={textsStyle} />
         </Group>
         <Group style={{ justifyContent: 'space-between', alignItems: 'flex-end', marginVertical: 10 }}>

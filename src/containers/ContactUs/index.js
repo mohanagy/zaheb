@@ -150,7 +150,7 @@ const inputStyle = {
   borderBottom: 'none',
   borderBottomColor: 'rgba(255, 255, 255, 0)',
   paddingHorizontal: 15,
-  fontSize:16,
+  fontSize:12,
 }
 
 const inputContainerStyle = {

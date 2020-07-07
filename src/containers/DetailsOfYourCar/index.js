@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { Group, Details, SplashButton } from 'components'
-import { Picker, Dimensions ,ActivityIndicator } from 'react-native'
+import { Dimensions, ActivityIndicator } from 'react-native'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
+import RNPickerSelect from 'react-native-picker-select'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as storeActions from 'actions/store'
@@ -10,15 +11,6 @@ import PropTypes from 'prop-types'
 import I18n from '../../utilites/i18n'
 
 const screen = Dimensions.get('screen')
-
-
-const bodyNumbers = [
-  { label: 'KSIRQQ', value: 'KSIRQQ' },
-  { label: 'MMMIFS', value: 'MMMIFS' },
-  { label: 'WEUYDS', value: 'WEUYDS' },
-  { label: 'MMDJEU', value: 'MMDJEU' },
-  { label: 'DKIERM', value: 'DKIERM' },
-]
 
 class DetailsOfYourCar extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -41,9 +33,9 @@ class DetailsOfYourCar extends Component {
         style={{
           marginRight: 10,
           color: '#ffffff',
-
         }}
-      />),
+      />
+    ),
     headerLeft: (
       <FontAwesome5
         name="stream"
@@ -53,92 +45,148 @@ class DetailsOfYourCar extends Component {
         style={{
           marginLeft: 10,
           color: '#ffffff',
-
         }}
-      />),
+      />
+    ),
   });
 
   state = {
     manufacturingYear: null,
     vehicleModel: null,
-    bodyNumber: null,
-  }
+  };
 
-  componentDidMount =async () => {
-    const { actions:{ getCarManufacturingYears,getCarModels },storeData:{ selectedCarId } } = this.props
+  componentDidMount = async () => {
+    const {
+      actions: { getCarManufacturingYears, getCarModels },
+      storeData: { selectedCarId },
+    } = this.props
     await getCarManufacturingYears(selectedCarId)
     await getCarModels(selectedCarId)
-    const { storeData:{ models, manufacturingYears } } = this.props
-    this.setState({
-      manufacturingYear:manufacturingYears[0].id,
-      vehicleModel:models[0].id,
-    })
-  }
+    const {
+      storeData: { models, manufacturingYears },
+    } = this.props
+    if (manufacturingYears[0]) {
+      this.setState({
+        manufacturingYear: manufacturingYears[0].id,
+      })
+    }
+    if (models[0]) {
+      this.setState({
+        vehicleModel: models[0].id,
+      })
+    }
+  };
 
-  handleNextButton =async (manufacturingYear,vehicleModel,bodyNumber) => {
-    const { actions:{ setFilters },navigation:{ navigate },storeData:{ selectedProductId } } = this.props
-    await setFilters({ manufacturingYear,vehicleModel,selectedProductId })
+  handleNextButton = async (manufacturingYear, vehicleModel) => {
+    const {
+      actions: { setFilters },
+      navigation: { navigate },
+      storeData: { selectedProductId },
+    } = this.props
+    await setFilters({ manufacturingYear, vehicleModel, selectedProductId })
     navigate('Products')
-  }
+  };
 
   render() {
     const {
-      storeData:{
-        models, manufacturingYears ,isFetching,
-      },
+      storeData: { models, manufacturingYears, isFetching },
     } = this.props
-    const { manufacturingYear,vehicleModel,bodyNumber } = this.state
-    if (isFetching) { return (
-      <Group
-        style={{
-          position: 'absolute',
-          left: 0,
-          right: 0,
-          top: 0,
-          bottom: 0,
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        <ActivityIndicator size="large" />
-      </Group>
-    ) }
+    const { manufacturingYear, vehicleModel } = this.state
+    if (isFetching) {
+      return (
+        <Group
+          style={{
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            top: 0,
+            bottom: 0,
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <ActivityIndicator size="large" />
+        </Group>
+      )
+    }
     return (
       <Group style={{ backgroundColor: '#F6F6F6', minHeight: screen.height }}>
-        <Group style={{ alignItems: 'flex-start', marginHorizontal: 20, marginTop: 40 }}>
-          <Details text={I18n.t('manufacturing_year')} style={{ marginHorizontal: 0, marginBottom: 5, color: '#1E1E1E' }} />
-          <Picker
+        <Group
+          style={{
+            alignItems: 'flex-start',
+            marginHorizontal: 20,
+            marginTop: 40,
+          }}
+        >
+          <Details
+            text={I18n.t('manufacturing_year')}
+            style={{ marginHorizontal: 0, marginBottom: 5, color: '#1E1E1E' }}
+          />
+          <RNPickerSelect
             selectedValue={manufacturingYear}
             style={{
-              marginBottom: 20, height: 50, width: screen.width - 40, backgroundColor: '#FFF', borderRadius: 15, alignSelf: 'center',
+              inputIOS: {
+                marginBottom: 20,
+                height: 50,
+                width: screen.width - 40,
+                backgroundColor: '#FFF',
+                borderRadius: 15,
+                alignSelf: 'center',
+              },
+              inputAndroid: {
+                marginBottom: 20,
+                height: 50,
+                width: screen.width - 40,
+                backgroundColor: '#FFF',
+                borderRadius: 15,
+                alignSelf: 'center',
+              },
             }}
-            onValueChange={(itemValue) => this.setState({ manufacturingYear: itemValue })}
-          >
-            {manufacturingYears.map(({ year,id }) => <Picker.Item label={year} value={id} />)}
-          </Picker>
-          <Details text="Vehicle Model" style={{ marginHorizontal: 0, marginBottom: 5, color: '#1E1E1E' }} />
-          <Picker
+            onValueChange={itemValue =>
+              this.setState({ manufacturingYear: itemValue })
+            }
+            items={manufacturingYears.map(({ year, id }) => ({
+              label: year.toString(),
+              value: id,
+            }))}
+          />
+          <Details
+            text={I18n.t('vehicle_model')}
+            style={{ marginHorizontal: 0, marginBottom: 5, color: '#1E1E1E' }}
+          />
+          <RNPickerSelect
             selectedValue={vehicleModel}
             style={{
-              marginBottom: 20, height: 50, width: screen.width - 40, backgroundColor: '#FFF', borderRadius: 15, alignSelf: 'center',
+              inputIOS: {
+                marginBottom: 20,
+                height: 50,
+                width: screen.width - 40,
+                backgroundColor: '#FFF',
+                borderRadius: 15,
+                alignSelf: 'center',
+              },
+              inputAndroid: {
+                marginBottom: 20,
+                height: 50,
+                width: screen.width - 40,
+                backgroundColor: '#FFF',
+                borderRadius: 15,
+                alignSelf: 'center',
+              },
             }}
-            onValueChange={(itemValue) => this.setState({ vehicleModel: itemValue })}
-          >
-            {models.map(({ id,en_name }) => <Picker.Item value={id} label={en_name} />)}
-          </Picker>
-          <Details text="Body Number" style={{ marginHorizontal: 0, marginBottom: 5, color: '#1E1E1E' }} />
-          <Picker
-            selectedValue={bodyNumber}
-            style={{
-              marginBottom: 20, height: 50, width: screen.width - 40, backgroundColor: '#FFF', borderRadius: 15, alignSelf: 'center',
-            }}
-            onValueChange={(itemValue) => this.setState({ bodyNumber: itemValue })}
-          >
-            {bodyNumbers.map((number) => <Picker.Item {...number} />)}
-          </Picker>
+            onValueChange={itemValue =>
+              this.setState({ vehicleModel: itemValue })
+            }
+            items={models.map(({ id, en_name, ar_name }) => ({
+              value: id,
+              label: I18n.locale === 'ar' ? ar_name || en_name : en_name,
+            }))}
+          />
           <SplashButton
-            onPress={() => this.handleNextButton(manufacturingYear,vehicleModel,bodyNumber)}
-            title="Next"
+            onPress={() =>
+              this.handleNextButton(manufacturingYear, vehicleModel)
+            }
+            title={I18n.t('next')}
             style={{
               buttonStyle: {
                 width: 150,
@@ -156,21 +204,18 @@ class DetailsOfYourCar extends Component {
     )
   }
 }
-const mapDispatchToProps = (dispatch) => ({
-  actions: bindActionCreators({ ...storeActions,...usersActions },dispatch),
+const mapDispatchToProps = dispatch => ({
+  actions: bindActionCreators({ ...storeActions, ...usersActions }, dispatch),
 })
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   storeData: state.storeData,
-  generalData:state.generalData,
-  userData:state.userData,
+  generalData: state.generalData,
+  userData: state.userData,
 })
 
 DetailsOfYourCar.propTypes = {
   actions: PropTypes.object.isRequired,
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(DetailsOfYourCar)
+export default connect(mapStateToProps, mapDispatchToProps)(DetailsOfYourCar)

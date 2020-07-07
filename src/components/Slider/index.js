@@ -5,6 +5,7 @@ import {
 } from 'components'
 import Swiper from 'react-native-swiper'
 import logo from 'assets/splashMareen.png'
+import I18n from '../../utilites/i18n'
 
 const screen = Dimensions.get('screen')
 
@@ -36,7 +37,7 @@ export const Slider = ({ navigate }) => (
 
       />
       <Details
-        text="Hayakom"
+        text={I18n.t('hayakom')}
         style={{
           color: 'black',
           margin: 0,
@@ -65,7 +66,7 @@ export const Slider = ({ navigate }) => (
 
       />
       <Details
-        text="An Experience that you will love"
+        text={I18n.t('experience_you_will_love')}
         style={{
           color: 'black',
           margin: 0,
@@ -94,7 +95,7 @@ export const Slider = ({ navigate }) => (
 
       />
       <Details
-        text="Reday to serve you"
+        text={I18n.t('ready_to_serve_you')}
         style={{
           color: 'black',
           margin: 0,
@@ -123,7 +124,7 @@ export const Slider = ({ navigate }) => (
 
       />
       <Details
-        text="A new world of services just for you"
+        text={I18n.t('a_new_world')}
         style={{
           color: 'black',
           margin: 0,

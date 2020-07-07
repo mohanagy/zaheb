@@ -5,19 +5,16 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as generalActions from 'actions/general'
 import PropTypes from 'prop-types'
-
-
 import {
   Group, CurvedHeader, Details,
 } from 'components'
-
-import _content from './whoWeAreDoc'
+import I18n from '../../utilites/i18n'
 
 const screen = Dimensions.get('screen')
 
 class WhoWeAre extends Component {
   static navigationOptions = ({ navigation }) => ({
-    headerTitle: 'Who We Are',
+    headerTitle: I18n.t('who_are_we'),
     headerTitleStyle: {
       textAlign: 'center',
       flexGrow: 1,
@@ -63,6 +60,7 @@ class WhoWeAre extends Component {
       generalData:{
         whoWeAre:{
           value,
+          ar_value,
         },
         isFetching,
       },
@@ -84,9 +82,9 @@ class WhoWeAre extends Component {
     ) }
     return (
       <Group style={{ backgroundColor: '#F6F6F6' }}>
-        <CurvedHeader type="text" content="Who We Are" />
+        <CurvedHeader type="text" content={I18n.t('who_are_we')} />
         <Group style={{ marginTop: 40, marginHorizontal: 20, minHeight: screen.height }}>
-          <Details text={value} style={{ color: '#1A2960', fontSize: 16 }} />
+          <Details text={I18n.locale === 'ar' ? ar_value || value : value } style={{ color: '#1A2960', fontSize: 16 }} />
         </Group>
       </Group>
     )

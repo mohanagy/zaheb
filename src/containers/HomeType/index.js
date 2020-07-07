@@ -1,8 +1,12 @@
 import React, { Component } from 'react'
-import { Dimensions ,ActivityIndicator } from 'react-native'
+import { Dimensions, ActivityIndicator } from 'react-native'
 
 import {
-  Group, CurvedHeader, Details, BackgroundImageWrapper, Logo,
+  Group,
+  CurvedHeader,
+  Details,
+  BackgroundImageWrapper,
+  Logo,
 } from 'components'
 import blurredBackground from 'assets/blurred-background.png'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
@@ -11,7 +15,6 @@ import { bindActionCreators } from 'redux'
 import * as storeActions from 'actions/store'
 import PropTypes from 'prop-types'
 import I18n from '../../utilites/i18n'
-
 
 const screen = Dimensions.get('screen')
 
@@ -36,9 +39,9 @@ class HomeType extends Component {
         style={{
           marginRight: 10,
           color: '#ffffff',
-
         }}
-      />),
+      />
+    ),
     headerLeft: (
       <FontAwesome5
         name="stream"
@@ -48,59 +51,78 @@ class HomeType extends Component {
         style={{
           marginLeft: 10,
           color: '#ffffff',
-
-        }}
-      />),
-  });
-
-componentDidMount =async () => {
-  const { actions:{ getProductsClassification } ,storeData:{ selectedCarId } } = this.props
-  await getProductsClassification(selectedCarId)
-}
-
-handleSelectProduct =async (id) => {
-  const { actions:{ selectProduct } ,navigation:{ navigate } } = this.props
-  await selectProduct(id)
-  navigate('DetailsOfYourCar')
-}
-
-render() {
-  const { storeData:{ products,isFetching } } = this.props
-  if (isFetching) { return (
-    <Group
-      style={{
-        position: 'absolute',
-        left: 0,
-        right: 0,
-        top: 0,
-        bottom: 0,
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}
-    >
-      <ActivityIndicator size="large" />
-    </Group>
-  ) }
-  return (
-    <BackgroundImageWrapper style={{ minHeight: screen.height }} source={blurredBackground}>
-      <Group
-        style={{
-          backgroundColor: '#FFFFFFA8', position: 'absolute', top: 0, bottom: 0, right: 0, left: 0,
         }}
       />
-      <CurvedHeader content="Contact us" />
-      <Group
-        style={{
-          marginTop: 40,
-          marginHorizontal: 20,
-          flexDirection: 'row',
-          flexWrap: 'wrap',
-          justifyContent: 'space-around',
-          alignItems: 'flex-start',
-        }}
+    ),
+  });
+
+  componentDidMount = async () => {
+    const {
+      actions: { getProductsClassification },
+      storeData: { selectedCarId },
+    } = this.props
+    await getProductsClassification(selectedCarId)
+  };
+
+  handleSelectProduct = async id => {
+    const {
+      actions: { selectProduct },
+      navigation: { navigate },
+    } = this.props
+    await selectProduct(id)
+    navigate('DetailsOfYourCar')
+  };
+
+  render() {
+    const {
+      storeData: { products, isFetching },
+    } = this.props
+
+    if (isFetching) {
+      return (
+        <Group
+          style={{
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            top: 0,
+            bottom: 0,
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <ActivityIndicator size="large" />
+        </Group>
+      )
+    }
+    return (
+      <BackgroundImageWrapper
+        style={{ minHeight: screen.height }}
+        source={blurredBackground}
       >
-        {
-          products.map(({ en_name, image ,id }) => (
+        <Group
+          style={{
+            backgroundColor: '#FFFFFFA8',
+            position: 'absolute',
+            top: 0,
+            bottom: 0,
+            right: 0,
+            left: 0,
+            minHeight: screen.height,
+          }}
+        />
+        <CurvedHeader content="Contact us" />
+        <Group
+          style={{
+            marginTop: 40,
+            marginHorizontal: 20,
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+            justifyContent: 'space-around',
+            alignItems: 'flex-start',
+          }}
+        >
+          {products.map(({ en_name, ar_name, image, id }) => (
             <Group
               style={{
                 marginBottom: 22,
@@ -113,7 +135,7 @@ render() {
                 }}
               >
                 <Logo
-                  source={{ uri:image }}
+                  source={{ uri: image }}
                   resizeMode="cover"
                   style={{
                     width: 150,
@@ -122,28 +144,30 @@ render() {
                   }}
                   containerStyle={{
                     overflow: 'hidden',
-                    borderRadius:150,
-
+                    borderRadius: 150,
                   }}
                   onPress={() => this.handleSelectProduct(id)}
                 />
               </Group>
-              <Details text={en_name} style={{ color: '#000', fontWeight: '900', fontSize: 22 }} />
+              <Details
+                text={
+                  I18n.locale === 'ar' ? (ar_name || en_name) : en_name
+                }
+                style={{ color: '#000', fontWeight: '900', fontSize: 22 }}
+              />
             </Group>
-          ))
-        }
-      </Group>
-    </BackgroundImageWrapper>
-  )
-}
+          ))}
+        </Group>
+      </BackgroundImageWrapper>
+    )
+  }
 }
 
-
-const mapDispatchToProps = (dispatch) => ({
-  actions: bindActionCreators({ ...storeActions },dispatch),
+const mapDispatchToProps = dispatch => ({
+  actions: bindActionCreators({ ...storeActions }, dispatch),
 })
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   storeData: state.storeData,
 })
 
@@ -151,7 +175,4 @@ HomeType.propTypes = {
   actions: PropTypes.object.isRequired,
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(HomeType)
+export default connect(mapStateToProps, mapDispatchToProps)(HomeType)

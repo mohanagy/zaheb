@@ -11,6 +11,7 @@ import { bindActionCreators } from 'redux'
 import * as storeActions from 'actions/store'
 import * as usersActions from 'actions/users'
 import PropTypes from 'prop-types'
+import { Input } from 'react-native-elements'
 import I18n from '../../utilites/i18n'
 
 const screen = Dimensions.get('screen')
@@ -53,6 +54,8 @@ class HomeStore extends Component {
       />),
   });
 
+  state = { filteredCars: [], search: '' };
+
   componentDidMount =async () => {
     const { actions:{ checkAuth  } ,navigation:{ navigate },userData:{ accessToken } } = this.props
     const valid = await checkAuth(accessToken)
@@ -67,8 +70,35 @@ class HomeStore extends Component {
     navigate('HomeType')
   }
 
+  handleSearch = (text) => {
+    const {
+      storeData: { cars },
+    } = this.props
+
+    this.setState({
+      search: text,
+    })
+    if (!text) {
+      this.setState({
+        filteredCars: cars,
+      })
+    }
+    const filtered = cars.filter((car) =>
+      car.en_name.toLowerCase().includes(text.toLowerCase())  || car.ar_name.includes(text)
+    )
+    this.setState({
+      filteredCars: filtered,
+    })
+  };
+
   render() {
     const { storeData:{ cars,isFetching }  } = this.props
+
+    const { filteredCars, search } = this.state
+
+    const data =
+    filteredCars.length || search ? filteredCars : cars
+
     if (isFetching) { return (
       <Group
         style={{
@@ -85,13 +115,16 @@ class HomeStore extends Component {
       </Group>
     ) }
     return (
-      <BackgroundImageWrapper style={{ minHeight: screen.height }} source={blurredBackground}>
+      <BackgroundImageWrapper source={blurredBackground}>
         <Group
           style={{
             backgroundColor: '#FFFFFFA8', position: 'absolute', top: 0, bottom: 0, right: 0, left: 0,
           }}
         />
         <CurvedHeader content="Contact us" />
+        <Input
+          placeholder="Search" onChangeText={this.handleSearch}
+        />
         <Group
           style={{
             marginTop: 40,
@@ -100,10 +133,11 @@ class HomeStore extends Component {
             flexWrap: 'wrap',
             justifyContent: 'space-around',
             alignItems: 'flex-start',
+            flex:1,
           }}
         >
           {
-            cars.map(({ en_name:name, image:logo,id }) => (
+            data.map(({ en_name,ar_name, image:logo,id }) => (
               <Group style={{ marginBottom: 22 }} key={id}>
                 <Logo
                   source={{ uri:logo }}
@@ -115,7 +149,7 @@ class HomeStore extends Component {
                   }
                   onPress={() => this.handleSelectCar(id)}
                 />
-                <Details text={name} style={{ color: '#000', fontWeight: '900' }} />
+                <Details text={I18n.locale === 'ar' ? (ar_name || en_name) : en_name} style={{ color: '#000', fontWeight: '900' }} />
               </Group>
             ))
           }

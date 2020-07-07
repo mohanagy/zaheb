@@ -11,6 +11,7 @@
 #import <RNCPushNotificationIOS.h>
 #import <React/RCTRootView.h>
 #import "Reachability.h"
+@import GoogleMaps;
 
 @import Firebase;
 
@@ -18,9 +19,11 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  
   if ([FIRApp defaultApp] == nil) {
     [FIRApp configure];
   }
+  [GMSServices provideAPIKey:@"AIzaSyDS6633bXHrdt418v31TOHZ7JRnDJ87d6w"];
 
   RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
   RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge

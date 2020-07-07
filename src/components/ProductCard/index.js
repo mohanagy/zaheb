@@ -1,19 +1,22 @@
 import React from 'react'
-import {
-  Group, Details, SplashButton,
-} from 'components'
+import { Group, Details, SplashButton } from 'components'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import { Image } from 'react-native-elements'
 
-
 export const ProductCard = ({
-  name,number,image,description, user,onPress,cost,handleAddToFavorite,
+  name,
+  number,
+  image,
+  description,
+  user,
+  onPress,
+  cost,
+  handleAddToFavorite,
 }) => (
   <Group
     style={{
       flexDirection: 'row',
       justifyContent: 'flex-start',
-      height: 100,
       marginHorizontal: 15,
       backgroundColor: '#FFF',
       marginBottom: 12,
@@ -29,12 +32,14 @@ export const ProductCard = ({
     <Group
       style={{
         width: 120,
+        height:120,
         borderRightWidth: 1,
         borderColor: '#000',
+        justifyContent: 'center',
       }}
     >
       <Image
-        source={{ uri:image }}
+        source={{ uri: image }}
         style={{
           width: '100%',
           height: '100%',
@@ -46,15 +51,49 @@ export const ProductCard = ({
     <Group style={{ flex: 1, marginHorizontal: 6 }}>
       <Group style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
         <Group style={{ alignItems: 'flex-start' }}>
-          <Details text={name} style={{ ...textsStyle, fontSize: 16, fontWeight: '900' }} />
-          <Group style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center' }}>
-            <Details text={description} style={{ ...textsStyle, fontSize: 14, fontWeight: '600' }} />
-            <Details text={number} style={{ ...textsStyle, marginLeft: 5, fontWeight: '100' }} />
+          <Details
+            text={name}
+            style={{ ...textsStyle, fontSize: 16, fontWeight: '900' }}
+          />
+          <Group
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-around',
+              alignItems: 'center',
+            }}
+          >
+            <Details
+              text={description}
+              style={{
+                ...textsStyle,
+                fontSize: 14,
+                fontWeight: '600',
+                width:120,
+              }}
+            />
+            <Details
+              text={number}
+              style={{
+                ...textsStyle,
+                marginLeft: 5,
+                fontWeight: '600',
+
+              }}
+            />
           </Group>
-          <Details text={`By: ${user.name}`} style={{ ...textsStyle,fontSize:12, fontWeight: '600' }} />
-          <Details text={`$${cost}`} style={{ ...textsStyle }} />
+          <Details
+            text={`By: ${user.name}`}
+            style={{ ...textsStyle, fontSize: 12, fontWeight: '600' }}
+          />
+          <Details text={`${cost} SAR`} style={{ ...textsStyle }} />
         </Group>
-        <Group style={{ justifyContent: 'space-between', alignItems: 'center', marginVertical: 10 }}>
+        <Group
+          style={{
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginVertical: 10,
+          }}
+        >
           <FontAwesome5 name="heart" size={20} onPress={handleAddToFavorite} />
           <SplashButton
             onPress={onPress}
@@ -79,7 +118,6 @@ const textsStyle = {
   color: '#000',
 }
 
-ProductCard.propTypes = {
-}
+ProductCard.propTypes = {}
 
 export default ProductCard

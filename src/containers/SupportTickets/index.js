@@ -6,11 +6,12 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as usersActions from 'actions/users'
 import PropTypes from 'prop-types'
+import I18n from '../../utilites/i18n'
 
 
 class SupportTickets extends Component {
   static navigationOptions = ({ navigation }) => ({
-    headerTitle: 'Support Tickets',
+    headerTitle: I18n.t('supports_tickets'),
     headerTitleStyle: {
       textAlign: 'center',
       flexGrow: 1,

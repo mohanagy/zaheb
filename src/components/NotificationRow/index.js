@@ -10,7 +10,7 @@ class NotificationRow extends Component {
     return (
       <TouchableOpacity onPress={handleNotification}>
         <Group style={{ padding: 15, borderBottomWidth: 1, borderBottomColor: '#1E1E1E' }}>
-          <Group style={{ flexDirection: 'row' }}>
+          <Group style={{ flexDirection: 'row',flexWrap:'wrap',flex:1 }}>
             <Group><Image source={{ uri:image }} style={{ width: 60, height: 60, borderRadius: 99 ** 9 }} /></Group>
             <Group style={{ alignItems: 'flex-start', justifyContent: 'space-between' }}>
               <Details text={title} style={{ color: '#1E1E1E', fontWeight: '900' }} />

@@ -1,8 +1,8 @@
 
 // const API_URL = 'http://192.168.1.251:3000'
 // const API_URL = 'http://192.168.1.252:3000'
-const API_URL = 'https://www.marenksa.com'
-const APIV1 = 'https://car-cleaner-api.herokuapp.com/api/v1'
+const API_URL = 'https://marenksa.com'
+const APIV1 = `${API_URL}/api`
 
 module.exports = {
   API_URL,
@@ -81,6 +81,8 @@ module.exports = {
     updateDriverLocation:`${APIV1}/update-driver-location`,
     checkPassCode:`${APIV1}/checkPassCode`,
     resetPassword:`${APIV1}/reset-password`,
+    uploadImage:`${APIV1}/update-profile/image`,
+    getServiceByWorkshopsId:`${APIV1}/getServiceByWorkshopsId?`,
   },
   socketApi: {
     clientActiveOrders: 'clientActiveOrders',

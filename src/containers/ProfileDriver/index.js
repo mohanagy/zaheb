@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import { Dimensions, Switch , PermissionsAndroid } from 'react-native'
-import { AirbnbRating } from 'react-native-elements'
+import { Dimensions , PermissionsAndroid } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as usersActions from 'actions/users'
@@ -14,45 +13,46 @@ import Geolocation from '@react-native-community/geolocation'
 
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import logo from '../../assets/logo.png'
+import I18n from '../../utilites/i18n'
 
 const screen = Dimensions.get('screen')
 
 const UserTab = ({ values, onStatusChange }) => (
   <Group style={{ width: '100%', alignItems: 'stretch' }}>
     <Details
-      text="Private details"
+      text={I18n.t('private_details')}
       style={{
         color: '#1E1E1E', marginHorizontal: 0, fontSize: 20, alignSelf: 'flex-start',
       }}
     />
     <LabeledInput
-      label="Name"
+      label={I18n.t('name')}
       placeholder={values.name}
       disabled
       {...styles.inputStyle}
     />
     <LabeledInput
-      label="Email"
+      label={I18n.t('email')}
       placeholder={values.email}
       disabled
 
       {...styles.inputStyle}
     />
     <LabeledInput
-      label="Adress"
+      label={I18n.t('address')}
       placeholder={values.address}
       disabled
 
       {...styles.inputStyle}
     />
     <LabeledInput
-      label="Mobile Number"
+      label={I18n.t('mobile')}
       placeholder={values.phone}
       disabled
       {...styles.inputStyle}
     />
     {/* <Group style={{ alignSelf: 'flex-start' }}>
-      <Details text="Status:" style={{ color: '#1E1E1E', fontWeight: '100' }} />
+      <Details text="Status:" style={{ color: '#1E1E1E', fontWeight: '600' }} />
       <Switch value={Number(values.status)} onChange={() => onStatusChange} />
     </Group> */}
   </Group>
@@ -103,7 +103,7 @@ const CommentsTab = () => (
 
 class ProfileDriver extends Component {
   static navigationOptions = ({ navigation }) => ({
-    headerTitle: 'My Profile',
+    headerTitle: I18n.t('my_profile'),
     headerTitleStyle: {
       textAlign: 'center',
       flexGrow: 1,

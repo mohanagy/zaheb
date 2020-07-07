@@ -62,7 +62,7 @@ class Register extends Component {
           <Group
             style={{
               marginVertical: 30,
-              fontWeight: '100',
+              fontWeight: '600',
               justifyContent: 'center',
             }}
           >
@@ -162,6 +162,7 @@ class Register extends Component {
             containerStyle={inputContainerStyle}
             value={password}
             secureTextEntry
+            autoCapitalize="none"
             onChangeText={(value) => this.handleChange('password',value)}
           />
           <LabeledInput
@@ -227,7 +228,7 @@ const buttonStyle = {
   },
   titleStyle: {
     color: '#FFFFFF',
-    fontWeight: '100',
+    fontWeight: '600',
     fontSize: screen.width > 600 ? 16 : 10,
     fontFamily: 'HelveticaNeueW23forSKY-Reg',
   },

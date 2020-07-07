@@ -3,7 +3,6 @@ import API from 'api'
 import * as actionsTypes from './actionTypes'
 const { api } = API
 
-
 export function startUserFetching() {
   return {
     type: actionsTypes.START_USER_FETCHING,
@@ -32,21 +31,21 @@ export function errorHappened(alert) {
 
 export function updateUserData(data) {
   return {
-    type:actionsTypes.UPDATE_USER_DATA,
-    payload:data,
+    type: actionsTypes.UPDATE_USER_DATA,
+    payload: data,
   }
 }
 
 export function updateCode(code) {
   return {
-    type:actionsTypes.UPDATE_CONFIRM_CODE,
-    payload:code,
+    type: actionsTypes.UPDATE_CONFIRM_CODE,
+    payload: code,
   }
 }
 export function sendNewMessage(data) {
   return {
-    type:actionsTypes.SEND_NEW_MESSAGE,
-    payload:data,
+    type: actionsTypes.SEND_NEW_MESSAGE,
+    payload: data,
   }
 }
 
@@ -62,45 +61,50 @@ export const login = ({ email, password }) => async (dispatch) => {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'multipart/form-data',
-
       },
       body: data,
     })
     const json = await response.json()
     const { error } = json
     if (error) {
-      dispatch(errorHappened({
-        type: 'error',
-        title: 'Error',
-        message: error,
-        error,
-      }))
+      dispatch(
+        errorHappened({
+          type: 'error',
+          title: 'Error',
+          message: error,
+          error,
+        })
+      )
       return false
     }
     const { access_token: accessToken, user } = json
+
     await AsyncStorage.setItem('@user', JSON.stringify({ user }))
     await AsyncStorage.setItem('@access_token', accessToken)
-    dispatch(getDataSuccess({ user ,accessToken }))
+    dispatch(getDataSuccess({ user, accessToken }))
     return user
   } catch (error) {
-    dispatch(errorHappened({
-      type: 'error',
-      title: 'Error',
-      message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
-      error,
-    }))
+
+    dispatch(
+      errorHappened({
+        type: 'error',
+        title: 'Error',
+        message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
+        error,
+      })
+    )
     return false
   } finally {
     dispatch(finishUserFetching())
   }
 }
 
-export const updateUserStore = (user) => async (dispatch) => dispatch(getDataSuccess(user))
+export const updateUserStore = (user) => async (dispatch) =>
+  dispatch(getDataSuccess(user))
 
 export const checkAuth = (accessToken) => async (dispatch, getState) => {
   try {
-
-    const response = await fetch(api.getCars, {
+    const response = await fetch(api.getConversations, {
       method: 'GET',
       headers: {
         Accept: 'application/json',
@@ -109,28 +113,21 @@ export const checkAuth = (accessToken) => async (dispatch, getState) => {
     })
     const json = await response.json()
     const { error } = json
-    console.log({
-      json,
-      'b':'Hello what',
-    })
     if (error) {
       return false
     }
     return true
-  }
-  catch (error) {
-    console.log({
-      error,
-      x:'Heelo Im here ',
-    })
+  } catch (error) {
     return false
   }
 }
 
-export const getUserProfile =  () =>  async (dispatch,getState) => {
+export const getUserProfile = () => async (dispatch, getState) => {
   dispatch(startUserFetching())
   try {
-    const { userData: { accessToken } } = getState()
+    const {
+      userData: { accessToken },
+    } = getState()
     const response = await fetch(api.getUserProfile, {
       method: 'GET',
       headers: {
@@ -139,33 +136,34 @@ export const getUserProfile =  () =>  async (dispatch,getState) => {
       },
     })
     const json = await response.json()
-    const {  user } = json
+    const { user } = json
     await AsyncStorage.setItem('@user', JSON.stringify({ user }))
 
     dispatch(updateUserData(user))
     return user
-  }
-  catch (error) {
-    dispatch(errorHappened({
-      type: 'error',
-      title: 'Error',
-      message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
-      error,
-    }))
+  } catch (error) {
+    dispatch(
+      errorHappened({
+        type: 'error',
+        title: 'Error',
+        message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
+        error,
+      })
+    )
     return false
-  }
-  finally {
+  } finally {
     dispatch(finishUserFetching())
   }
 }
 
-
-export const updateProfile =  (field,value) => async (dispatch,getState) => {
+export const updateProfile = (field, value) => async (dispatch, getState) => {
   try {
     const data = new FormData()
     data.append(field, value)
     dispatch(startUserFetching())
-    const { userData: { accessToken } } = getState()
+    const {
+      userData: { accessToken },
+    } = getState()
 
     const response = await fetch(`${api.updateProfile}${field}`, {
       method: 'POST',
@@ -177,36 +175,41 @@ export const updateProfile =  (field,value) => async (dispatch,getState) => {
       body: data,
     })
     const json = await response.json()
-    const { status,error } = json
+    const { status, error } = json
 
-    if (!status) { dispatch(errorHappened({
-      type: 'error',
-      title: 'Error',
-      message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
-      error,
-    }))
-    return false
+    if (!status) {
+      dispatch(
+        errorHappened({
+          type: 'error',
+          title: 'Error',
+          message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
+          error,
+        })
+      )
+      return false
     }
 
     dispatch(getUserProfile())
-  }
-  catch (error) {
-    dispatch(errorHappened({
-      type: 'error',
-      title: 'Error',
-      message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
-      error,
-    }))
+  } catch (error) {
+    dispatch(
+      errorHappened({
+        type: 'error',
+        title: 'Error',
+        message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
+        error,
+      })
+    )
     return false
-  }
-  finally {
+  } finally {
     dispatch(finishUserFetching())
   }
 }
-export const getConversations =  () =>  async (dispatch,getState) => {
+export const getConversations = () => async (dispatch, getState) => {
   dispatch(startUserFetching())
   try {
-    const { userData: { accessToken } } = getState()
+    const {
+      userData: { accessToken },
+    } = getState()
     const response = await fetch(api.getConversations, {
       method: 'GET',
       headers: {
@@ -215,26 +218,28 @@ export const getConversations =  () =>  async (dispatch,getState) => {
       },
     })
     const json = await response.json()
-    const {  conversations } = json
+    const { conversations } = json
     dispatch(getDataSuccess({ conversations }))
-  }
-  catch (error) {
-    dispatch(errorHappened({
-      type: 'error',
-      title: 'Error',
-      message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
-      error,
-    }))
+  } catch (error) {
+    dispatch(
+      errorHappened({
+        type: 'error',
+        title: 'Error',
+        message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
+        error,
+      })
+    )
     return false
-  }
-  finally {
+  } finally {
     dispatch(finishUserFetching())
   }
 }
-export const getSupportTickets =  () =>  async (dispatch,getState) => {
+export const getSupportTickets = () => async (dispatch, getState) => {
   dispatch(startUserFetching())
   try {
-    const { userData: { accessToken } } = getState()
+    const {
+      userData: { accessToken },
+    } = getState()
     const response = await fetch(api.getSupportTickets, {
       method: 'GET',
       headers: {
@@ -243,26 +248,31 @@ export const getSupportTickets =  () =>  async (dispatch,getState) => {
       },
     })
     const json = await response.json()
-    const {  customerServices } = json
+    const { customerServices } = json
     dispatch(getDataSuccess({ customerServices }))
-  }
-  catch (error) {
-    dispatch(errorHappened({
-      type: 'error',
-      title: 'Error',
-      message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
-      error,
-    }))
+  } catch (error) {
+    dispatch(
+      errorHappened({
+        type: 'error',
+        title: 'Error',
+        message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
+        error,
+      })
+    )
     return false
-  }
-  finally {
+  } finally {
     dispatch(finishUserFetching())
   }
 }
-export const getConversationByReceiverId =  (id) =>  async (dispatch,getState) => {
+export const getConversationByReceiverId = (id) => async (
+  dispatch,
+  getState
+) => {
   dispatch(startUserFetching())
   try {
-    const { userData: { accessToken } } = getState()
+    const {
+      userData: { accessToken },
+    } = getState()
     const response = await fetch(`${api.getConversationByReceiverId}${id}`, {
       method: 'GET',
       headers: {
@@ -271,26 +281,28 @@ export const getConversationByReceiverId =  (id) =>  async (dispatch,getState) =
       },
     })
     const json = await response.json()
-    const {  conversation } = json
+    const { conversation } = json
     dispatch(getDataSuccess({ conversation }))
-  }
-  catch (error) {
-    dispatch(errorHappened({
-      type: 'error',
-      title: 'Error',
-      message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
-      error,
-    }))
+  } catch (error) {
+    dispatch(
+      errorHappened({
+        type: 'error',
+        title: 'Error',
+        message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
+        error,
+      })
+    )
     return false
-  }
-  finally {
+  } finally {
     dispatch(finishUserFetching())
   }
 }
-export const getCustomerServiceById =  (id) =>  async (dispatch,getState) => {
+export const getCustomerServiceById = (id) => async (dispatch, getState) => {
   dispatch(startUserFetching())
   try {
-    const { userData: { accessToken } } = getState()
+    const {
+      userData: { accessToken },
+    } = getState()
     const response = await fetch(`${api.getCustomerServiceById}${id}`, {
       method: 'GET',
       headers: {
@@ -299,91 +311,104 @@ export const getCustomerServiceById =  (id) =>  async (dispatch,getState) => {
       },
     })
     const json = await response.json()
-    const {  customerService } = json
-    dispatch(getDataSuccess({ supportTicketConversation:customerService }))
-  }
-  catch (error) {
-    dispatch(errorHappened({
-      type: 'error',
-      title: 'Error',
-      message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
-      error,
-    }))
+    const { customerService } = json
+    dispatch(getDataSuccess({ supportTicketConversation: customerService }))
+  } catch (error) {
+    dispatch(
+      errorHappened({
+        type: 'error',
+        title: 'Error',
+        message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
+        error,
+      })
+    )
     return false
-  }
-  finally {
+  } finally {
     dispatch(finishUserFetching())
   }
 }
-export const sendConversationMessage =  (receiverId,message) =>  async (dispatch,getState) => {
+export const sendConversationMessage = (receiverId, message) => async (
+  dispatch,
+  getState
+) => {
   dispatch(startUserFetching())
   try {
     const data = new FormData()
     data.append('message', message)
-    const { userData: { accessToken } } = getState()
+    const {
+      userData: { accessToken },
+    } = getState()
     await fetch(`${api.sendConversationMessage}${receiverId}`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
         Authorization: `Bearer ${accessToken}`,
         'Content-Type': 'multipart/form-data',
-
       },
-      body:data,
+      body: data,
     })
     dispatch(getConversationByReceiverId(receiverId))
-  }
-  catch (error) {
-    dispatch(errorHappened({
-      type: 'error',
-      title: 'Error',
-      message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
-      error,
-    }))
+  } catch (error) {
+    dispatch(
+      errorHappened({
+        type: 'error',
+        title: 'Error',
+        message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
+        error,
+      })
+    )
     return false
-  }
-  finally {
+  } finally {
     dispatch(finishUserFetching())
   }
 }
-export const sendSupportTicketReply =  (id,message) =>  async (dispatch,getState) => {
+export const sendSupportTicketReply = (id, message) => async (
+  dispatch,
+  getState
+) => {
   dispatch(startUserFetching())
   try {
     const data = new FormData()
     data.append('message', message)
-    const { userData: { accessToken } } = getState()
+    const {
+      userData: { accessToken },
+    } = getState()
     await fetch(`${api.sendSupportTicketReply}${id}`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
         Authorization: `Bearer ${accessToken}`,
         'Content-Type': 'multipart/form-data',
-
       },
-      body:data,
+      body: data,
     })
     dispatch(getCustomerServiceById(id))
-  }
-  catch (error) {
-    dispatch(errorHappened({
-      type: 'error',
-      title: 'Error',
-      message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
-      error,
-    }))
+  } catch (error) {
+    dispatch(
+      errorHappened({
+        type: 'error',
+        title: 'Error',
+        message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
+        error,
+      })
+    )
     return false
-  }
-  finally {
+  } finally {
     dispatch(finishUserFetching())
   }
 }
-export const setSelectedConversation = (id,name,image) => async (dispatch) => {
-  dispatch(getDataSuccess({ selectedReceiver: { id,name ,image } }))
+export const setSelectedConversation = (id, name, image) => async (
+  dispatch
+) => {
+  dispatch(getDataSuccess({ selectedReceiver: { id, name, image } }))
 }
 export const setSelectedSupportTicket = (id) => async (dispatch) => {
   dispatch(getDataSuccess({ selectedSupportTicket: id }))
 }
-export const forgetPassword =  ({ email = 'salkdmklsamdkl',phone }) =>  async (dispatch,getState) => {
+export const forgetPassword = ({ email = 'salkdmklsamdkl', phone }) => async (
+  dispatch,
+  getState
+) => {
   dispatch(startUserFetching())
   try {
     const data = new FormData()
@@ -394,32 +419,36 @@ export const forgetPassword =  ({ email = 'salkdmklsamdkl',phone }) =>  async (d
       headers: {
         Accept: 'application/json',
         'Content-Type': 'multipart/form-data',
-
       },
-      body:data,
+      body: data,
     })
     const json = await response.json()
-    const { status,msg } = json
+    const { status, msg } = json
 
     if (!status) throw new Error(msg)
     return true
-  }
-  catch (error) {
-    dispatch(errorHappened({
-      type: 'error',
-      title: 'Error',
-      message: error.message,
-      error,
-    }))
+  } catch (error) {
+    dispatch(
+      errorHappened({
+        type: 'error',
+        title: 'Error',
+        message: error.message,
+        error,
+      })
+    )
     return false
-  }
-  finally {
+  } finally {
     dispatch(finishUserFetching())
   }
 }
-export const register =  ({
-  phone,email,name,password,location,username,
-}) =>  async (dispatch,getState) => {
+export const register = ({
+  phone,
+  email,
+  name,
+  password,
+  location,
+  username,
+}) => async (dispatch, getState) => {
   dispatch(startUserFetching())
   try {
     const data = new FormData()
@@ -435,45 +464,54 @@ export const register =  ({
       headers: {
         Accept: 'application/json',
         'Content-Type': 'multipart/form-data',
-
       },
-      body:data,
+      body: data,
     })
     const json = await response.json()
-    const { user,msg } = json
+    const { user, msg } = json
 
-    if (!user) throw new Error(msg.error ? (msg.error.email || msg.error.username || msg.error.password) : msg)
-    dispatch(errorHappened({
-      type: 'success',
-      title: 'Done',
-      message: 'Your account created!' ,
-    }))
+    if (!user) {
+      throw new Error(
+        msg.error
+          ? msg.error.email || msg.error.username || msg.error.password
+          : msg
+      )
+    }
+    dispatch(
+      errorHappened({
+        type: 'success',
+        title: 'Done',
+        message: 'Your account created!',
+      })
+    )
     return true
-  }
-  catch (error) {
-    console.log({
-      error,
-    })
-    dispatch(errorHappened({
-      type: 'error',
-      title: 'Error',
-      message: error.message,
-      error,
-    }))
+  } catch (error) {
+
+    dispatch(
+      errorHappened({
+        type: 'error',
+        title: 'Error',
+        message: error.message,
+        error,
+      })
+    )
     return false
-  }
-  finally {
+  } finally {
     dispatch(finishUserFetching())
   }
 }
-export const sendCustomerService =  ({  title,message }) =>  async (dispatch,getState) => {
+export const sendCustomerService = ({ title, message }) => async (
+  dispatch,
+  getState
+) => {
   dispatch(startUserFetching())
   try {
     const data = new FormData()
     data.append('title', title)
     data.append('message', message)
-    const { userData: { accessToken } } = getState()
-
+    const {
+      userData: { accessToken },
+    } = getState()
 
     const response = await fetch(`${api.createCustomerServices}`, {
       method: 'POST',
@@ -481,68 +519,73 @@ export const sendCustomerService =  ({  title,message }) =>  async (dispatch,get
         Accept: 'application/json',
         'Content-Type': 'multipart/form-data',
         Authorization: `Bearer ${accessToken}`,
-
       },
-      body:data,
+      body: data,
     })
     const json = await response.json()
-    const { status,msg } = json
+    const { status, msg } = json
     if (!status) throw new Error(msg)
     // dispatch(getDataSuccess({  }))
-  }
-  catch (error) {
-    dispatch(errorHappened({
-      type: 'error',
-      title: 'Error',
-      message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
-      error,
-    }))
+  } catch (error) {
+    dispatch(
+      errorHappened({
+        type: 'error',
+        title: 'Error',
+        message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
+        error,
+      })
+    )
     return false
-  }
-  finally {
+  } finally {
     dispatch(finishUserFetching())
   }
 }
-export const sendDriverLocation =  ({  latitude,longitude }) =>  async (dispatch,getState) => {
+export const sendDriverLocation = ({ latitude, longitude }) => async (
+  dispatch,
+  getState
+) => {
   dispatch(startUserFetching())
   try {
     const data = new FormData()
     data.append('lat', latitude)
     data.append('lng', longitude)
-    const { userData: { accessToken } } = getState()
+    const {
+      userData: { accessToken },
+    } = getState()
 
-
-    await fetch(`${api.updateDriverLocation}`, {
+    const response =  await fetch(`${api.updateDriverLocation}`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'multipart/form-data',
         Authorization: `Bearer ${accessToken}`,
-
       },
-      body:data,
+      body: data,
     })
-  }
-  catch (error) {
-    dispatch(errorHappened({
-      type: 'error',
-      title: 'Error',
-      message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
-      error,
-    }))
+    const json =  await response.json()
+
+  } catch (error) {
+    dispatch(
+      errorHappened({
+        type: 'error',
+        title: 'Error',
+        message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
+        error,
+      })
+    )
     return false
-  }
-  finally {
+  } finally {
     dispatch(finishUserFetching())
   }
 }
-export const updateUserFcm =  (token) =>  async (dispatch,getState) => {
+export const updateUserFcm = (token) => async (dispatch, getState) => {
   dispatch(startUserFetching())
   try {
     const data = new FormData()
     data.append('fcm_token', token)
-    const { userData: { accessToken } } = getState()
-
+    const {
+      userData: { accessToken },
+    } = getState()
 
     await fetch(`${api.updateFcm}`, {
       method: 'POST',
@@ -550,83 +593,110 @@ export const updateUserFcm =  (token) =>  async (dispatch,getState) => {
         Accept: 'application/json',
         'Content-Type': 'multipart/form-data',
         Authorization: `Bearer ${accessToken}`,
-
       },
-      body:data,
+      body: data,
     })
-  }
-  catch (error) {
-    dispatch(errorHappened({
-      type: 'error',
-      title: 'Error',
-      message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
-      error,
-    }))
+  } catch (error) {
+    dispatch(
+      errorHappened({
+        type: 'error',
+        title: 'Error',
+        message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
+        error,
+      })
+    )
     return false
-  }
-  finally {
+  } finally {
     dispatch(finishUserFetching())
   }
 }
-export const updatePassword =  ({ confirmPassword ,password }) =>  async (dispatch,getState) => {
+export const updatePassword = ({ confirmPassword, password }) => async (
+  dispatch,
+  getState
+) => {
   dispatch(startUserFetching())
   try {
     const data = new FormData()
     data.append('password', password)
     data.append('password_confirmation', confirmPassword)
-    const { userData: { code } } = getState()
+    const {
+      userData: { code },
+    } = getState()
     data.append('code', code)
 
-
-    await fetch(`${api.resetPassword}`, {
+    const response = await fetch(`${api.resetPassword}`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'multipart/form-data',
-
       },
-      body:data,
+      body: data,
     })
-  }
-  catch (error) {
-    dispatch(errorHappened({
-      type: 'error',
-      title: 'Error',
-      message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
-      error,
-    }))
+    const { status ,error} = await response.json()
+    if (error) {
+      dispatch(
+        errorHappened({
+          type: 'error',
+          title: 'Error',
+          message: 'يرجى التحقق من كلمة المرور',
+        })
+      )
+      return false
+    }
+    if (status) {
+      return true
+    }
+  } catch (error) {
+    dispatch(
+      errorHappened({
+        type: 'error',
+        title: 'Error',
+        message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
+        error,
+      })
+    )
     return false
-  }
-  finally {
+  } finally {
     dispatch(finishUserFetching())
   }
 }
-export const sendConfirmCode =  ({ confirmCode }) =>  async (dispatch,getState) => {
+export const sendConfirmCode = ({ confirmCode }) => async (
+  dispatch,
+  getState
+) => {
   dispatch(startUserFetching())
   try {
     const data = new FormData()
     data.append('code', confirmCode)
 
-    await fetch(`${api.checkPassCode}`, {
+    const response = await fetch(`${api.checkPassCode}`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'multipart/form-data',
       },
-      body:data,
+      body: data,
     })
-    dispatch(updateCode({ confirmCode }))
-  }
-  catch (error) {
-    dispatch(errorHappened({
-      type: 'error',
-      title: 'Error',
-      message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
-      error,
-    }))
+    const { status } = await response.json()
+    if (status) {
+      dispatch(
+        getDataSuccess({
+          code: confirmCode,
+        })
+      )
+      return true
+    }
+  } catch (error) {
+    dispatch(
+      errorHappened({
+        type: 'error',
+        title: 'Error',
+        message: 'حدث خطأ ما يرجى التأكد من اتصالك بالانترنت',
+        error,
+      })
+    )
     return false
-  }
-  finally {
+  } finally {
     dispatch(finishUserFetching())
   }
 }

@@ -11,6 +11,7 @@ import { bindActionCreators } from 'redux'
 import * as userActions from 'actions/users'
 import logo from 'assets/marinLogo.png'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
+import Geolocation from '@react-native-community/geolocation'
 import I18n from '../../utilites/i18n'
 
 const screen = Dimensions.get('screen')
@@ -30,9 +31,24 @@ class Login extends Component {
     const { actions:{ login } , navigation: { navigate } } = this.props
     const { email,password }  = this.state
     const user = await login({ email,password })
-
+    const {
+      actions:{
+        sendDriverLocation,
+      },
+    } = this.props
     if (user) {
-      if (user.type === '3') return navigate('HomeDriverPage')
+      if (user.type === '3') {
+        if (!global.driverLocation)
+        {
+          global.driverLocation =   setInterval(async () => {
+            await Geolocation.getCurrentPosition(async(result) => {
+              const { coords:{ latitude,longitude } } = result
+              await sendDriverLocation({ latitude,longitude })
+            },(error) => {
+
+            }, { enableHighAccuracy:false })
+          },40000)}
+        return navigate('HomeDriverPage')}
       else    navigate('HomePageDrawer')
     }
   }
@@ -130,9 +146,11 @@ class Login extends Component {
                     labelStyle={{ ...inputLabelStyle }}
                     style={{
                     }}
+                    autoCapitalize="none"
                     inputContainerStyle={{ ...inputContainerStyle }}
                     value={password}
                     onChangeText={(value) => this.handleChange('password',value)}
+                    onPressOnRightIcon={()=>this.setState()}
                     rightIcon={(
                       <FontAwesome5
                         size={10}
@@ -252,7 +270,7 @@ const inputStyle = {
 const inputLabelStyle = {
   color: '#b0abab',
   fontSize:10,
-  fontWeight:'100',
+  fontWeight:'600',
 
 }
 
@@ -290,7 +308,7 @@ const buttonStyle = {
     alignContent: 'center',
     alignSelf:'center',
     color: '#FFFFFF',
-    fontWeight: '100',
+    fontWeight: '600',
     fontSize:12,
     justifyContent: 'center',
 

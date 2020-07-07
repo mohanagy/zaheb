@@ -7,13 +7,15 @@ import { bindActionCreators } from 'redux'
 import * as storeActions from 'actions/store'
 import * as usersActions from 'actions/users'
 import PropTypes from 'prop-types'
+import { Input } from 'react-native-elements'
+import I18n from '../../utilites/i18n'
 
 const screen = Dimensions.get('screen')
 
 
 class SubServices extends Component {
   static navigationOptions = ({ navigation }) => ({
-    headerTitle: 'Sub Services',
+    headerTitle: I18n.t('sub_services'),
     headerTitleStyle: {
       textAlign: 'center',
       flexGrow: 1,
@@ -49,6 +51,8 @@ class SubServices extends Component {
       />),
   });
 
+  state = { filteredServices: [], search: '' };
+
   componentDidMount=async () => {
     const { storeData:{ selectedCarId },actions:{ getServicesByCarId },navigation:{ navigate } } = this.props
     if (!selectedCarId)navigate('HomePage')
@@ -61,8 +65,34 @@ class SubServices extends Component {
     navigate('Workshops')
   }
 
+  handleSearch = (text) => {
+    const {
+      storeData: { services },
+    } = this.props
+
+    this.setState({
+      search: text,
+    })
+    if (!text) {
+      this.setState({
+        filteredServices: services,
+      })
+    }
+    const filtered = services.filter((service) =>
+      service.en_name.toLowerCase().includes(text.toLowerCase())  || service.ar_name.includes(text)
+    )
+    this.setState({
+      filteredServices: filtered,
+    })
+  };
+
   render() {
     const { storeData:{ services,isFetching } } = this.props
+    const { filteredServices, search } = this.state
+
+    const data =
+    filteredServices.length || search ? filteredServices : services
+
     if (isFetching) { return (
       <Group
         style={{
@@ -80,9 +110,12 @@ class SubServices extends Component {
     ) }
     return (
       <ScrollContainer>
+        <Input
+          placeholder="Search" onChangeText={this.handleSearch}
+        />
         <Group style={{ backgroundColor: '#F6F6F6', minHeight: screen.height }}>
           {
-            services.map(({ image ,id,en_name }) => (
+            data.map(({ image ,id,en_name,ar_name }) => (
               <SubServiceCard
                 source={{ uri: image }}
                 style={{
@@ -93,7 +126,7 @@ class SubServices extends Component {
                 }}
                 containerStyle={{ overflow: 'hidden' }}
                 key={id}
-                name={en_name}
+                name={I18n.locale === 'ar' ? (ar_name || en_name) : en_name}
                 onPress={() => this.handleSelectService(id)}
               />
             ))

@@ -8,19 +8,20 @@ import PropTypes from 'prop-types'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { storeActions } from 'actions'
+import I18n from '../../utilites/i18n'
 
 
 const screen = Dimensions.get('screen')
 const status = {
-  '1':'New',
-  '2':'In Shipping',
-  '3':'Complete',
-  '4':'Reject',
-  '5':'In Progress',
+  '1': I18n.t('new'),
+  '2': I18n.t('in_shipping'),
+  '3': I18n.t('complete'),
+  '4': I18n.t('reject'),
+  '5': I18n.t('in_progress'),
 }
 class PurchaseDetails extends Component {
   static navigationOptions = ({ navigation }) => ({
-    headerTitle: 'Purchase Details',
+    headerTitle:I18n.t('purchase_details') ,
     headerTitleStyle: {
       textAlign: 'center',
       flexGrow: 1,
@@ -57,12 +58,12 @@ class PurchaseDetails extends Component {
 
   state={
     requestDetailsFields : [
-      { title: 'requestName', fieldName: 'Request name', icon: 'clipboard-list' },
-      { title: 'requestDate', fieldName: 'Request date', icon: 'calendar' },
-      { title: 'location', fieldName: 'Location', icon: 'map-marker-alt' },
-      { title: 'orderStatus', fieldName: 'Order status', icon: 'exclamation-circle' },
-      { title: 'driverName', fieldName: 'Driver name', icon: 'car' },
-      { title: 'supplierName', fieldName: 'Supplier name', icon: 'hand-holding-usd' },
+      { title: 'requestName', fieldName: I18n.t('request_name'), icon: 'clipboard-list' },
+      { title: 'requestDate', fieldName: I18n.t('request_date'), icon: 'calendar' },
+      { title: 'location', fieldName:I18n.t('location'), icon: 'map-marker-alt' },
+      { title: 'orderStatus', fieldName: I18n.t('order_status'), icon: 'exclamation-circle' },
+      { title: 'driverName', fieldName: I18n.t('driver_name'), icon: 'car' },
+      { title: 'supplierName', fieldName: I18n.t('supplier_name'), icon: 'hand-holding-usd' },
     ],
   }
 
@@ -123,7 +124,7 @@ class PurchaseDetails extends Component {
             {product.supplier_status === '1' ?   (
               <SplashButton
                 onPress={() => this.handleChangeStatus(2)}
-                title="Cancel Request"
+                title={I18n.t('cancel_request')}
                 style={{
                   buttonStyle: {
                     backgroundColor: '#1E1E1E',

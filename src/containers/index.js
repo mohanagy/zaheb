@@ -48,6 +48,7 @@ import MyOrderDetails from './MyOrderDetails'
 import ContactUsOut from './ContactUsOut'
 import UpdatePassword from './UpdatePassword'
 import ConfirmCode from './ConfirmCode'
+import Services from './Services'
 
 export {
   Login,
@@ -100,4 +101,5 @@ export {
   ContactUsOut,
   UpdatePassword,
   ConfirmCode,
+  Services,
 }

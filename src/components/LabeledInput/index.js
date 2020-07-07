@@ -7,7 +7,7 @@ import { Group } from 'components'
 export const LabeledInput = (props) => {
   const {
     containerStyle, labelStyle, inputStyle, label, onChangeText, secureTextEntry,disabled,inputContainerStyle,
-    style,    isRequired,rightIcon,placeholder,
+    style,    isRequired,rightIcon,placeholder,autoCapitalize,
   } = props
   return (
     <Group style={containerStyle}>
@@ -25,6 +25,7 @@ export const LabeledInput = (props) => {
         required={isRequired}
         rightIcon={rightIcon}
         placeholder={placeholder}
+        autoCapitalize={autoCapitalize}
 
 
       >

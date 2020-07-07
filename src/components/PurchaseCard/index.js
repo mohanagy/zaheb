@@ -96,7 +96,7 @@ export const PurchaseCard = ({
           }}
         >
           <Details
-            text={`$${cost}`}
+            text={`${cost} SAR`}
             style={{
               backgroundColor: '#B0ABAB',
               borderRadius: 50,

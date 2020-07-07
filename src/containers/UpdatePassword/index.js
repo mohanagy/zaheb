@@ -78,6 +78,8 @@ class UpdatePassword extends Component {
             labelStyle={inputLabelStyle}
             containerStyle={inputContainerStyle}
             value={password}
+            secureTextEntry
+            autoCapitalize="none"
             onChangeText={(value) => this.handleChange('password',value)}
           />
           <Group
@@ -98,6 +100,8 @@ class UpdatePassword extends Component {
             labelStyle={inputLabelStyle}
             containerStyle={{ ...inputContainerStyle, marginBottom: 60 }}
             value={confirmPassword}
+            secureTextEntry
+            autoCapitalize="none"
             onChangeText={(value) => this.handleChange('confirmPassword',value)}
           />
           <SplashButton
@@ -149,7 +153,7 @@ const buttonStyle = {
   },
   titleStyle: {
     color: '#FFFFFF',
-    fontWeight: '100',
+    fontWeight: '600',
     fontSize: screen.width > 600 ? 18 : 10,
     fontFamily: 'HelveticaNeueW23forSKY-Reg',
   },

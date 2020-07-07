@@ -17,38 +17,39 @@ import bmw from '../../assets/bmw-logo-64.png'
 import hyundai from '../../assets/hyundai-logo-64.png'
 import mercedes from '../../assets/mercedes-logo-64.png'
 import skoda from '../../assets/skoda-logo-64.png'
+import I18n from '../../utilites/i18n'
 
 const screen = Dimensions.get('screen')
 
 const WorkshopProfileTab = ({ workShopProfile }) => (
   <Group style={{ width: '100%', alignItems: 'stretch' }}>
     <Details
-      text="Private details"
+      text={I18n.t('private_details')}
       style={{
         color: '#1E1E1E', marginHorizontal: 0, fontSize: 20, alignSelf: 'flex-start',
       }}
     />
     <LabeledInput
       disabled
-      label="Name"
+      label={I18n.t('name')}
       placeholder={workShopProfile.name}
       {...styles.inputStyle}
     />
     <LabeledInput
       disabled
-      label="Email"
+      label={I18n.t('email')}
       placeholder={workShopProfile.email}
       {...styles.inputStyle}
     />
     <LabeledInput
       disabled
-      label="Adress"
+      label={I18n.t('address')}
       placeholder={workShopProfile.address}
       {...styles.inputStyle}
     />
     <LabeledInput
       disabled
-      label="Mobile Number"
+      label={I18n.t('mobile')}
       placeholder={workShopProfile.phone}
       {...styles.inputStyle}
     />
@@ -56,7 +57,7 @@ const WorkshopProfileTab = ({ workShopProfile }) => (
 )
 const WorkshopTimesTab = ({ workShopProfile })  => (
   <Group style={{ alignItems: 'flex-start' }}>
-    <Details text="Work-days" style={{ color: '#1E1E1E', fontSize: 22, marginHorizontal: 0 }} />
+    <Details text={I18n.t('work_days')} style={{ color: '#1E1E1E', fontSize: 22, marginHorizontal: 0 }} />
     <Group
       style={{
         flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', marginBottom: 15,
@@ -65,7 +66,7 @@ const WorkshopTimesTab = ({ workShopProfile })  => (
       <FontAwesome5 name="calendar" size={20} />
       <Details style={{ color: '#1E1E1E', marginHorizontal: 5 }} text="From Sunday to Thursday" />
     </Group>
-    <Details text="Work-hours" style={{ color: '#1E1E1E', fontSize: 22, marginHorizontal: 0 }} />
+    <Details text={I18n.t('work_hours')} style={{ color: '#1E1E1E', fontSize: 22, marginHorizontal: 0 }} />
     <Group
       style={{
         flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', marginBottom: 15,
@@ -79,15 +80,9 @@ const WorkshopTimesTab = ({ workShopProfile })  => (
 
 const WorkshopSettingsTab = ({ workShopProfile })  => (
   <Group style={{ alignItems: 'flex-start', width: '100%' }}>
-    <Details text="Service:" style={{ color: '#1E1E1E', fontSize: 22 }} />
-    <Details text="Supplier" style={{ color: '#1E1E1E', fontSize: 18, fontWeight: '800' }} />
-    <Details text="Sub Service:" style={{ color: '#1E1E1E', fontSize: 22 }} />
-    <Group style={{ width: '100%' }}>
-      <InputField disabled style={{ inputStyle: { ...styles.inputStyle.inputStyle, width: '100%' } }} />
-      <InputField disabled style={{ inputStyle: { ...styles.inputStyle.inputStyle, width: '100%' } }} />
-      <InputField disabled style={{ inputStyle: { ...styles.inputStyle.inputStyle, width: '100%' } }} />
-    </Group>
-    <Details text="Car Type:" style={{ color: '#1E1E1E', fontSize: 22 }} />
+    <Details text={`${I18n.t('service')}:`} style={{ color: '#1E1E1E', fontSize: 22 }} />
+    <Details text={I18n.t('supplier')} style={{ color: '#1E1E1E', fontSize: 18, fontWeight: '800' }} />
+    <Details text={`${I18n.t('car_type')}:`} style={{ color: '#1E1E1E', fontSize: 22 }} />
     <SelectLogo
       options={[
         { source: nissan },
@@ -102,7 +97,7 @@ const WorkshopSettingsTab = ({ workShopProfile })  => (
 
 class WorkshopSupplier extends Component {
   static navigationOptions = ({ navigation }) => ({
-    headerTitle: 'Workshop Profile',
+    headerTitle: I18n.t('workshop_profile') ,
     headerTitleStyle: {
       textAlign: 'center',
       flexGrow: 1,
@@ -166,6 +161,8 @@ class WorkshopSupplier extends Component {
         <ActivityIndicator size="large" />
       </Group>
     ) }
+
+
     return (
       <ScrollContainer
         contentContainerStyle={{

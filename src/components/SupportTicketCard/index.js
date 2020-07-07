@@ -40,7 +40,7 @@ export const SupportTicketCard = ({
         >
           <Title
             style={{
-              color: '#000', fontSize: screen.width > 600 ? 14 : 10, marginHorizontal: 0, fontWeight: '100',
+              color: '#000', fontSize: screen.width > 600 ? 14 : 10, marginHorizontal: 0, fontWeight: '600',
             }}
             text={title}
           />
@@ -67,7 +67,7 @@ export const SupportTicketCard = ({
 
           <Title
             style={{
-              color: '#000', fontSize: screen.width > 600 ? 14 : 10, marginHorizontal: 0, fontWeight: '100',
+              color: '#000', fontSize: screen.width > 600 ? 14 : 10, marginHorizontal: 0, fontWeight: '600',
 
             }}
             text={message}

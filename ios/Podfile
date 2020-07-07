@@ -37,7 +37,9 @@ target 'maren' do
   pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
   pod 'RNFBMessaging', :path => '../node_modules/@react-native-firebase/messaging'
   pod 'RNCPushNotificationIOS', :path => '../node_modules/@react-native-community/push-notification-ios'
-
+  pod 'react-native-maps', :path => '../node_modules/react-native-maps'
+  pod 'react-native-google-maps', :path => '../node_modules/react-native-maps'
+  pod 'PayPal-iOS-SDK'
   target 'marenTests' do
     inherit! :search_paths
     # Pods for testing

@@ -1,18 +1,18 @@
 import React, { Component } from 'react'
-import { PermissionsAndroid,ActivityIndicator } from 'react-native'
+import { PermissionsAndroid, ActivityIndicator } from 'react-native'
 import Geolocation from '@react-native-community/geolocation'
 
-import {  Maps, Group, SplashButton } from 'components'
+import { Maps, Group, SplashButton } from 'components'
 import PropTypes from 'prop-types'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { storeActions } from 'actions'
-
+import I18n from '../../utilites/i18n'
 
 class PaymentInformationMap extends Component {
   static navigationOptions = ({ navigation }) => ({
-    headerTitle: 'Please select your location',
+    headerTitle: I18n.t('please_select_your_location'),
     headerTitleStyle: {
       textAlign: 'center',
       flexGrow: 1,
@@ -31,9 +31,9 @@ class PaymentInformationMap extends Component {
         style={{
           marginRight: 10,
           color: '#ffffff',
-
         }}
-      />),
+      />
+    ),
     headerLeft: (
       <FontAwesome5
         name="stream"
@@ -43,45 +43,75 @@ class PaymentInformationMap extends Component {
         style={{
           marginLeft: 10,
           color: '#ffffff',
-
         }}
-      />),
+      />
+    ),
   });
 
-  state={
-    coordinate:{  },
-    lat:22.90162,
-    lng:47.02226,
-  }
+  state = {
+    coordinate: {},
+    lat: 22.90162,
+    lng: 47.02226,
+    markerCoordinates:{
+      latitude:22.90162,
+      longitude:47.02226,
+    },
+  };
 
-    componentDidMount =async () => {
-      console.log('askldml')
-      Geolocation.getCurrentPosition((result) => {
-        const { coords:{ latitude,longitude } } = result
+  componentDidMount = async () => {
+    Geolocation.getCurrentPosition(
+      result => {
+        const {
+          coords: { latitude, longitude },
+        } = result
         this.setState({
-          lat:latitude,
-          lng:longitude,
-        })
-        const { coordinate } = this.state
-        if (!coordinate.latitude) { this.setState({
-          coordinate:{
+          lat: latitude,
+          lng: longitude,
+          markerCoordinates:{
             latitude,
             longitude,
           },
-        }) }
-      },(error) => {      }, { enableHighAccuracy:true })
-    }
+        })
+        const { coordinate } = this.state
+        if (!coordinate.latitude) {
+          this.setState({
+            coordinate: {
+              latitude,
+              longitude,
+            },
+          })
+        }
+      },
+      error => {},
+      { enableHighAccuracy: true }
+    )
+  };
 
-    onRegionChange=(coordinate) => {
-      this.setState({ coordinate })
-    }
+  onRegionChange = coordinate => {
+    this.setState({ coordinate })
+  };
 
-    render() {
-      const {        lat,lng ,coordinate     } = this.state
-      const {
-        storeData:{           isFetching        },
-      } = this.props
-      if (isFetching) { return (
+
+  updateMarkerCoordinates = coordinate => {
+    this.setState({ markerCoordinates:{...coordinate} })
+  };
+
+  updateCoordinates = async () => {
+    const { markerCoordinates } = this.state
+    const {
+      actions: { updateCoordinates },navigation:{navigate},
+    } = this.props
+    await updateCoordinates(markerCoordinates)
+    navigate('PaymentInformation')
+  };
+
+  render() {
+    const { lat, lng, markerCoordinates } = this.state
+    const {
+      storeData: { isFetching },
+    } = this.props
+    if (isFetching) {
+      return (
         <Group
           style={{
             position: 'absolute',
@@ -95,91 +125,94 @@ class PaymentInformationMap extends Component {
         >
           <ActivityIndicator size="large" />
         </Group>
-      ) }
-      return (
-        <Group
-          style={{
-            flex: 1,
-          }}
-        >
-
-          <Maps
-            coordinate={{
-              latitudeDelta:0.025,
-              longitudeDelta:0.025,
-              latitude: lat,
-              longitude: lng,
-            }}
-            onRegionChange={(cords) => this.onRegionChange(cords)}
-            options={{
-              onMapReady: () => (
-                PermissionsAndroid.request(
-                  PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION
-                )),
-
-              zoomEnabled: false,
-              minZoomLevel: 0,
-              defaultZoom: 4,
-              showsUserLocation: true,
-              showUserLocationButton: true,
-              followsUserLocation: true,
-              initialRegion: {
-                latitude: lat,
-                longitude: lng,
-                latitudeDelta: 1,
-                longitudeDelta: 1,
-              },
-              region: {
-                latitude: lat,
-                longitude: lng,
-                latitudeDelta:20.1022,
-                longitudeDelta: 20.4021,
-              },
-            }}
-            workshops={[]}
-            style={{ map: { flex: 1,width: '100%',alignSelf: 'center' } }}
-          >
-          </Maps>
-
-          <Group
-            style={{
-              position: 'absolute', // use absolute position to show button on top of the map
-              bottom: '2%', // for center align
-              alignSelf: 'center', // for align to right
-            }}
-          >
-            <SplashButton
-              title="Confirm"
-              onPress={() => this.toggleModal()}
-              loading={isFetching}
-              style={{
-                buttonStyle: {
-                  backgroundColor: '#1E1E1E',
-                  paddingHorizontal: 15,
-                  borderRadius: 99 ** 9,
-                  width: 180,
-                  alignSelf: 'center',
-                },
-              }}
-            />
-          </Group>
-
-        </Group>
       )
     }
+    return (
+      <Group
+        style={{
+          flex: 1,
+        }}
+      >
+        <Maps
+          coordinate={{
+            latitudeDelta: 0.025,
+            longitudeDelta: 0.025,
+            latitude: lat,
+            longitude: lng,
+          }}
+          // onRegionChange={cords => this.onRegionChange(cords)}
+          options={{
+            onMapReady: () =>
+              PermissionsAndroid.request(
+                PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION
+              ),
+
+            zoomEnabled: true,
+            minZoomLevel: 0,
+            defaultZoom: 4,
+            showsUserLocation: true,
+            showUserLocationButton: true,
+            followsUserLocation: true,
+            initialRegion: {
+              latitude: lat,
+              longitude: lng,
+              latitudeDelta: 1,
+              longitudeDelta: 1,
+            },
+            region: {
+              latitude: lat,
+              longitude: lng,
+              latitudeDelta: 20.1022,
+              longitudeDelta: 20.4021,
+            },
+          }}
+          allowMarker
+          updateMarkerCoordinates={this.updateMarkerCoordinates}
+          markerCoordinates={markerCoordinates}
+          workshops={[]}
+          style={{ map: { flex: 1, width: '100%', alignSelf: 'center' } }}
+        ></Maps>
+
+        <Group
+          style={{
+            position: 'absolute', // use absolute position to show button on top of the map
+            bottom: '2%', // for center align
+            alignSelf: 'center', // for align to right
+          }}
+        >
+          <SplashButton
+            title={I18n.t('confirm')}
+            onPress={() => this.updateCoordinates()}
+            loading={isFetching}
+            style={{
+              buttonStyle: {
+                backgroundColor: '#1E1E1E',
+                paddingHorizontal: 15,
+                borderRadius: 99 ** 9,
+                width: 180,
+                alignSelf: 'center',
+              },
+            }}
+          />
+        </Group>
+      </Group>
+    )
+  }
 }
 PaymentInformationMap.propTypes = {
   storeData: PropTypes.object.isRequired,
-
 }
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators({ ...storeActions }, dispatch),
 })
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   user: state.userData.user,
   storeData: state.storeData,
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(PaymentInformationMap)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PaymentInformationMap)

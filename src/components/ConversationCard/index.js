@@ -68,7 +68,7 @@ export const ConversationCard = ({
               color: '#000',
               fontSize:screen.width > 600 ? 14 : 10,
               marginHorizontal: 0,
-              fontWeight: '100',
+              fontWeight: '600',
             }}
             text={from}
           />

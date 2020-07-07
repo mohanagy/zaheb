@@ -13,11 +13,16 @@ import image from 'assets/splashImage.png'
 import { firebase } from '@react-native-firebase/messaging'
 
 export class SplashLoading extends Component {
+
+
   async componentDidMount() {
     await this.checkInformation()
   }
 
+
   checkInformation=async () => {
+
+    // throw new Error('Update your android version')
     const userToken = await AsyncStorage.getItem('@access_token')
     const firstTime = await AsyncStorage.getItem('@firstTime')
     const {
@@ -25,9 +30,7 @@ export class SplashLoading extends Component {
         checkAuth,updateUserStore ,sendDriverLocation,updateUserFcm,
       },
     } = this.props
-    console.log('aslkdnmklsamdlkm')
     const checkAuthValue = await checkAuth(userToken)
-    console.log('Whaat',userToken)
     if (userToken && checkAuthValue ) {
       const user = await AsyncStorage.getItem('@user')
       const userParsed = JSON.parse(user).user
@@ -35,9 +38,8 @@ export class SplashLoading extends Component {
         await   AsyncStorage.removeItem('@access_token','@user')
       }
       await updateUserStore({ user:JSON.parse(user).user,accessToken:userToken })
-      console.log('Hello there')
+      await firebase.messaging().registerForRemoteNotifications()
       const fcmToken = await firebase.messaging().getToken()
-      console.log('WTF',fcmToken)
       if (fcmToken) {
         await updateUserFcm(fcmToken)
         const enabled = await firebase.messaging().hasPermission()
@@ -46,14 +48,16 @@ export class SplashLoading extends Component {
         }
       }
       if (userParsed.type === '3')     {
-        setTimeout(async () => {
-          Geolocation.getCurrentPosition((result) => {
-            const { coords:{ latitude,longitude } } = result
-            sendDriverLocation({ latitude,longitude }).then(() => {
+        if (!global.driverLocation)
+        {
+          global.driverLocation =   setInterval(async () => {
+            await Geolocation.getCurrentPosition(async(result) => {
+              const { coords:{ latitude,longitude } } = result
+              await sendDriverLocation({ latitude,longitude })
+            },(error) => {
 
-            })
-          },(error) => {      }, { enableHighAccuracy:true })
-        },180000)
+            }, { enableHighAccuracy:false })
+          },40000)}
         return navigate('HomeDriverPage')
       }
       return navigate('HomePageDrawer')

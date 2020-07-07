@@ -11,7 +11,7 @@ class Conversation extends Component {
     return (
       <Group>
         {
-          conversation.reverse().map(({
+          [...conversation].reverse().map(({
             message, updated_at, sender:{ id:senderId,image } = {},id,
           }) => (
             <Group style={{  marginVertical: 5 }} key={id}>

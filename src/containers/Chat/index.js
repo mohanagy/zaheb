@@ -1,21 +1,19 @@
 import React, { Component } from 'react'
-import {
-  Group, Details, Conversation, ScrollContainer ,
-} from 'components'
+import { Group, Details, Conversation, ScrollContainer } from 'components'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
-import { Image, Dimensions  ,ActivityIndicator } from 'react-native'
+import { Image, Dimensions, ActivityIndicator } from 'react-native'
 import { Input } from 'react-native-elements'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as usersActions from 'actions/users'
 import PropTypes from 'prop-types'
-
+import I18n from '../../utilites/i18n'
 
 const screen = Dimensions.get('screen')
 
 class Chat extends Component {
   static navigationOptions = ({ navigation }) => ({
-    headerTitle: 'Chat',
+    headerTitle: I18n.t('chat'),
     headerTitleStyle: {
       textAlign: 'center',
       flexGrow: 1,
@@ -34,9 +32,9 @@ class Chat extends Component {
         style={{
           marginRight: 10,
           color: '#ffffff',
-
         }}
-      />),
+      />
+    ),
     headerLeft: (
       <FontAwesome5
         name="stream"
@@ -46,61 +44,78 @@ class Chat extends Component {
         style={{
           marginLeft: 10,
           color: '#ffffff',
-
         }}
-      />),
+      />
+    ),
   });
 
-  state={
-    message:'',
-  }
+  state = {
+    message: '',
+  };
 
-  componentDidMount =async () => {
-    const { actions:{ getConversationByReceiverId },userData:{ selectedReceiver:{ id } } ,navigation:{ navigate } } = this.props
+  componentDidMount = async () => {
+    const {
+      actions: { getConversationByReceiverId },
+      userData: {
+        selectedReceiver: { id },
+      },
+      navigation: { navigate },
+    } = this.props
 
-
-    if (!id)navigate('Conversations')
+    if (!id) navigate('Conversations')
     await getConversationByReceiverId(id)
-  }
+  };
 
-  handleSendMessage =async (id,message) => {
-    const { actions:{ sendConversationMessage } } = this.props
-    await sendConversationMessage(id,message)
+  handleSendMessage = async (id, message) => {
+    const {
+      actions: { sendConversationMessage },
+    } = this.props
+    await sendConversationMessage(id, message)
     this.setState({
-      message:'',
+      message: '',
     })
-  }
+  };
 
-  handleChangeText =async (value) => {
+  handleChangeText = async value => {
     this.setState({
-      message:value,
+      message: value,
     })
-  }
+  };
 
-  handleBack =async () => {
-    const { navigation:{ navigate } } = this.props
+  handleBack = async () => {
+    const {
+      navigation: { navigate },
+    } = this.props
     navigate('Conversations')
-  }
+  };
 
   render() {
-    const { userData:{ conversation,selectedReceiver:{ name,image,id },isFetching } } = this.props
+    const {
+      userData: {
+        conversation,
+        selectedReceiver: { name, image, id },
+        isFetching,
+      },
+    } = this.props
     const { message } = this.state
 
-    if (isFetching) { return (
-      <Group
-        style={{
-          position: 'absolute',
-          left: 0,
-          right: 0,
-          top: 0,
-          bottom: 0,
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        <ActivityIndicator size="large" />
-      </Group>
-    ) }
+    if (isFetching) {
+      return (
+        <Group
+          style={{
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            top: 0,
+            bottom: 0,
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <ActivityIndicator size="large" />
+        </Group>
+      )
+    }
     return (
       <Group
         style={{
@@ -118,45 +133,70 @@ class Chat extends Component {
             alignItems: 'center',
           }}
         >
-          <Group><FontAwesome5 name="arrow-left" size={25} color="#FFF" onPress={() => this.handleBack()} /></Group>
-          <Group><Details text={name} style={{ color: '#FFF', fontSize: 22 }} /></Group>
-          <Group><Image source={{ uri:image }} style={{ width: 50, height: 50, borderRadius: 99 ** 9 }} /></Group>
+          <Group>
+            <FontAwesome5
+              name="arrow-left"
+              size={25}
+              color="#FFF"
+              onPress={() => this.handleBack()}
+            />
+          </Group>
+          <Group>
+            <Details text={name} style={{ color: '#FFF', fontSize: 22 }} />
+          </Group>
+          <Group>
+            <Image
+              source={{ uri: image }}
+              style={{ width: 50, height: 50, borderRadius: 99 ** 9 }}
+            />
+          </Group>
         </Group>
         <ScrollContainer>
-
-          <Group><Conversation conversation={conversation} /></Group>
+          <Group>
+            <Conversation conversation={conversation} />
+          </Group>
         </ScrollContainer>
-        <Group style={{ flexDirection: 'row', backgroundColor: '#1E1E1E', padding: 10 }}>
+        <Group
+          style={{
+            flexDirection: 'row',
+            backgroundColor: '#1E1E1E',
+            padding: 10,
+          }}
+        >
           <Input
             inputStyle={{ backgroundColor: '#FFF' }}
-            containerStyle={{ width: screen.width - 90, borderBottomWidth: 0, borderRadius: 10 }}
+            containerStyle={{
+              width: screen.width - 90,
+              borderBottomWidth: 0,
+              borderRadius: 10,
+            }}
             value={message}
-            onChangeText={(text) => this.handleChangeText(text)}
-
+            onChangeText={text => this.handleChangeText(text)}
           />
-          <FontAwesome5 name="telegram" size={50} style={{ color: '#FFF', marginLeft: 20 }} onPress={() => this.handleSendMessage(id,message)} />
+          <FontAwesome5
+            name="telegram"
+            size={50}
+            style={{ color: '#FFF', marginLeft: 20 }}
+            onPress={() => this.handleSendMessage(id, message)}
+          />
         </Group>
       </Group>
     )
   }
 }
 
-
-const mapDispatchToProps = (dispatch) => ({
-  actions: bindActionCreators({ ...usersActions },dispatch),
+const mapDispatchToProps = dispatch => ({
+  actions: bindActionCreators({ ...usersActions }, dispatch),
 })
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   storeData: state.storeData,
-  generalData:state.generalData,
-  userData:state.userData,
+  generalData: state.generalData,
+  userData: state.userData,
 })
 
 Chat.propTypes = {
   actions: PropTypes.object.isRequired,
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Chat)
+export default connect(mapStateToProps, mapDispatchToProps)(Chat)

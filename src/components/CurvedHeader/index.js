@@ -1,6 +1,7 @@
+
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
-import { Dimensions } from 'react-native'
+import { Dimensions,TouchableOpacity } from 'react-native'
 import { Image } from 'react-native-elements'
 
 import { Group, Title } from 'components'
@@ -14,7 +15,7 @@ export class CurvedHeader extends Component {
 
   render() {
     const {
-      type, content, source, style, fillSource,
+      type, content, source, style, fillSource,profile,uploadPic,
     } = this.props
     return (
       <Group
@@ -63,7 +64,8 @@ export class CurvedHeader extends Component {
                 }}
               />
             </Group>
-          ) : type === 'image' && (
+          ) : type === 'image' ? profile ?
+
             <Group
               style={{
                 alignSelf: 'center',
@@ -82,22 +84,61 @@ export class CurvedHeader extends Component {
                 overflow: 'hidden',
               }}
             >
-              <Image
-                source={source}
-                containerStyle={{
-                  width: fillSource ? 150 : 100,
-                  height: fillSource ? 150 : 100,
-                  margin: fillSource ? 0 : 0,
-                  resizeMode: 'cover',
-                  borderWidth: 0,
-                  alignItems:'center',
-                  justifyContent: 'center',
-                  alignSelf:'center',
-                  alignContent:'center',
-                }}
-              />
+              <TouchableOpacity onPress={uploadPic}>
+
+
+                <Image
+                  source={source}
+                  containerStyle={{
+                    width: fillSource ? 150 : 100,
+                    height: fillSource ? 150 : 100,
+                    margin: fillSource ? 0 : 0,
+                    resizeMode: 'cover',
+                    borderWidth: 0,
+                    alignItems:'center',
+                    justifyContent: 'center',
+                    alignSelf:'center',
+                    alignContent:'center',
+                  }}
+                />
+              </TouchableOpacity>
             </Group>
-          )
+
+            : (
+              <Group
+                style={{
+                  alignSelf: 'center',
+                  bottom: 70,
+                  width: 150,
+                  height: 150,
+                  position: 'relative',
+                  backgroundColor: '#FFF',
+                  justifyContent: 'center',
+                  borderRadius: 200,
+                  shadowColor: '#BF1E1E1E',
+                  shadowOffset: { width: 0, height: 2 },
+                  shadowOpacity: 0.8,
+                  shadowRadius: 2,
+                  elevation: 5,
+                  overflow: 'hidden',
+                }}
+              >
+                <Image
+                  source={source}
+                  containerStyle={{
+                    width: fillSource ? 150 : 100,
+                    height: fillSource ? 150 : 100,
+                    margin: fillSource ? 0 : 0,
+                    resizeMode: 'cover',
+                    borderWidth: 0,
+                    alignItems:'center',
+                    justifyContent: 'center',
+                    alignSelf:'center',
+                    alignContent:'center',
+                  }}
+                />
+              </Group>
+            ) : null
         }
       </Group>
     )

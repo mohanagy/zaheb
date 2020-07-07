@@ -8,11 +8,12 @@ import { bindActionCreators } from 'redux'
 import * as storeActions from 'actions/store'
 import * as usersActions from 'actions/users'
 import PropTypes from 'prop-types'
+import I18n from '../../utilites/i18n'
 
 
 class Purchases extends Component {
   static navigationOptions = ({ navigation }) => ({
-    headerTitle: 'My Purchases',
+    headerTitle: I18n.t('my_purchases'),
     headerTitleStyle: {
       textAlign: 'center',
       flexGrow: 1,

@@ -1,7 +1,12 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import {
-  Title, Group, SplashButton,  SimpleForm, LabeledInput,  Dot,
+  Title,
+  Group,
+  SplashButton,
+  SimpleForm,
+  LabeledInput,
+  Dot,
 } from 'components'
 import blurredBackground from 'assets/blurred-background.png'
 import { connect } from 'react-redux'
@@ -14,34 +19,37 @@ import I18n from '../../utilites/i18n'
 
 const screen = Dimensions.get('screen')
 
-
 class ForgotPassword extends Component {
-  state={
-    phone:null,
-    email:null,
-  }
+  state = {
+    phone: null,
+    email: null,
+  };
 
-  handleChange =(field,value) => {
+  handleChange = (field, value) => {
     this.setState({
-      [field]:value,
+      [field]: value,
     })
-  }
+  };
 
-  handleSubmit =async () => {
-    const { actions:{ forgetPassword },navigation:{ navigate } } = this.props
-    const { phone,email } = this.state
-    const check = await forgetPassword({ email ,phone })
+  handleSubmit = async () => {
+    const {
+      actions: { forgetPassword },
+      navigation: { navigate },
+    } = this.props
+    const { phone, email } = this.state
+    const check = await forgetPassword({ email, phone })
     navigate('ConfirmCode')
-  }
+  };
 
   static navigationOptions = {
     header: null,
   };
 
-
   render() {
-    const { userData:{ isFetching } } = this.props
-    const { phone,email } = this.state
+    const {
+      userData: { isFetching },
+    } = this.props
+    const { phone, email } = this.state
     return (
       <SimpleForm
         backgroundSource={blurredBackground}
@@ -60,7 +68,7 @@ class ForgotPassword extends Component {
             style={{
               position: 'absolute',
               top: -80,
-              left: (screen.width * 0.5) - 28 - 70,
+              left: screen.width * 0.5 - 28 - 70,
               backgroundColor: '#FFF',
               borderTopLeftRadius: 9 ** 9,
               borderTopRightRadius: 9 ** 9,
@@ -69,7 +77,10 @@ class ForgotPassword extends Component {
               height: 140,
             }}
           >
-            <Image source={logo} style={{ width: 120, height: 120,resizeMode:'contain' }} />
+            <Image
+              source={logo}
+              style={{ width: 120, height: 120, resizeMode: 'contain' }}
+            />
           </Group>
           <LabeledInput
             label={I18n.t('enter_your_email')}
@@ -77,7 +88,7 @@ class ForgotPassword extends Component {
             labelStyle={inputLabelStyle}
             containerStyle={inputContainerStyle}
             value={email}
-            onChangeText={(value) => this.handleChange('email',value)}
+            onChangeText={value => this.handleChange('email', value)}
           />
           <Group
             style={{
@@ -91,7 +102,11 @@ class ForgotPassword extends Component {
             <Dot />
             <Title
               text={I18n.t('or')}
-              style={{ color: '#be1522', marginBottom: 5,    fontSize: screen.width > 600 ? 18 : 10 }}
+              style={{
+                color: '#be1522',
+                marginBottom: 5,
+                fontSize: screen.width > 600 ? 18 : 10,
+              }}
             />
             <Dot />
           </Group>
@@ -101,7 +116,7 @@ class ForgotPassword extends Component {
             labelStyle={inputLabelStyle}
             containerStyle={{ ...inputContainerStyle, marginBottom: 60 }}
             value={phone}
-            onChangeText={(value) => this.handleChange('phone',value)}
+            onChangeText={value => this.handleChange('phone', value)}
           />
           <SplashButton
             loading={isFetching}
@@ -148,23 +163,23 @@ const buttonStyle = {
     bottom: -45,
     width: '100%',
     paddingHorizontal: 10,
-    padding:35,
+    padding: 35,
   },
   titleStyle: {
     color: '#FFFFFF',
-    fontWeight: '100',
+    fontWeight: '600',
     fontSize: screen.width > 600 ? 18 : 10,
     fontFamily: 'HelveticaNeueW23forSKY-Reg',
   },
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  actions: bindActionCreators(userActions,dispatch,),
+const mapDispatchToProps = dispatch => ({
+  actions: bindActionCreators(userActions, dispatch),
 })
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   user: state.userData.user,
-  userData:state.userData,
+  userData: state.userData,
   generalData: state.generalData,
 })
 
@@ -173,7 +188,4 @@ ForgotPassword.propTypes = {
   actions: PropTypes.object.isRequired,
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(ForgotPassword)
+export default connect(mapStateToProps, mapDispatchToProps)(ForgotPassword)

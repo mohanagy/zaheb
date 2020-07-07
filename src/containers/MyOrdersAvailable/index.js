@@ -7,11 +7,12 @@ import { bindActionCreators } from 'redux'
 import * as storeActions from 'actions/store'
 import * as usersActions from 'actions/users'
 import PropTypes from 'prop-types'
+import I18n from '../../utilites/i18n'
 
 
 class MyOrderAvailable extends Component {
   static navigationOptions = ({ navigation }) => ({
-    headerTitle: 'My Order Available',
+    headerTitle: I18n.t('my_orders_available'),
 
     headerTitleStyle: {
       textAlign: 'center',
